@@ -1,21 +1,19 @@
-# Dockerfiles for Nebula Graph Services
+# Nebula Graph Docker Deployment
 
-**NOTE:** The `Dockerfile` is used to build docker image only for **testing** nebula graph in local machine.
+In this repository, we provide following methods to deploy a [nebula](https://github.com/vesoft-inc/nebula) cluster:
 
-Following Dockerfiles will be ready in production.
-
-- `Dockerfile.graphd`: nebula-graphd service
-- `Dockerfile.metad`: nebula-metad service
-- `Dockerfile.storaged`: nebula-storaged service
-- `Dockerfile.console`: nebula console client
+- [X] `docker-compose`
+- [ ] `ansible`(coming soon)
 
 ## docker-compose
 
-Use git to clone nebula project to your local directory and `cd` to `docker` folder in nebula root directory.
+First of all, install `docker` and `docker-compose` in your system.
+
+**Step 0**: Use `git` to clone this repo to your local directory and `cd` to the root directory of project:
 
 ```shell
-$ cd /path/to/nebula/root/directory/ # replace your real nebula clone path
-$ cd docker
+$ git clone https://github.com/vesoft-inc/nebula-docker-compose.git
+$ cd nebula-docker-compose/
 ```
 
 **Step 1**: Start all services with `docker-compose`
@@ -51,9 +49,9 @@ docker_storaged1_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.
 docker_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.0.0.0:32873->12000/tcp, 0.0.0.0:32870->12002/tcp, 44500/tcp, 44501/tcp
 ```
 
-Now we can see the `graph0` exposed port is `32868`
+Now we can see the `docker_graphd0_1` container exposed port is `32868`
 
-**Step 3**: Use `nebula-console` docker container to connect to one of above **Graph Services**
+**Step 3**: Use `nebula-console` docker container to connect to one of above three **graph services**
 
 ``` shell
 $ docker run --rm -ti --network=host vesoft/nebula-console --port=32868 --addr=127.0.0.1
@@ -98,4 +96,4 @@ All nebula service data and logs are stored in local directory: `./data` and `./
      |- graph2
 ```
 
-Then enjoy nebula graph :)
+Enjoy nebula graph :)
