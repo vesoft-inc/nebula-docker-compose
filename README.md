@@ -97,3 +97,8 @@ All nebula service data and logs are stored in local directory: `./data` and `./
 ```
 
 Enjoy nebula graph :)
+
+## TODO
+
+- [ ] `prometheus` and `grafana` collect cluster metrics
+- [ ] `ansible` deployment tutorial
