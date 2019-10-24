@@ -60,6 +60,7 @@ Now we can see that the exposed port mapped to `3699` of `docker_graphd_1` conta
 If `vesoft/nebula-console:nightly` image has been pulled in your local machine, please remove it and pull it again:
 
 ```shell
+$ docker rm $(docker ps -qa -f status=exited) # cleanup exited containers
 $ docker rmi vesoft/nebula-console:nigthly
 $ docker pull vesoft/nebula-console:nightly
 ```
