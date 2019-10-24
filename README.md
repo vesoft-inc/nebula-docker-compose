@@ -51,9 +51,21 @@ docker_storaged1_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.
 docker_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.0.0.0:32873->12000/tcp, 0.0.0.0:32870->12002/tcp, 44500/tcp, 44501/tcp
 ```
 
-Now we can see the exposed port mapped to `3699` of `docker_graphd_1` container is `32868`. **Note:** Your port may be different from the example, please use your own.
+Now we can see that the exposed port mapped to `3699` of `docker_graphd_1` container is `32868`.
+
+> **Note**: Your *graphd* service port may be different from the example, please use your own in the next step.
 
 **Step 3**: Use `nebula-console` docker container to connect to the above **graph service**
+
+If `vesoft/nebula-console:nightly` image has been pulled in your local machine, please remove it and pull it again:
+
+```shell
+$ docker rm $(docker ps -qa -f status=exited) # cleanup exited containers
+$ docker rmi vesoft/nebula-console:nigthly
+$ docker pull vesoft/nebula-console:nightly
+```
+
+And now, you can try to connect to the above graph service with the new version `console` container.
 
 ``` shell
 $ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=32868
@@ -94,22 +106,24 @@ Execution succeeded (Time spent: 1061/1773 us)
 All nebula service data and logs are stored in local directory `nebula-docker-compose`: `./data` and `./logs`.
 
 ```text
-|-- docker-compose.yaml
-|-- data
-|     |- meta0
-|     |- meta1
-|     |- meta2
-|     |- storage0
-|     |- storage1
-|     `- storage2
-`-- logs
-     |- meta0
-     |- meta1
-     |- meta2
-     |- storage0
-     |- storage1
-     |- storage2
-     `- graph
+nebula-docker-compose/
+  |
+  |-- docker-compose.yaml
+  |-- data
+  |     |- meta0
+  |     |- meta1
+  |     |- meta2
+  |     |- storage0
+  |     |- storage1
+  |     `- storage2
+  `-- logs
+      |- meta0
+      |- meta1
+      |- meta2
+      |- storage0
+      |- storage1
+      |- storage2
+      `- graph
 ```
 
 **Step 5**: Stop nebula services
