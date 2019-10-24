@@ -11,9 +11,9 @@ First of all, install `docker` and `docker-compose` in your system.
 
 The nebula services to be deployed:
 
-- 3 replicas of nebula-metad service
-- 3 replicas of nebula-storaged service
-- 1 replica of nebula-graphd service
+- 3 replicas of `nebula-metad` service
+- 3 replicas of `nebula-storaged` service
+- 1 replica of `nebula-graphd` service
 
 **Step 0**: Use `git` to clone this repo to your local directory and `cd` to the root directory of project:
 
