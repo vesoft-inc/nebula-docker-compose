@@ -208,7 +208,7 @@ services:
       - 13000
       - 13002
     volumes:
-      - ./logs/graph0:/logs
+      - ./logs/graph:/logs
     networks:
       nebula-net:
         ipv4_address: 172.28.3.1
