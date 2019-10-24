@@ -51,7 +51,7 @@ docker_storaged1_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.
 docker_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.0.0.0:32873->12000/tcp, 0.0.0.0:32870->12002/tcp, 44500/tcp, 44501/tcp
 ```
 
-Now we can see the exposed port mapped to `3699` of `docker_graphd_1` container is `32868`.
+Now we can see the exposed port mapped to `3699` of `docker_graphd_1` container is `32868`. **Note:** Your port may be different from the example, please use your own.
 
 **Step 3**: Use `nebula-console` docker container to connect to the above **graph service**
 
@@ -91,7 +91,7 @@ Execution succeeded (Time spent: 1061/1773 us)
 
 **Step 4**: Check cluster data and logs
 
-All nebula service data and logs are stored in local directory: `./data` and `./logs`.
+All nebula service data and logs are stored in local directory `/nebula-docker-compose`: `./data` and `./logs`.
 
 ```text
 |-- docker-compose.yaml
