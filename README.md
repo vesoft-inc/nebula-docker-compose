@@ -91,7 +91,7 @@ Execution succeeded (Time spent: 1061/1773 us)
 
 **Step 4**: Check cluster data and logs
 
-All nebula service data and logs are stored in local directory `/nebula-docker-compose`: `./data` and `./logs`.
+All nebula service data and logs are stored in local directory `nebula-docker-compose`: `./data` and `./logs`.
 
 ```text
 |-- docker-compose.yaml
