@@ -71,6 +71,22 @@ Welcome to Nebula Graph (Version 49d651f)
 | 172.28.2.3 | 44500 | online | 0            |                     |                        |
 ---------------------------------------------------------------------------------------------
 Got 3 rows (Time spent: 6479/7619 us)
+
+(user@127.0.0.1) [(none)]> CREATE SPACE test(partition_num=1024, replica_factor=3);
+Execution succeeded (Time spent: 19558/20769 us)
+
+(user@127.0.0.1) [(none)]> SHOW SPACES;
+========
+| Name |
+========
+| test |
+--------
+Got 1 rows (Time spent: 1578/2853 us)
+
+(user@127.0.0.1) [(none)]> USE test;
+Execution succeeded (Time spent: 1061/1773 us)
+
+(user@127.0.0.1) [test]>
 ```
 
 **Step 4**: Check cluster data and logs
@@ -94,6 +110,27 @@ All nebula service data and logs are stored in local directory: `./data` and `./
      |- storage1
      |- storage2
      `- graph
+```
+
+**Step 5**: Stop nebula services
+
+```shell
+$ docker-compose down -v
+Stopping nebula-docker-compose_graphd_1    ... done
+Stopping nebula-docker-compose_storaged1_1 ... done
+Stopping nebula-docker-compose_storaged0_1 ... done
+Stopping nebula-docker-compose_storaged2_1 ... done
+Stopping nebula-docker-compose_metad0_1    ... done
+Stopping nebula-docker-compose_metad1_1    ... done
+Stopping nebula-docker-compose_metad2_1    ... done
+Removing nebula-docker-compose_graphd_1    ... done
+Removing nebula-docker-compose_storaged1_1 ... done
+Removing nebula-docker-compose_storaged0_1 ... done
+Removing nebula-docker-compose_storaged2_1 ... done
+Removing nebula-docker-compose_metad0_1    ... done
+Removing nebula-docker-compose_metad1_1    ... done
+Removing nebula-docker-compose_metad2_1    ... done
+Removing network nebula-docker-compose_nebula-net
 ```
 
 Enjoy nebula graph :)
