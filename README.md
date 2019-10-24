@@ -53,7 +53,7 @@ docker_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.
 
 Now we can see that the exposed port mapped to `3699` of `docker_graphd_1` container is `32868`.
 
-**Note**: Your *graphd* service port may be different from the example, please use your own in the next step.
+> **Note**: Your *graphd* service port may be different from the example, please use your own in the next step.
 
 **Step 3**: Use `nebula-console` docker container to connect to the above **graph service**
 
