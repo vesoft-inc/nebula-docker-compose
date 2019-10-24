@@ -183,7 +183,7 @@ services:
         ipv4_address: 172.28.2.3
     restart: on-failure
 
-  graphd0:
+  graphd:
     image: vesoft/nebula-graphd:nightly
     environment:
       USER: root
@@ -208,72 +208,10 @@ services:
       - 13000
       - 13002
     volumes:
-      - ./logs/graph0:/logs
+      - ./logs/graph:/logs
     networks:
       nebula-net:
         ipv4_address: 172.28.3.1
-    restart: on-failure
-
-  graphd1:
-    image: vesoft/nebula-graphd:nightly
-    environment:
-      USER: root
-    command:
-      - --meta_server_addrs=172.28.1.1:45500,172.28.1.2:45500,172.28.1.3:45500
-      - --port=3699
-      - --ws_ip=172.28.3.2
-      - --load_data_interval_secs=5
-      - --log_dir=/logs
-    depends_on:
-      - metad0
-      - metad1
-      - metad2
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:13000/status"]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-      start_period: 20s
-    ports:
-      - 3699
-      - 13000
-      - 13002
-    volumes:
-      - ./logs/graph1:/logs
-    networks:
-      nebula-net:
-        ipv4_address: 172.28.3.2
-    restart: on-failure
-
-  graphd2:
-    image: vesoft/nebula-graphd:nightly
-    environment:
-      USER: root
-    command:
-      - --meta_server_addrs=172.28.1.1:45500,172.28.1.2:45500,172.28.1.3:45500
-      - --port=3699
-      - --ws_ip=172.28.3.3
-      - --load_data_interval_secs=5
-      - --log_dir=/logs
-    depends_on:
-      - metad0
-      - metad1
-      - metad2
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:13000/status"]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-      start_period: 20s
-    ports:
-      - 3699
-      - 13000
-      - 13002
-    volumes:
-      - ./logs/graph2:/logs
-    networks:
-      nebula-net:
-        ipv4_address: 172.28.3.3
     restart: on-failure
 
 networks:
