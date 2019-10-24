@@ -56,7 +56,7 @@ Now we can see the exposed port mapped to `3699` of `docker_graphd_1` container 
 **Step 3**: Use `nebula-console` docker container to connect to the above **graph service**
 
 ``` shell
-$ docker run --rm -ti --network=host vesoft/nebula-console --addr=127.0.0.1 --port=32868
+$ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=32868
 
 Welcome to Nebula Graph (Version 49d651f)
 
