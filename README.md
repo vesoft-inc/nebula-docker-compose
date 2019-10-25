@@ -7,7 +7,7 @@ In this repository, we provide following methods to deploy a [nebula](https://gi
 
 ## docker-compose
 
-First of all, install `docker` and `docker-compose` in your system.
+Before you start, make sure that you have installed the latest version of [Docker](https://docs.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/).
 
 The nebula services to be deployed:
 
