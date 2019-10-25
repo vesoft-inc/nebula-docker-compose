@@ -117,13 +117,13 @@ nebula-docker-compose/
   |     |- storage1
   |     `- storage2
   `-- logs
-      |- meta0
-      |- meta1
-      |- meta2
-      |- storage0
-      |- storage1
-      |- storage2
-      `- graph
+        |- meta0
+        |- meta1
+        |- meta2
+        |- storage0
+        |- storage1
+        |- storage2
+        `- graph
 ```
 
 **Step 5**: Stop nebula services
