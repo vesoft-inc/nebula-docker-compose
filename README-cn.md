@@ -91,7 +91,7 @@ Execution succeeded (Time spent: 1061/1773 us)
 
 **Step 4**：查看集群数据及日志
 
-所有 nebula 服务的数据及日志均位于本地仓库的  `./data` 及 `./logs`路径下。
+所有 nebula 服务的数据及日志均位于本地仓库 `nebula-docker-compose` 的  `./data` 及 `./logs`路径下。
 
 ```text
 |-- docker-compose.yaml
