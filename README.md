@@ -1,4 +1,4 @@
-<div>
+<div align="center">
   <h1>Nebula Graph Docker Deployment</h1>
   <div>
     <a href="https://github.com/vesoft-inc/nebula-docker-compose/README_zh-CN.md">中文</a>
