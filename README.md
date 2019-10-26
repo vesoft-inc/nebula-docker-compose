@@ -1,8 +1,9 @@
 <div align="center">
   <h1>Nebula Graph Docker Deployment</h1>
   <div>
-    <a href="https://github.com/vesoft-inc/nebula-docker-compose/README_zh-CN.md">中文</a>
+    <a href="https://github.com/vesoft-inc/nebula-docker-compose/blob/update-readme/README_zh-CN.md">中文</a>
   </div>
+  <br>
 </div>
 
 In this repository, we provide following methods to deploy a [nebula](https://github.com/vesoft-inc/nebula) cluster:
