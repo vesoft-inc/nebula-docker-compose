@@ -51,9 +51,20 @@ docker_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.
 ```
 
 可以看到映射到 docker_graphd_1 容器的 3699 的裸露端口是 32868。
+
 > **注意**： 你的 *graphd* 服务端口可能与文档不同，请使用你的实际端口。
 
 **Step 3**: 使用 `nebula-console` docker 容器连接上述**图服务**
+
+如果本地已经存在 `vesoft/nebula-console:nightly` 镜像，请先删除并重新拉取：
+
+```shell
+$ docker rm $(docker ps -qa -f status=exited) # cleanup exited containers
+$ docker rmi vesoft/nebula-console:nigthly
+$ docker pull vesoft/nebula-console:nightly
+```
+
+现在，你可以试着使用新版的 `vesoft/nebula-console` 容器链接 graph 服务。
 
 ``` shell
 $ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=32868
@@ -94,22 +105,24 @@ Execution succeeded (Time spent: 1061/1773 us)
 所有 nebula 服务的数据及日志均位于本地仓库 `nebula-docker-compose` 的  `./data` 及 `./logs`路径下。
 
 ```text
-|-- docker-compose.yaml
-|-- data
-|     |- meta0
-|     |- meta1
-|     |- meta2
-|     |- storage0
-|     |- storage1
-|     `- storage2
-`-- logs
-     |- meta0
-     |- meta1
-     |- meta2
-     |- storage0
-     |- storage1
-     |- storage2
-     `- graph
+nebula-docker-compose/
+  |
+  |-- docker-compose.yaml
+  |-- data
+  |     |- meta0
+  |     |- meta1
+  |     |- meta2
+  |     |- storage0
+  |     |- storage1
+  |     `- storage2
+  `-- logs
+        |- meta0
+        |- meta1
+        |- meta2
+        |- storage0
+        |- storage1
+        |- storage2
+        `- graph
 ```
 
 **Step 5**: 停止 nebula 服务
@@ -134,8 +147,3 @@ Removing network nebula-docker-compose_nebula-net
 ```
 
 希望你喜欢 nebula :)
-
-## TODO
-
-- [ ] `prometheus` 和 `grafana` 收集集群指标信息
-- [ ] `ansible` 部署教程

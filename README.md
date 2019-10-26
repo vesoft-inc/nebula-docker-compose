@@ -1,4 +1,9 @@
-# Nebula Graph Docker Deployment
+<div>
+  <h1>Nebula Graph Docker Deployment</h1>
+  <div>
+    <a href="https://github.com/vesoft-inc/nebula-docker-compose/README_zh-CN.md">中文</a>
+  </div>
+</div>
 
 In this repository, we provide following methods to deploy a [nebula](https://github.com/vesoft-inc/nebula) cluster:
 
@@ -65,7 +70,7 @@ $ docker rmi vesoft/nebula-console:nigthly
 $ docker pull vesoft/nebula-console:nightly
 ```
 
-And now, you can try to connect to the above graph service with the new version `console` container.
+And now, you can try to connect to the above graph service with the new version `vesoft/nebula-console` container.
 
 ``` shell
 $ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=32868
