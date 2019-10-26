@@ -1,7 +1,7 @@
 <div align="center">
   <h1>Nebula Graph Docker Deployment</h1>
   <div>
-    <a href="https://github.com/vesoft-inc/nebula-docker-compose/blob/update-readme/README_zh-CN.md">中文</a>
+    <a href="https://github.com/vesoft-inc/nebula-docker-compose/blob/master/README_zh-CN.md">中文</a>
   </div>
   <br>
 </div>
