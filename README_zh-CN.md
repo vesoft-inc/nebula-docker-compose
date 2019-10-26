@@ -106,7 +106,6 @@ Execution succeeded (Time spent: 1061/1773 us)
 
 ```text
 nebula-docker-compose/
-  |
   |-- docker-compose.yaml
   |-- data
   |     |- meta0

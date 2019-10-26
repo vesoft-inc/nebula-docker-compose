@@ -113,7 +113,6 @@ All nebula service data and logs are stored in local directory `nebula-docker-co
 
 ```text
 nebula-docker-compose/
-  |
   |-- docker-compose.yaml
   |-- data
   |     |- meta0
