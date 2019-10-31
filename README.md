@@ -67,7 +67,7 @@ If `vesoft/nebula-console:nightly` image has been pulled in your local machine, 
 
 ```shell
 $ docker rm $(docker ps -qa -f status=exited) # cleanup exited containers
-$ docker rmi vesoft/nebula-console:nigthly
+$ docker rmi vesoft/nebula-console:nightly
 $ docker pull vesoft/nebula-console:nightly
 ```
 
