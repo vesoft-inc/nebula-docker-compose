@@ -60,7 +60,7 @@ docker_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.
 
 ```shell
 $ docker rm $(docker ps -qa -f status=exited) # cleanup exited containers
-$ docker rmi vesoft/nebula-console:nigthly
+$ docker rmi vesoft/nebula-console:nightly
 $ docker pull vesoft/nebula-console:nightly
 ```
 
