@@ -48,7 +48,7 @@ Creating nebula-docker-compose_storaged2_1 ... done
 $ docker-compose ps
        Name                     Command                       State                                                   Ports
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-nebula-docker-compose_graphd_1     ./bin/nebula-graphd --flag ...   Up (health: starting)   0.0.0.0:32867->13000/tcp, 0.0.0.0:32866->13002/tcp, 3369/tcp, 0.0.0.0:32868->3699/tcp
+nebula-docker-compose_graphd_1      ./bin/nebula-graphd --flag ...   Up (health: starting)   0.0.0.0:32867->13000/tcp, 0.0.0.0:32866->13002/tcp, 3369/tcp, 0.0.0.0:3699->3699/tcp
 nebula-docker-compose_metad0_1      ./bin/nebula-metad --flagf ...   Up (health: starting)   0.0.0.0:32865->11000/tcp, 0.0.0.0:32864->11002/tcp, 45500/tcp, 45501/tcp
 nebula-docker-compose_metad1_1      ./bin/nebula-metad --flagf ...   Up (health: starting)   0.0.0.0:32863->11000/tcp, 0.0.0.0:32862->11002/tcp, 45500/tcp, 45501/tcp
 nebula-docker-compose_metad2_1      ./bin/nebula-metad --flagf ...   Up (health: starting)   0.0.0.0:32861->11000/tcp, 0.0.0.0:32860->11002/tcp, 45500/tcp, 45501/tcp
@@ -57,7 +57,7 @@ nebula-docker-compose_storaged1_1   ./bin/nebula-storaged --fl ...   Up (health:
 nebula-docker-compose_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.0.0.0:32873->12000/tcp, 0.0.0.0:32870->12002/tcp, 44500/tcp, 44501/tcp
 ```
 
-Now we can see that the exposed port mapped to `3699` of `docker_graphd_1` container is `32868`.
+Now we can see that the exposed port mapped to `3699` of `docker_graphd_1` container is `3699`.
 
 > **Note**: Your *graphd* service port may be different from the example, please use your own in the next step.
 
@@ -74,7 +74,7 @@ $ docker pull vesoft/nebula-console:nightly
 And now, you can try to connect to the above graph service with the new version `vesoft/nebula-console` container.
 
 ``` shell
-$ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=32868
+$ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=3699
 
 Welcome to Nebula Graph (Version 49d651f)
 
