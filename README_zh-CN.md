@@ -50,9 +50,7 @@ nebula-docker-compose_storaged1_1   ./bin/nebula-storaged --fl ...   Up (health:
 nebula-docker-compose_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.0.0.0:32873->12000/tcp, 0.0.0.0:32870->12002/tcp, 44500/tcp, 44501/tcp
 ```
 
-可以看到映射到 docker_graphd_1 容器的 3699 的裸露端口是 3699。
-
-> **注意**： 你的 *graphd* 服务端口可能与文档不同，请使用你的实际端口。
+可以看到映射到 `nebula-docker-compose_graphd_1` 容器的 3699 的暴露端口是 3699。
 
 **Step 3**: 使用 `nebula-console` docker 容器连接上述**图服务**
 
