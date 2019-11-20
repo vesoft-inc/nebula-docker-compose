@@ -41,7 +41,7 @@ Creating nebula-docker-compose_storaged2_1 ... done
 $ docker-compose ps
        Name                     Command                       State                                                   Ports
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-nebula-docker-compose_graphd_1     ./bin/nebula-graphd --flag ...   Up (health: starting)   0.0.0.0:32867->13000/tcp, 0.0.0.0:32866->13002/tcp, 3369/tcp, 0.0.0.0:32868->3699/tcp
+nebula-docker-compose_graphd_1      ./bin/nebula-graphd --flag ...   Up (health: starting)   0.0.0.0:32867->13000/tcp, 0.0.0.0:32866->13002/tcp, 3369/tcp, 0.0.0.0:3699->3699/tcp
 nebula-docker-compose_metad0_1      ./bin/nebula-metad --flagf ...   Up (health: starting)   0.0.0.0:32865->11000/tcp, 0.0.0.0:32864->11002/tcp, 45500/tcp, 45501/tcp
 nebula-docker-compose_metad1_1      ./bin/nebula-metad --flagf ...   Up (health: starting)   0.0.0.0:32863->11000/tcp, 0.0.0.0:32862->11002/tcp, 45500/tcp, 45501/tcp
 nebula-docker-compose_metad2_1      ./bin/nebula-metad --flagf ...   Up (health: starting)   0.0.0.0:32861->11000/tcp, 0.0.0.0:32860->11002/tcp, 45500/tcp, 45501/tcp
@@ -50,9 +50,7 @@ nebula-docker-compose_storaged1_1   ./bin/nebula-storaged --fl ...   Up (health:
 nebula-docker-compose_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.0.0.0:32873->12000/tcp, 0.0.0.0:32870->12002/tcp, 44500/tcp, 44501/tcp
 ```
 
-可以看到映射到 docker_graphd_1 容器的 3699 的裸露端口是 32868。
-
-> **注意**： 你的 *graphd* 服务端口可能与文档不同，请使用你的实际端口。
+可以看到映射到 `nebula-docker-compose_graphd_1` 容器的 3699 的暴露端口是 3699。
 
 **Step 3**: 使用 `nebula-console` docker 容器连接上述**图服务**
 
@@ -67,7 +65,7 @@ $ docker pull vesoft/nebula-console:nightly
 现在，你可以试着使用新版的 `vesoft/nebula-console` 容器链接 graph 服务。
 
 ``` shell
-$ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=32868
+$ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=3699
 
 Welcome to Nebula Graph (Version 49d651f)
 
