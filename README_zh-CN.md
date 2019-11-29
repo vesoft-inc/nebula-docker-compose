@@ -62,6 +62,12 @@ $ docker rmi vesoft/nebula-console:nightly
 $ docker pull vesoft/nebula-console:nightly
 ```
 
+使用以下命令在 `docker-compose.yaml` 文件所在的目录中获取最新的 **Nebula Graph** 镜像。
+
+```bash
+docker-compose pull
+```
+
 现在，你可以试着使用新版的 `vesoft/nebula-console` 容器链接 graph 服务。
 
 ``` shell

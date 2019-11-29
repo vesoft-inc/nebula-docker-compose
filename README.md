@@ -69,6 +69,12 @@ $ docker rmi vesoft/nebula-console:nightly
 $ docker pull vesoft/nebula-console:nightly
 ```
 
+Pull the latest **Nebula Graph** images with the following command in directory where `docker-compose.yaml` is located.
+
+```bash
+docker-compose pull
+```
+
 And now, you can try to connect to the above graph service with the new version `vesoft/nebula-console` container.
 
 ``` shell
