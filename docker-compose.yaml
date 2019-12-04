@@ -14,7 +14,7 @@ services:
       - --log_dir=/logs
     healthcheck:
       test: ["CMD", "curl", "-f", "http://172.28.1.1:11000/status"]
-      interval: 1m30s
+      interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
@@ -43,7 +43,7 @@ services:
       - --log_dir=/logs
     healthcheck:
       test: ["CMD", "curl", "-f", "http://172.28.1.2:11000/status"]
-      interval: 1m30s
+      interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
@@ -72,7 +72,7 @@ services:
       - --log_dir=/logs
     healthcheck:
       test: ["CMD", "curl", "-f", "http://172.28.1.3:11000/status"]
-      interval: 1m30s
+      interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
@@ -104,7 +104,7 @@ services:
       - metad2
     healthcheck:
       test: ["CMD", "curl", "-f", "http://172.28.2.1:12000/status"]
-      interval: 1m30s
+      interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
@@ -136,7 +136,7 @@ services:
       - metad2
     healthcheck:
       test: ["CMD", "curl", "-f", "http://172.28.2.2:12000/status"]
-      interval: 1m30s
+      interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
@@ -168,7 +168,7 @@ services:
       - metad2
     healthcheck:
       test: ["CMD", "curl", "-f", "http://172.28.2.3:12000/status"]
-      interval: 1m30s
+      interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
@@ -199,7 +199,7 @@ services:
       - metad2
     healthcheck:
       test: ["CMD", "curl", "-f", "http://172.28.3.1:13000/status"]
-      interval: 1m30s
+      interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s

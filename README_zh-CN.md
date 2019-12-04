@@ -7,7 +7,7 @@
 
 ## docker-compose
 
-首先请确保系统已安装 `docker` 和 `docker-compose`。
+首先请确保系统已安装 [Docker](https://docs.docker.com/install/) 和 [Docker Compose](https://docs.docker.com/compose/install/)。
 已部署的 nebula 服务：
 
 - 3 副本 `nebula-metad` 服务
@@ -65,7 +65,7 @@ $ docker pull vesoft/nebula-console:nightly
 使用以下命令在 `docker-compose.yaml` 文件所在的目录中获取最新的 **Nebula Graph** 镜像。
 
 ```bash
-docker-compose pull
+$ docker-compose pull
 ```
 
 现在，你可以试着使用新版的 `vesoft/nebula-console` 容器链接 graph 服务。

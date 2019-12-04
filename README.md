@@ -13,7 +13,7 @@ In this repository, we provide following methods to deploy a [nebula](https://gi
 
 ## docker-compose
 
-Before you start, make sure that you have installed the latest version of [Docker](https://docs.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/).
+Before you start, make sure that you have installed the latest version of [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/).
 
 The nebula services to be deployed:
 
@@ -72,7 +72,7 @@ $ docker pull vesoft/nebula-console:nightly
 Pull the latest **Nebula Graph** images with the following command in directory where `docker-compose.yaml` is located.
 
 ```bash
-docker-compose pull
+$ docker-compose pull
 ```
 
 And now, you can try to connect to the above graph service with the new version `vesoft/nebula-console` container.
