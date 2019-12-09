@@ -2,7 +2,7 @@
 
 ## Overview
 
-In this document, we will walk you through the process of deploying a **Nebula Graph** cluster with [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/).
+In this document, we will walk you through the process of deploying a **Nebula Graph** cluster with [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/). We will also show you how to [check the services status of **Nebula Graph**](#checking-the-status-and-ports-of-nebula-graph-services), how to [check the cluster data and logs](#checking-the-cluster-data-and-logs), and how to [stop the services of **Nebula Graph**](#stopping-the-services-of-nebula-graph).
 
 ## Prerequisite
 
