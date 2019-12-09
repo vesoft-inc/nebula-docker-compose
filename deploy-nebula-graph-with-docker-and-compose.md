@@ -140,8 +140,6 @@ nebula-docker-compose/
         `- graph
 ```
 
-**Note**: By default, the `data` directory and the `logs` directory are invisible. You can use the `ls -a` command to check the two directories.
-
 ## Stopping the Services of Nebula Graph
 
 You can stop the services of **Nebula Graph** with the following command:
