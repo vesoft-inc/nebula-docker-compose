@@ -12,7 +12,9 @@ In this document, we will walk you through the process of deploying a **Nebula G
 
 # Prerequisites
 
-Before you start deploying the **Nebula Graph** cluster, ensure that you have installed the latest version of [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/). If you do not have the `root` privilege for [Docker](https://docs.docker.com/install/), you can refer to [how to set root privileges for Docker](https://docs.docker.com/install/linux/linux-postinstall/). If you have not set your root privileges for [Docker](https://docs.docker.com/install/), you must add `sudo` before some commands as the following document describes.
+Before you start deploying the **Nebula Graph** cluster, ensure that you have installed the latest version of [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/). 
+
+**Note**: If you do not have the `root` privilege for [Docker](https://docs.docker.com/install/), you can refer to [how to set root privileges for Docker](https://docs.docker.com/install/linux/linux-postinstall/).
 
 # Services of Nebula Graph to Be Deployed
 
@@ -41,7 +43,7 @@ $ cd nebula-docker-compose/
 3. Start all the services of **Nebula Graph**.
 
 ```shell
-$ sudo docker-compose up -d
+$ docker-compose up -d
 ```
 
 The following information is displayed:
@@ -68,7 +70,7 @@ a. We will use the `nebula-console` docker container to connect to the graph ser
 
 b. If you have pulled the `vesoft/nebula-console` image before, remove it with the following command before you pull it again:
 
-   * `docker rm $(docker ps -qa -f status=exited)`
+   * `docker rm $(docker ps -qa -f status=exited) # cleanup exited containers`
    * `docker rmi vesoft/nebula-console:nightly`
    
 c. If you have pulled the **Nebula Graph** images before, you can update the images with the following command:
@@ -80,7 +82,7 @@ $ docker-compose pull
 5. Connect to the graph service of **Nebula Graph**.
 
 ```shell
-$ sudo docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=3699
+$ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=3699
 ```
 
 The following information which indicates that you successfully connect to **Nebula Graph** is displayed:
@@ -99,7 +101,7 @@ Welcome to Nebula Graph (Version 5d10861)
 You can list all services of **Nebula Graph** and check their exposed ports with the following command.
 
 ```shell
-$ sudo docker-compose ps
+$ docker-compose ps
 ```
 
 The following information is displayed:
@@ -149,7 +151,7 @@ nebula-docker-compose/
 You can stop the services of **Nebula Graph** with the following command:
 
 ```shell
-$ sudo docker-compose down -v
+$ docker-compose down -v
 ```
 
 The following information which indicates you successfully stop the services of **Nebula Graph** is displayed:
