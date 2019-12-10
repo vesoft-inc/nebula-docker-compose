@@ -1,45 +1,107 @@
 # Nebula Graph Docker 部署
 
-本仓库提供如下方式部署 [nebula](https://github.com/vesoft-inc/nebula) 集群：
+## 概述
 
-- `docker-compose`
-- `ansible` (开发中)
+在本文档中，我们将指导您使用 [Docker](https://docs.docker.com/install/) 和 [Docker Compose](https://docs.docker.com/compose/install/) 来部署 **Nebula Graph** 集群。  我们将向您展示如何 [查看 **Nebula Graph** 的服务状态和端口](#查看-Nebula-Graph-服务状态和端口)，如何[查看集群数据和日志](#查看集群数据和日志), 以及如何[停止 **Nebula Graph** 服务](#停止-Nebula-Graph-服务)。
 
-## docker-compose
+## 前提条件
 
-首先请确保系统已安装 [Docker](https://docs.docker.com/install/) 和 [Docker Compose](https://docs.docker.com/compose/install/)。
-已部署的 nebula 服务：
+在开始部署 **Nebula Graph** 集群前，确保您已部署最新版本的 [Docker](https://docs.docker.com/install/) 和 [Docker Compose](https://docs.docker.com/compose/install/)。
 
-- 3 副本 `nebula-metad` 服务
-- 3 副本 `nebula-storaged` 服务
-- 1 副本 `nebula-graphd` 服务
+**注意**：如果您没有 [Docker](https://docs.docker.com/install/) 的 `root` 权限，请参考 [如何设置 Docker 的 root 权限](https://docs.docker.com/install/linux/linux-postinstall/)。
 
-**Step 0**: 使用 `git` 将本仓库克隆至本地然后使用 `cd` 切换至仓库根目录：
+## 要部署的 **Nebula Graph** 服务
+
+在本指南中我们将部署以下 **Nebula Graph** 服务：
+
+* 3 副本 `nebula-metad` 服务
+* 3 副本 `nebula-storaged` 服务
+* 1 副本 `nebula-graphd` 服务
+
+## 部署 **Nebula Graph** 集群
+
+您可以通过以下命令部署 **Nebula Graph** 集群：
+
+1. 把 `nebula-docker-compose` 库拷贝到您的本地电脑。
 
 ```shell
 $ git clone https://github.com/vesoft-inc/nebula-docker-compose.git
+```
+
+2. 把当前路径更改为 `nebula-docker-compose` 路径。
+
+```shell
 $ cd nebula-docker-compose/
 ```
 
-**Step 1**： 使用 `docker-compose` 启动所有服务
+3. 启动所有 **Nebula Graph** 服务。
 
 ```shell
 $ docker-compose up -d
-Creating network "docker_nebula-net" with the default driver
+```
+
+显示以下信息表明服务已启动：
+
+```shell
 Creating nebula-docker-compose_metad2_1 ... done
 Creating nebula-docker-compose_metad1_1 ... done
 Creating nebula-docker-compose_metad0_1 ... done
+Creating nebula-docker-compose_storaged2_1 ... done
+Creating nebula-docker-compose_graphd_1    ... done
 Creating nebula-docker-compose_storaged0_1 ... done
 Creating nebula-docker-compose_storaged1_1 ... done
-Creating nebula-docker-compose_graphd_1    ... done
-Creating nebula-docker-compose_storaged2_1 ... done
 ```
 
-**Step 2**： 列出所有 nebula 服务及其对应的端口
+4. 把 `vesoft/nebula-console:nightly` 镜像下拉到您的本地电脑。
 
-``` shell
+```shell
+$ docker pull vesoft/nebula-console:nightly
+```
+
+**注意**：
+
+a. 我们将使用 `nebula-console` docker 容器来连接 **Nebula Graph** 的图服务。
+
+b. 如果您之前下拉了 `vesoft/nebula-console` 镜像，使用以下命令先删除该镜像然后再下拉：
+
+   * `docker rm $(docker ps -qa -f status=exited) # cleanup exited containers`
+   * `docker rmi vesoft/nebula-console:nightly`
+   
+c. 如果您之前下拉了 **Nebula Graph** 镜像，您可以通过以下命令更新镜像：
+
+```shell
+$ docker-compose pull
+```
+
+5. 连接到 **Nebula Graph** 的图服务。
+
+```shell
+$ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=3699
+```
+
+显示以下信息表明您已成功连接到 **Nebula Graph**：
+
+```shell
+Welcome to Nebula Graph (Version 5d10861)
+
+(user@127.0.0.1) [(none)]>
+
+```
+
+**注意**: 现在您可以通过创建空间、tag、space 等操作来使用 **Nebula Graph**。 获取详细信息，请参考 [快速入门](https://github.com/vesoft-inc/nebula/blob/master/docs/manual-CN/1.overview/2.quick-start/1.get-started.md)。
+
+## 查看 **Nebula Graph** 服务状态和端口
+
+您可以通过以下命令把所有 **Nebula Graph** 服务以列表的形式显示出来并查看其暴露的端口：
+
+```shell
 $ docker-compose ps
-       Name                     Command                       State                                                   Ports
+```
+
+显示以下信息：
+
+```shell
+Name                     Command                       State                                                   Ports
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 nebula-docker-compose_graphd_1      ./bin/nebula-graphd --flag ...   Up (health: starting)   0.0.0.0:32867->13000/tcp, 0.0.0.0:32866->13002/tcp, 3369/tcp, 0.0.0.0:3699->3699/tcp
 nebula-docker-compose_metad0_1      ./bin/nebula-metad --flagf ...   Up (health: starting)   0.0.0.0:32865->11000/tcp, 0.0.0.0:32864->11002/tcp, 45500/tcp, 45501/tcp
@@ -50,63 +112,13 @@ nebula-docker-compose_storaged1_1   ./bin/nebula-storaged --fl ...   Up (health:
 nebula-docker-compose_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.0.0.0:32873->12000/tcp, 0.0.0.0:32870->12002/tcp, 44500/tcp, 44501/tcp
 ```
 
-可以看到映射到 `nebula-docker-compose_graphd_1` 容器的 3699 的暴露端口是 3699。
+**注意**： 可以看到映射到 `nebula-docker-compose_graphd_1` 容器的 3699 的暴露端口是 3699。
 
-**Step 3**: 使用 `nebula-console` docker 容器连接上述**图服务**
+## 查看集群数据和日志
 
-如果本地已经存在 `vesoft/nebula-console:nightly` 镜像，请先删除并重新拉取：
+ **Nebula Graph** 的所有服务数据和日志分别存储在您本地目录 `nebula-docker-compose/data` 和 `nebula-docker-compose/logs`。
 
-```shell
-$ docker rm $(docker ps -qa -f status=exited) # cleanup exited containers
-$ docker rmi vesoft/nebula-console:nightly
-$ docker pull vesoft/nebula-console:nightly
-```
-
-使用以下命令在 `docker-compose.yaml` 文件所在的目录中获取最新的 **Nebula Graph** 镜像。
-
-```bash
-$ docker-compose pull
-```
-
-现在，你可以试着使用新版的 `vesoft/nebula-console` 容器链接 graph 服务。
-
-``` shell
-$ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=3699
-
-Welcome to Nebula Graph (Version 49d651f)
-
-(user@127.0.0.1) [(none)]> SHOW HOSTS;
-=============================================================================================
-| Ip         | Port  | Status | Leader count | Leader distribution | Partition distribution |
-=============================================================================================
-| 172.28.2.1 | 44500 | online | 0            |                     |                        |
----------------------------------------------------------------------------------------------
-| 172.28.2.2 | 44500 | online | 0            |                     |                        |
----------------------------------------------------------------------------------------------
-| 172.28.2.3 | 44500 | online | 0            |                     |                        |
----------------------------------------------------------------------------------------------
-Got 3 rows (Time spent: 6479/7619 us)
-
-(user@127.0.0.1) [(none)]> CREATE SPACE test(partition_num=1024, replica_factor=3);
-Execution succeeded (Time spent: 19558/20769 us)
-
-(user@127.0.0.1) [(none)]> SHOW SPACES;
-========
-| Name |
-========
-| test |
---------
-Got 1 rows (Time spent: 1578/2853 us)
-
-(user@127.0.0.1) [(none)]> USE test;
-Execution succeeded (Time spent: 1061/1773 us)
-
-(user@127.0.0.1) [test]>
-```
-
-**Step 4**：查看集群数据及日志
-
-所有 nebula 服务的数据及日志均位于本地仓库 `nebula-docker-compose` 的  `./data` 及 `./logs`路径下。
+目录结构如下所示：
 
 ```text
 nebula-docker-compose/
@@ -128,20 +140,27 @@ nebula-docker-compose/
         `- graph
 ```
 
-**Step 5**: 停止 nebula 服务
+## 停止 **Nebula Graph** 服务
+
+您可以通过以下命令停止 **Nebula Graph** 的服务：
 
 ```shell
 $ docker-compose down -v
-Stopping nebula-docker-compose_graphd_1    ... done
+```
+
+显示以下信息表明您已成功停止 **Nebula Graph** 服务：
+
+```shell
 Stopping nebula-docker-compose_storaged1_1 ... done
 Stopping nebula-docker-compose_storaged0_1 ... done
+Stopping nebula-docker-compose_graphd_1    ... done
 Stopping nebula-docker-compose_storaged2_1 ... done
 Stopping nebula-docker-compose_metad0_1    ... done
 Stopping nebula-docker-compose_metad1_1    ... done
 Stopping nebula-docker-compose_metad2_1    ... done
-Removing nebula-docker-compose_graphd_1    ... done
 Removing nebula-docker-compose_storaged1_1 ... done
 Removing nebula-docker-compose_storaged0_1 ... done
+Removing nebula-docker-compose_graphd_1    ... done
 Removing nebula-docker-compose_storaged2_1 ... done
 Removing nebula-docker-compose_metad0_1    ... done
 Removing nebula-docker-compose_metad1_1    ... done
@@ -149,4 +168,4 @@ Removing nebula-docker-compose_metad2_1    ... done
 Removing network nebula-docker-compose_nebula-net
 ```
 
-希望你喜欢 nebula :)
+**注意**： 由于您的数据存储在您的本地电脑上，所以即使您停止 **Nebula Graph** 服务，数据也会保留在您的本地电脑。
