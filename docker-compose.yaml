@@ -12,6 +12,8 @@ services:
       - --load_data_interval_secs=5
       - --data_path=/data/meta
       - --log_dir=/logs
+      - --v=0
+      - --minloglevel=2
     healthcheck:
       test: ["CMD", "curl", "-f", "http://172.28.1.1:11000/status"]
       interval: 30s
@@ -41,6 +43,8 @@ services:
       - --load_data_interval_secs=5
       - --data_path=/data/meta
       - --log_dir=/logs
+      - --v=0
+      - --minloglevel=2
     healthcheck:
       test: ["CMD", "curl", "-f", "http://172.28.1.2:11000/status"]
       interval: 30s
@@ -70,6 +74,8 @@ services:
       - --load_data_interval_secs=5
       - --data_path=/data/meta
       - --log_dir=/logs
+      - --v=0
+      - --minloglevel=2
     healthcheck:
       test: ["CMD", "curl", "-f", "http://172.28.1.3:11000/status"]
       interval: 30s
@@ -98,6 +104,8 @@ services:
       - --port=44500
       - --data_path=/data/storage
       - --log_dir=/logs
+      - --v=0
+      - --minloglevel=2
     depends_on:
       - metad0
       - metad1
@@ -130,6 +138,8 @@ services:
       - --port=44500
       - --data_path=/data/storage
       - --log_dir=/logs
+      - --v=0
+      - --minloglevel=2
     depends_on:
       - metad0
       - metad1
@@ -162,6 +172,8 @@ services:
       - --port=44500
       - --data_path=/data/storage
       - --log_dir=/logs
+      - --v=0
+      - --minloglevel=2
     depends_on:
       - metad0
       - metad1
@@ -193,6 +205,8 @@ services:
       - --ws_ip=172.28.3.1
       - --load_data_interval_secs=5
       - --log_dir=/logs
+      - --v=0
+      - --minloglevel=2
     depends_on:
       - metad0
       - metad1
