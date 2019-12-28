@@ -9,7 +9,6 @@ services:
       - --local_ip=172.28.1.1
       - --ws_ip=172.28.1.1
       - --port=45500
-      - --load_data_interval_secs=5
       - --data_path=/data/meta
       - --log_dir=/logs
       - --v=0
@@ -40,7 +39,6 @@ services:
       - --local_ip=172.28.1.2
       - --ws_ip=172.28.1.2
       - --port=45500
-      - --load_data_interval_secs=5
       - --data_path=/data/meta
       - --log_dir=/logs
       - --v=0
@@ -71,7 +69,6 @@ services:
       - --local_ip=172.28.1.3
       - --ws_ip=172.28.1.3
       - --port=45500
-      - --load_data_interval_secs=5
       - --data_path=/data/meta
       - --log_dir=/logs
       - --v=0
@@ -203,7 +200,6 @@ services:
       - --meta_server_addrs=172.28.1.1:45500,172.28.1.2:45500,172.28.1.3:45500
       - --port=3699
       - --ws_ip=172.28.3.1
-      - --load_data_interval_secs=5
       - --log_dir=/logs
       - --v=0
       - --minloglevel=2
