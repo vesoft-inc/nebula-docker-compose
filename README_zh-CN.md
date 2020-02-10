@@ -58,6 +58,24 @@ Creating nebula-docker-compose_storaged1_1 ... done
 $ docker pull vesoft/nebula-console:nightly
 ```
 
+国内从 Docker Hub 拉取镜像有时会遇到困难，此时可以配置加速镜像。例如:
+
+* Azure 中国镜像 https://dockerhub.azk8s.cn
+* 七牛云 https://reg-mirror.qiniu.com
+
+对于 Linux 用户，请在 `/etc/docker/daemon.json` 中写入如下内容（如果文件不存在请新建该文件）：
+
+```bash
+{
+  "registry-mirrors": [
+    "https://dockerhub.azk8s.cn",
+    "https://reg-mirror.qiniu.com"
+  ]
+}
+```
+
+对于 macOS 用户，请点击任务栏中 Docker Desktop 图标 -> Preferences -> Daemon -> Registry mirrors。在列表中添加 https://dockerhub.azk8s.cn 和 https://reg-mirror.qiniu.com。修改完成后，点击 Apply & Restart 按钮，重启 Docker。
+
 **注意**：
 
 a. 我们将使用 `nebula-console` docker 容器来连接 **Nebula Graph** 的图服务。
