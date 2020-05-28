@@ -6,17 +6,19 @@
   <br>
 </div>
 
-# Overview
+# Deploying Nebula Graph Docker
+
+## Overview
 
 In this document, we will walk you through the process of deploying a **Nebula Graph** cluster with [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/). We will also show you how to [check the services status of **Nebula Graph**](#checking-the-status-and-ports-of-nebula-graph-services), how to [check the cluster data and logs](#checking-the-cluster-data-and-logs), and how to [stop the services of **Nebula Graph**](#stopping-the-services-of-nebula-graph).
 
-# Prerequisites
+## Prerequisites
 
-Before you start deploying the **Nebula Graph** cluster, ensure that you have installed the latest version of [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/). 
+Before you start deploying the **Nebula Graph** cluster, ensure that you have installed the latest version of [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/).
 
 **Note**: If you do not have the `root` privilege for [Docker](https://docs.docker.com/install/), you can refer to [how to set root privileges for Docker](https://docs.docker.com/install/linux/linux-postinstall/).
 
-# Services of **Nebula Graph** to Be Deployed
+## Services of **Nebula Graph** to Be Deployed
 
 In this guide, we are going to deploy the following services of **Nebula Graph**:
 
@@ -24,7 +26,7 @@ In this guide, we are going to deploy the following services of **Nebula Graph**
 * 3 replicas of `nebula-storage`d service
 * 1 replica of `nebula-graphd` service
 
-# Deploying the **Nebula Graph** Cluster
+## Deploying the **Nebula Graph** Cluster
 
 You can deploy the **Nebula Graph** cluster by the following steps:
 
@@ -72,7 +74,7 @@ b. If you have pulled the `vesoft/nebula-console` image before, remove it with t
 
    * `docker rm $(docker ps -qa -f status=exited) # cleanup exited containers`
    * `docker rmi vesoft/nebula-console:nightly`
-   
+
 c. If you have pulled the **Nebula Graph** images before, you can update the images with the following command:
 
 ```shell
@@ -96,9 +98,9 @@ Welcome to Nebula Graph (Version 5d10861)
 
 **Note**: Now, you can start using **Nebula Graph** by creating spaces, tags and more. For details, refer to [get started](https://github.com/vesoft-inc/nebula/blob/master/docs/manual-EN/1.overview/2.quick-start/1.get-started.md).
 
-# Checking the Status and Ports of **Nebula Graph** Services
+## Checking the Status and Ports of **Nebula Graph** Services
 
-You can list all services of **Nebula Graph** and check their exposed ports with the following command:
+You can list all services of **Nebula Graph** and check their exposed ports with inputting the following command in your terminal:
 
 ```shell
 $ docker-compose ps
@@ -120,9 +122,9 @@ nebula-docker-compose_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health:
 
 **Note**: We can see that the exposed port mapped to 3699 of the `nebula-docker-compose_graphd_1` container is 3699.
 
-# Checking the Cluster Data and Logs
+## Checking the Cluster Data and Logs
 
-All services data and logs of **Nebula Graph** are stored in your local directories `nebula-docker-compose/data` and `nebula-docker-compose/logs` respectively.
+All services data and logs of **Nebula Graph** are stored in the `nebula-docker-compose/data` and `nebula-docker-compose/logs` directories respectively.
 
 The structure of the directories is as follows:
 
@@ -146,7 +148,7 @@ nebula-docker-compose/
         `- graph
 ```
 
-# Stopping the Services of **Nebula Graph**
+## Stopping the Services of **Nebula Graph**
 
 You can stop the services of **Nebula Graph** with the following command:
 
@@ -175,8 +177,3 @@ Removing network nebula-docker-compose_nebula-net
 ```
 
 **Note**: As your data is stored in your local computer, your data will be reserved even after you stop the services of **Nebula Graph**.
-
-## TODO
-
-- [ ] `prometheus` and `grafana` collect cluster metrics
-- [ ] `ansible` deployment tutorial
