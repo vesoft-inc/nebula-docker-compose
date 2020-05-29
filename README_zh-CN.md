@@ -1,12 +1,10 @@
 <div align="center">
-  <h1>Nebula Graph Docker Deployment</h1>
+  <h1>Nebula Graph Docker 部署</h1>
   <div>
     <a href="https://github.com/vesoft-inc/nebula-docker-compose/blob/master/README.md">英文</a>
   </div>
   <br>
 </div>
-
-# Nebula Graph Docker 部署
 
 ## 概述
 
