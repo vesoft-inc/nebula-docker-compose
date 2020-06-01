@@ -1,8 +1,14 @@
-# Nebula Graph Docker 部署
+<div align="center">
+  <h1>Nebula Graph Docker 部署</h1>
+  <div>
+    <a href="https://github.com/vesoft-inc/nebula-docker-compose/blob/master/README.md">英文</a>
+  </div>
+  <br>
+</div>
 
 ## 概述
 
-在本文档中，我们将指导您使用 [Docker](https://docs.docker.com/install/) 和 [Docker Compose](https://docs.docker.com/compose/install/) 来部署 **Nebula Graph** 集群。  我们将向您展示如何 [查看 **Nebula Graph** 的服务状态和端口](#查看-Nebula-Graph-服务状态和端口)，如何[查看集群数据和日志](#查看集群数据和日志), 以及如何[停止 **Nebula Graph** 服务](#停止-Nebula-Graph-服务)。
+在本文档中，我们将指导您使用 [Docker](https://docs.docker.com/install/) 和 [Docker Compose](https://docs.docker.com/compose/install/) 来部署 **Nebula Graph** 集群。我们将向您展示如何[查看 **Nebula Graph** 的服务状态和端口](#查看-Nebula-Graph-服务状态和端口)，如何[查看集群数据和日志](#查看集群数据和日志), 以及如何[停止 **Nebula Graph** 服务](#停止-Nebula-Graph-服务)。
 
 ## 前提条件
 
@@ -80,12 +86,12 @@ $ docker pull vesoft/nebula-console:nightly
 
 a. 我们将使用 `nebula-console` docker 容器来连接 **Nebula Graph** 的图服务。
 
-b. 如果您之前下拉了 `vesoft/nebula-console` 镜像，使用以下命令先删除该镜像然后再下拉：
+b. 如果您之前拉取了 `vesoft/nebula-console` 镜像，使用以下命令先删除该镜像然后再拉取：
 
    * `docker rm $(docker ps -qa -f status=exited) # cleanup exited containers`
    * `docker rmi vesoft/nebula-console:nightly`
-   
-c. 如果您之前下拉了 **Nebula Graph** 镜像，您可以通过以下命令更新镜像：
+
+c. 如果您之前拉取了 **Nebula Graph** 镜像，您可以通过以下命令更新镜像：
 
 ```shell
 $ docker-compose pull
@@ -110,7 +116,7 @@ Welcome to Nebula Graph (Version 5d10861)
 
 ## 查看 **Nebula Graph** 服务状态和端口
 
-您可以通过以下命令把所有 **Nebula Graph** 服务以列表的形式显示出来并查看其暴露的端口：
+您可以在终端输入以下命令把所有 **Nebula Graph** 服务以列表的形式显示出来并查看其暴露的端口：
 
 ```shell
 $ docker-compose ps
