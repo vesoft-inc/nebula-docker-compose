@@ -87,6 +87,8 @@ $ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.
 
 If the authorization is not enabled, **Nebula Graph** will use the default user name and password to log in, so you can skip the user and password specification here. If the authorization is enabled, the user and password must be specified. For example:
 
+Set the `enable_authorize` parameter in the `/usr/local/nebula/etc/nebula-graphd.conf` file to `true` to enable the authorization. In this case, you must provide the user and password to connect.
+
 ```shell
 $ docker run --rm -ti --network=host vesoft/nebula-console:nightly -u <user> -p <password> --addr=127.0.0.1 --port=3699
 ```
