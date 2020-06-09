@@ -103,6 +103,14 @@ $ docker-compose pull
 $ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=3699
 ```
 
+如果未开启权限管理开关，则使用默认用户和密码登录，此外无需指定；如果开启权限管理，则必须指定用户及密码。例如：
+
+将 `/usr/local/nebula/etc/nebula-graphd.conf` 文件中的 `enable_authorize` 设置为 `true` 打开权限开关。此时需指定用户及密码进行连接。
+
+```shell
+$ docker run --rm -ti --network=host vesoft/nebula-console:nightly -u <user> -p <password> --addr=127.0.0.1 --port=3699
+```
+
 显示以下信息表明您已成功连接到 **Nebula Graph**：
 
 ```shell
