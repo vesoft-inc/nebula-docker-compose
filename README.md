@@ -102,7 +102,7 @@ Welcome to Nebula Graph (Version 5d10861)
 
 ```
 
-**Note**: Now, you can start using **Nebula Graph** by creating spaces, tags and more. For details, refer to [get started](https://github.com/vesoft-inc/nebula/blob/master/docs/manual-EN/1.overview/2.quick-start/1.get-started.md).
+**Note**: Now, you can start using **Nebula Graph** by creating spaces, tags and more. For details, refer to [get started](https://docs.nebula-graph.io/manual-EN/1.overview/2.quick-start/1.get-started/).
 
 ## Checking the Status and Ports of **Nebula Graph** Services
 

@@ -120,7 +120,7 @@ Welcome to Nebula Graph (Version 5d10861)
 
 ```
 
-**注意**: 现在您可以通过创建空间、tag、space 等操作来使用 **Nebula Graph**。 获取详细信息，请参考 [快速入门](https://github.com/vesoft-inc/nebula/blob/master/docs/manual-CN/1.overview/2.quick-start/1.get-started.md)。
+**注意**: 现在您可以通过创建空间、tag、space 等操作来使用 **Nebula Graph**。 获取详细信息，请参考 [快速入门](https://docs.nebula-graph.com.cn/manual-CN/1.overview/2.quick-start/1.get-started/)。
 
 ## 查看 **Nebula Graph** 服务状态和端口
 
