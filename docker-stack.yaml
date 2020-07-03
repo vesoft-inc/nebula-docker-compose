@@ -1,0 +1,338 @@
+version: '3.6'
+services:
+  metad0:
+    image: vesoft/nebula-metad:v1.0.0
+    env_file:
+      - ./nebula.env
+    command:
+      - --meta_server_addrs=192.168.8.191:45500,192.168.8.192:45500,192.168.8.193:45500
+      - --local_ip=192.168.8.191
+      - --ws_ip=192.168.8.191
+      - --port=45500
+      - --data_path=/data/meta
+      - --log_dir=/logs
+      - --v=0
+      - --minloglevel=2
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == node-191
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://192.168.8.191:11000/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    ports:
+      - target: 11000
+        published: 11000
+        protocol: tcp
+        mode: host
+      - target: 11002
+        published: 11002
+        protocol: tcp
+        mode: host
+      - target: 45500
+        published: 45500
+        protocol: tcp
+        mode: host
+    volumes:
+      - data-metad0:/data/meta
+      - logs-metad0:/logs
+    networks:
+      - nebula-net
+
+  metad1:
+    image: vesoft/nebula-metad:v1.0.0
+    env_file:
+      - ./nebula.env
+    command:
+      - --meta_server_addrs=192.168.8.191:45500,192.168.8.192:45500,192.168.8.193:45500
+      - --local_ip=192.168.8.192
+      - --ws_ip=192.168.8.192
+      - --port=45500
+      - --data_path=/data/meta
+      - --log_dir=/logs
+      - --v=0
+      - --minloglevel=2
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == node-192
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://192.168.8.192:11000/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    ports:
+      - target: 11000
+        published: 11000
+        protocol: tcp
+        mode: host
+      - target: 11002
+        published: 11002
+        protocol: tcp
+        mode: host
+      - target: 45500
+        published: 45500
+        protocol: tcp
+        mode: host
+    volumes:
+      - data-metad1:/data/meta
+      - logs-metad1:/logs
+    networks:
+      - nebula-net
+
+  metad2:
+    image: vesoft/nebula-metad:v1.0.0
+    env_file:
+      - ./nebula.env
+    command:
+      - --meta_server_addrs=192.168.8.191:45500,192.168.8.192:45500,192.168.8.193:45500
+      - --local_ip=192.168.8.193
+      - --ws_ip=192.168.8.193
+      - --port=45500
+      - --data_path=/data/meta
+      - --log_dir=/logs
+      - --v=0
+      - --minloglevel=2
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == node-193
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://192.168.8.193:11000/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    ports:
+      - target: 11000
+        published: 11000
+        protocol: tcp
+        mode: host
+      - target: 11002
+        published: 11002
+        protocol: tcp
+        mode: host
+      - target: 45500
+        published: 45500
+        protocol: tcp
+        mode: host
+    volumes:
+      - data-metad2:/data/meta
+      - logs-metad2:/logs
+    networks:
+      - nebula-net
+
+  storaged0:
+    image: vesoft/nebula-storaged:v1.0.0
+    env_file:
+      - ./nebula.env
+    command:
+      - --meta_server_addrs=192.168.8.191:45500,192.168.8.192:45500,192.168.8.193:45500
+      - --local_ip=192.168.8.191
+      - --ws_ip=192.168.8.191
+      - --port=44500
+      - --data_path=/data/storage
+      - --log_dir=/logs
+      - --v=0
+      - --minloglevel=2
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == node-191
+    depends_on:
+      - metad0
+      - metad1
+      - metad2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://192.168.8.191:12000/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    ports:
+      - target: 12000
+        published: 12000
+        protocol: tcp
+        mode: host
+      - target: 12002
+        published: 12002
+        protocol: tcp
+        mode: host
+    volumes:
+      - data-storaged0:/data/storage
+      - logs-storaged0:/logs
+    networks:
+      - nebula-net
+
+  storaged1:
+    image: vesoft/nebula-storaged:v1.0.0
+    env_file:
+      - ./nebula.env
+    command:
+      - --meta_server_addrs=192.168.8.191:45500,192.168.8.192:45500,192.168.8.193:45500
+      - --local_ip=192.168.8.192
+      - --ws_ip=192.168.8.192
+      - --port=44500
+      - --data_path=/data/storage
+      - --log_dir=/logs
+      - --v=0
+      - --minloglevel=2
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == node-192
+    depends_on:
+      - metad0
+      - metad1
+      - metad2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://192.168.8.192:12000/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    ports:
+      - target: 12000
+        published: 12000
+        protocol: tcp
+        mode: host
+      - target: 12002
+        published: 12004
+        protocol: tcp
+        mode: host
+    volumes:
+      - data-storaged1:/data/storage
+      - logs-storaged1:/logs
+    networks:
+      - nebula-net
+
+  storaged2:
+    image: vesoft/nebula-storaged:v1.0.0
+    env_file:
+      - ./nebula.env
+    command:
+      - --meta_server_addrs=192.168.8.191:45500,192.168.8.192:45500,192.168.8.193:45500
+      - --local_ip=192.168.8.193
+      - --ws_ip=192.168.8.193
+      - --port=44500
+      - --data_path=/data/storage
+      - --log_dir=/logs
+      - --v=0
+      - --minloglevel=2
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == node-193
+    depends_on:
+      - metad0
+      - metad1
+      - metad2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://192.168.8.193:12000/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    ports:
+      - target: 12000
+        published: 12000
+        protocol: tcp
+        mode: host
+      - target: 12002
+        published: 12006
+        protocol: tcp
+        mode: host
+    volumes:
+      - data-storaged2:/data/storage
+      - logs-storaged2:/logs
+    networks:
+      - nebula-net
+
+  graphd:
+    image: vesoft/nebula-graphd:v1.0.0
+    env_file:
+      - ./nebula.env
+    command:
+      - --meta_server_addrs=192.168.8.191:45500,192.168.8.192:45500,192.168.8.193:45500
+      - --port=3699
+      - --ws_ip=192.168.8.191
+      - --log_dir=/logs
+      - --v=0
+      - --minloglevel=2
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == node-191
+    depends_on:
+      - metad0
+      - metad1
+      - metad2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://192.168.8.191:13000/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    ports:
+      - target: 3699
+        published: 3699
+        protocol: tcp
+        mode: host
+      - target: 13000
+        published: 13000
+        protocol: tcp
+        mode: host
+      - target: 13002
+        published: 13002
+        protocol: tcp
+        mode: host
+    volumes:
+      - logs-graphd:/logs
+    networks:
+      - nebula-net
+
+networks:
+  nebula-net:
+    external: true
+    attachable: true
+    name: host
+
+volumes:
+  data-metad0:
+  logs-metad0:
+  data-metad1:
+  logs-metad1:
+  data-metad2:
+  logs-metad2:
+  data-storaged0:
+  logs-storaged0:
+  data-storaged1:
+  logs-storaged1:
+  data-storaged2:
+  logs-storaged2:
+  logs-graphd:
