@@ -21,6 +21,7 @@ services:
       retries: 3
       start_period: 20s
     ports:
+      - "45500:45500"
       - 11000
       - 11002
     volumes:
@@ -52,6 +53,7 @@ services:
       retries: 3
       start_period: 20s
     ports:
+      - "45500:45500"
       - 11000
       - 11002
     volumes:
@@ -83,6 +85,7 @@ services:
       retries: 3
       start_period: 20s
     ports:
+      - "45500:45500"
       - 11000
       - 11002
     volumes:
@@ -118,6 +121,7 @@ services:
       retries: 3
       start_period: 20s
     ports:
+      - "44500:44500"
       - 12000
       - 12002
     volumes:
@@ -153,6 +157,7 @@ services:
       retries: 3
       start_period: 20s
     ports:
+      - "44500:44500"
       - 12000
       - 12002
     volumes:
@@ -188,6 +193,7 @@ services:
       retries: 3
       start_period: 20s
     ports:
+      - "44500:44500"
       - 12000
       - 12002
     volumes:
