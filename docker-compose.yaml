@@ -31,6 +31,8 @@ services:
       nebula-net:
         ipv4_address: 172.28.1.1
     restart: on-failure
+    cap_add:
+      - SYS_PTRACE
 
   metad1:
     image: vesoft/nebula-metad:nightly
@@ -63,6 +65,8 @@ services:
       nebula-net:
         ipv4_address: 172.28.1.2
     restart: on-failure
+    cap_add:
+      - SYS_PTRACE
 
   metad2:
     image: vesoft/nebula-metad:nightly
@@ -95,6 +99,8 @@ services:
       nebula-net:
         ipv4_address: 172.28.1.3
     restart: on-failure
+    cap_add:
+      - SYS_PTRACE
 
   storaged0:
     image: vesoft/nebula-storaged:nightly
@@ -131,6 +137,8 @@ services:
       nebula-net:
         ipv4_address: 172.28.2.1
     restart: on-failure
+    cap_add:
+      - SYS_PTRACE
 
   storaged1:
     image: vesoft/nebula-storaged:nightly
@@ -167,6 +175,8 @@ services:
       nebula-net:
         ipv4_address: 172.28.2.2
     restart: on-failure
+    cap_add:
+      - SYS_PTRACE
 
   storaged2:
     image: vesoft/nebula-storaged:nightly
@@ -203,6 +213,8 @@ services:
       nebula-net:
         ipv4_address: 172.28.2.3
     restart: on-failure
+    cap_add:
+      - SYS_PTRACE
 
   graphd:
     image: vesoft/nebula-graphd:nightly
@@ -236,6 +248,8 @@ services:
       nebula-net:
         ipv4_address: 172.28.3.1
     restart: on-failure
+    cap_add:
+      - SYS_PTRACE
 
 networks:
   nebula-net:
