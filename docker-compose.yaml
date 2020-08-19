@@ -22,7 +22,7 @@ services:
       retries: 3
       start_period: 20s
     ports:
-      - "15500:15500"
+      - 15500
       - 11000
       - 11002
     volumes:
@@ -56,7 +56,7 @@ services:
       retries: 3
       start_period: 20s
     ports:
-      - "15501:15500"
+      - 15500
       - 11000
       - 11002
     volumes:
@@ -90,7 +90,7 @@ services:
       retries: 3
       start_period: 20s
     ports:
-      - "15502:15500"
+      - 15500
       - 11000
       - 11002
     volumes:
@@ -112,6 +112,7 @@ services:
       - --local_ip=storaged0
       - --ws_ip=storaged0
       - --port=44500
+      - --ws_http_port=12000
       - --data_path=/data/storage
       - --log_dir=/logs
       - --v=0
@@ -127,7 +128,7 @@ services:
       retries: 3
       start_period: 20s
     ports:
-      - "44500:44500"
+      - 44500
       - 12000
       - 12002
     volumes:
@@ -149,6 +150,7 @@ services:
       - --local_ip=storaged1
       - --ws_ip=storaged1
       - --port=44500
+      - --ws_http_port=12000
       - --data_path=/data/storage
       - --log_dir=/logs
       - --v=0
@@ -164,7 +166,7 @@ services:
       retries: 3
       start_period: 20s
     ports:
-      - "44501:44500"
+      - 44500
       - 12000
       - 12002
     volumes:
@@ -186,6 +188,7 @@ services:
       - --local_ip=storaged2
       - --ws_ip=storaged2
       - --port=44500
+      - --ws_http_port=12000
       - --data_path=/data/storage
       - --log_dir=/logs
       - --v=0
@@ -201,7 +204,7 @@ services:
       retries: 3
       start_period: 20s
     ports:
-      - "44502:44500"
+      - 44500
       - 12000
       - 12002
     volumes:
@@ -222,6 +225,7 @@ services:
       - --meta_server_addrs=metad0:15500,metad1:15500,metad2:15500
       - --port=3699
       - --ws_ip=graphd
+      - --ws_http_port=13000
       - --log_dir=/logs
       - --v=0
       - --minloglevel=0
@@ -236,7 +240,7 @@ services:
       retries: 3
       start_period: 20s
     ports:
-      - "3699:3699"
+      - 3699
       - 13000
       - 13002
     volumes:
