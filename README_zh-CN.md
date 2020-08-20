@@ -182,7 +182,7 @@ Removing network nebula-docker-compose_nebula-net
 
 ## 安装 **Nebula Graph** 的其它方法
 * [使用源代码](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/1.build/1.build-source-code/)
-* [使用Docker](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/1.build/2.build-by-docker/)
+* [使用 Docker](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/1.build/2.build-by-docker/)
 * [使用 .rpm 或 .deb 文件](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/2.install/1.install-with-rpm-deb/)
 
 ## 常见问题
