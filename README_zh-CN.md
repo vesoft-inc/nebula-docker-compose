@@ -201,7 +201,7 @@ Removing network nebula-docker-compose_nebula-net
 
 **问**：如何更新 nebula-console 客户端？
 
-**答**：在主机的`nebula-docker-compose`目录中使用`docker pull`命令。例如，要更新 Nebula Graph 1.0 系列对应的nebula-console，运行如下命令：
+**答**：在主机的`nebula-docker-compose`目录中使用`docker pull`命令。例如，要更新 Nebula Graph 1.0 系列对应的 nebula-console，运行如下命令：
 
 ```Shell
 docker pull vesoft/nebula-console:nightly
