@@ -1,136 +1,128 @@
-<div align="center">
-  <h1>Nebula Graph Docker 部署</h1>
-  <div>
-    <a href="https://github.com/vesoft-inc/nebula-docker-compose/blob/master/README.md">英文</a>
-  </div>
-  <br>
-</div>
+<p align="center">
+  <img src="https://github.com/vesoft-inc/nebula/raw/master/docs/logo.png"/>
+  <br>中文 | <a href="README.md">English</a>
+  <br>能够容纳千亿个顶点和万亿条边，并提供毫秒级查询延时的图数据库解决方案<br>
+</p>
 
-## 概述
+<p align="center">
+  <a href="https://user-images.githubusercontent.com/38887077/67449282-4362b300-f64c-11e9-878f-7efc373e5e55.jpg"><img src="https://img.shields.io/badge/WeChat-%E5%BE%AE%E4%BF%A1-brightgreen" alt="WeiXin"></a>
+  <a href="https://www.zhihu.com/org/nebulagraph/activities"><img src="https://img.shields.io/badge/Zhihu-%E7%9F%A5%E4%B9%8E-blue" alt="Zhihu"></a>
+  <a href="https://segmentfault.com/t/nebula"><img src="https://img.shields.io/badge/SegmentFault-%E6%80%9D%E5%90%A6-green" alt="SegmentFault"></a>
+  <a href="https://weibo.com/p/1006067122684542/home?from=page_100606&mod=TAB#place"><img src="https://img.shields.io/badge/Weibo-%E5%BE%AE%E5%8D%9A-red" alt="Sina Weibo"></a>
+  <a href="http://githubbadges.com/star.svg?user=vesoft-inc&repo=nebula&style=default">
+    <img src="http://githubbadges.com/star.svg?user=vesoft-inc&repo=nebula&style=default" alt="nebula star"/>
+  </a>
+  <a href="http://githubbadges.com/fork.svg?user=vesoft-inc&repo=nebula&style=default">
+    <img src="http://githubbadges.com/fork.svg?user=vesoft-inc&repo=nebula&style=default" alt="nebula fork"/>
+  </a>
+  <a href="https://codecov.io/gh/vesoft-inc/nebula">
+    <img src="https://codecov.io/gh/vesoft-inc/nebula/branch/master/graph/badge.svg" alt="codecov"/>
+  </a>
+</p>
 
-在本文档中，我们将指导您使用 [Docker](https://docs.docker.com/install/) 和 [Docker Compose](https://docs.docker.com/compose/install/) 来部署 **Nebula Graph** 集群。我们将向您展示如何[查看 **Nebula Graph** 的服务状态和端口](#查看-Nebula-Graph-服务状态和端口)，如何[查看集群数据和日志](#查看集群数据和日志), 以及如何[停止 **Nebula Graph** 服务](#停止-Nebula-Graph-服务)。
+## 使用 Docker Compose 部署 Nebula Graph
+
+Docker Compose 可以帮助您快速部署 Nebula Graph 服务。
+
+- [使用 Docker Compose 部署 Nebula Graph](#使用-docker-compose-部署-nebula-graph)
+- [前提条件](#前提条件)
+- [部署流程](#部署流程)
+- [查看 Nebula Graph 服务状态和端口](#查看-nebula-graph-服务状态和端口)
+- [查看服务数据与日志](#查看服务数据与日志)
+- [停止 Nebula Graph 服务](#停止-nebula-graph-服务)
+- [安装 Nebula Graph 的其它方法](#安装-nebula-graph-的其它方法)
+- [常见问题](#常见问题)
+- [下一步](#下一步)
 
 ## 前提条件
 
-在开始部署 **Nebula Graph** 集群前，确保您已部署最新版本的 [Docker](https://docs.docker.com/install/) 和 [Docker Compose](https://docs.docker.com/compose/install/)。
+* 已在主机中安装了[Docker](https://docs.docker.com/engine/install/)、[Docker Compose](https://docs.docker.com/compose/install/) 和 [Git](https://git-scm.com/download/linux)。
 
-**注意**：如果您没有 [Docker](https://docs.docker.com/install/) 的 `root` 权限，请参考 [如何设置 Docker 的 root 权限](https://docs.docker.com/install/linux/linux-postinstall/)。
+    >**说明**：
+    >* 使用 Docker 时，如果您的用户没有 root 权限，请参见[以非 root 权限用户管理 Docker](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)。
+    >* 为了确保这些应用正常工作，建议您安装其最新版本。
 
-## 要部署的 **Nebula Graph** 服务
+* 已在主机中启动了 Docker 服务。
 
-在本指南中我们将部署以下 **Nebula Graph** 服务：
+* 如果您在该主机上使用 Docker Compose 部署过其它版本的 Nebula Graph，为了避免兼容性问题，请先备份需要保留的[服务数据](#查看服务数据与日志)，然后删除`nebula-docker-compose/data`目录。
 
-* 3 副本 `nebula-metad` 服务
-* 3 副本 `nebula-storaged` 服务
-* 1 副本 `nebula-graphd` 服务
+## 部署流程
 
-## 部署 **Nebula Graph** 集群
+1. 使用 Git 将 `nebula-docker-compose` 库拷贝到您的主机。
 
-您可以通过以下命令部署 **Nebula Graph** 集群：
+   * 安装 Nebula Graph 1.0 版本请拷贝 `master` 分支。
 
-1. 把 `nebula-docker-compose` 库拷贝到您的本地电脑。
+    ```shell
+    $ git clone https://github.com/vesoft-inc/nebula-docker-compose.git
+    ```
 
-```shell
-$ git clone https://github.com/vesoft-inc/nebula-docker-compose.git
-```
+   * 安装 Nebula Graph 2.0 pre 版本请拷贝 `v2-preview` 分支。
 
-2. 把当前路径更改为 `nebula-docker-compose` 路径。
+    ```shell
+    $ git clone --branch v2-preview https://github.com/vesoft-inc/nebula-docker-compose.git
+    ```
 
-```shell
-$ cd nebula-docker-compose/
-```
+2. 进入 `nebula-docker-compose` 目录。
 
-3. 启动所有 **Nebula Graph** 服务。
+    ```shell
+    $ cd nebula-docker-compose/
+    ```
 
-```shell
-$ docker-compose up -d
-```
+3. 启动所有 Nebula Graph 服务。
 
-显示以下信息表明服务已启动：
+    ```shell
+    $ docker-compose up -d
+    ```
 
-```shell
-Creating nebula-docker-compose_metad2_1 ... done
-Creating nebula-docker-compose_metad1_1 ... done
-Creating nebula-docker-compose_metad0_1 ... done
-Creating nebula-docker-compose_storaged2_1 ... done
-Creating nebula-docker-compose_graphd_1    ... done
-Creating nebula-docker-compose_storaged0_1 ... done
-Creating nebula-docker-compose_storaged1_1 ... done
-```
+    以下返回信息表明服务已启动：
 
-4. 把 `vesoft/nebula-console:nightly` 镜像下拉到您的本地电脑。
+    ```shell
+    Creating nebula-docker-compose_metad2_1 ... done
+    Creating nebula-docker-compose_metad1_1 ... done
+    Creating nebula-docker-compose_metad0_1 ... done
+    Creating nebula-docker-compose_storaged2_1 ... done
+    Creating nebula-docker-compose_graphd_1    ... done
+    Creating nebula-docker-compose_storaged0_1 ... done
+    Creating nebula-docker-compose_storaged1_1 ... done
+    ```
 
-```shell
-$ docker pull vesoft/nebula-console:nightly
-```
+    >**说明**：如需了解上述服务的详情，请参见[ Nebula Graph 设计与架构](https://docs.nebula-graph.com.cn/manual-CN/1.overview/3.design-and-architecture/1.design-and-architecture/)。
 
-国内从 Docker Hub 拉取镜像有时会遇到困难，此时可以配置加速镜像。例如:
+4. 连接到 Nebula Graph。
 
-* Azure 中国镜像 https://dockerhub.azk8s.cn
-* 七牛云 https://reg-mirror.qiniu.com
+    Nebula-console 是 Nebula Graph 的原生命令行客户端。在当前步骤中，Docker 会按下方命令中指定的 Docker Hub 路径将 nebula-console 镜像文件下载到本地主机，并用其连接 Nebula Graph 的 graphd 服务。您也可以使用其它客户端连接Nebula Graph，例如 [Nebula Graph Stutio](https://github.com/vesoft-inc/nebula-web-docker) 以及[其它编程语言的客户端](https://docs.nebula-graph.com.cn/manual-CN/1.overview/2.quick-start/3.supported-clients/)。
 
-对于 Linux 用户，请在 `/etc/docker/daemon.json` 中写入如下内容（如果文件不存在请新建该文件）：
+   * 连接到 Nebula Graph 1.0 版本：
 
-```bash
-{
-  "registry-mirrors": [
-    "https://dockerhub.azk8s.cn",
-    "https://reg-mirror.qiniu.com"
-  ]
-}
-```
+    ```shell
+    $ docker run --rm -ti --network=host vesoft/nebula-console:nightly -u <user> -p <password> --addr=127.0.0.1 --port=3699
+    ```
 
-对于 macOS 用户，请点击任务栏中 Docker Desktop 图标 -> Preferences -> Daemon -> Registry mirrors。在列表中添加 https://dockerhub.azk8s.cn 和 https://reg-mirror.qiniu.com。修改完成后，点击 Apply & Restart 按钮，重启 Docker。
+    * 连接到 Nebula Graph 2.0 pre 版本：
 
-**注意**：
+    ```shell
+    $ docker run --rm -ti --network nebula-docker-compose_nebula-net vesoft/nebula-console:v2-preview-nightly -u <user> -p <password> --address=graphd --port=3699
+    ```
 
-a. 我们将使用 `nebula-console` docker 容器来连接 **Nebula Graph** 的图服务。
+    >**说明**：Nebula Graph 默认不开启身份验证功能，此时可以省略上述命令中的 `-u` 和 `-p` 选项。如需开启验证，请参见[身份验证](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/4.account-management-statements/authentication/)。
 
-b. 如果您之前拉取了 `vesoft/nebula-console` 镜像，使用以下命令先删除该镜像然后再拉取：
+    显示以下信息表明您已成功连接到 Nebula Graph：
 
-   * `docker rm $(docker ps -qa -f status=exited) # cleanup exited containers`
-   * `docker rmi vesoft/nebula-console:nightly`
+    ```shell
+    Welcome to Nebula Graph (Version 5d10861)
 
-c. 如果您之前拉取了 **Nebula Graph** 镜像，您可以通过以下命令更新镜像：
+    (user@127.0.0.1) [(none)]>
+    ```
 
-```shell
-$ docker-compose pull
-```
+## 查看 Nebula Graph 服务状态和端口
 
-5. 连接到 **Nebula Graph** 的图服务。
-
-```shell
-$ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=3699
-```
-
-如果未开启权限管理开关，则使用默认用户和密码登录，此外无需指定；如果开启权限管理，则必须指定用户及密码。例如：
-
-将 `/usr/local/nebula/etc/nebula-graphd.conf` 文件中的 `enable_authorize` 设置为 `true` 打开权限开关。此时需指定用户及密码进行连接。
-
-```shell
-$ docker run --rm -ti --network=host vesoft/nebula-console:nightly -u <user> -p <password> --addr=127.0.0.1 --port=3699
-```
-
-显示以下信息表明您已成功连接到 **Nebula Graph**：
-
-```shell
-Welcome to Nebula Graph (Version 5d10861)
-
-(user@127.0.0.1) [(none)]>
-
-```
-
-**注意**: 现在您可以通过创建空间、tag、space 等操作来使用 **Nebula Graph**。 获取详细信息，请参考 [快速入门](https://docs.nebula-graph.com.cn/manual-CN/1.overview/2.quick-start/1.get-started/)。
-
-## 查看 **Nebula Graph** 服务状态和端口
-
-您可以在终端输入以下命令把所有 **Nebula Graph** 服务以列表的形式显示出来并查看其暴露的端口：
+您可以使用如下命令查看 Nebula Graph 服务的详细信息，包括服务状态及端口号等：
 
 ```shell
 $ docker-compose ps
 ```
 
-显示以下信息：
+返回结果的示例如下：
 
 ```shell
 Name                     Command                       State                                                   Ports
@@ -144,11 +136,11 @@ nebula-docker-compose_storaged1_1   ./bin/nebula-storaged --fl ...   Up (health:
 nebula-docker-compose_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.0.0.0:32873->12000/tcp, 0.0.0.0:32870->12002/tcp, 44500/tcp, 44501/tcp
 ```
 
-**注意**： 可以看到映射到 `nebula-docker-compose_graphd_1` 容器的 3699 的暴露端口是 3699。
+**说明**： Nebula Graph 默认通过 TCP3699 端口向客户端提供服务，您可以在[网络配置](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/3.configurations/4.graph-config/#networking)中自定义端口号。
 
-## 查看集群数据和日志
+## 查看服务数据与日志
 
- **Nebula Graph** 的所有服务数据和日志分别存储在您本地目录 `nebula-docker-compose/data` 和 `nebula-docker-compose/logs`。
+ Nebula Graph 的服务数据和日志被持久化地保存在主机的 `nebula-docker-compose/data` 和 `nebula-docker-compose/logs` 目录中。
 
 目录结构如下所示：
 
@@ -172,15 +164,15 @@ nebula-docker-compose/
         `- graph
 ```
 
-## 停止 **Nebula Graph** 服务
+## 停止 Nebula Graph 服务
 
-您可以通过以下命令停止 **Nebula Graph** 的服务：
+您可以通过以下命令停止 Nebula Graph 服务：
 
 ```shell
 $ docker-compose down -v
 ```
 
-显示以下信息表明您已成功停止 **Nebula Graph** 服务：
+以下返回结果表明您已成功停止 Nebula Graph 服务：
 
 ```shell
 Stopping nebula-docker-compose_storaged1_1 ... done
@@ -200,4 +192,26 @@ Removing nebula-docker-compose_metad2_1    ... done
 Removing network nebula-docker-compose_nebula-net
 ```
 
-**注意**： 由于您的数据存储在您的本地电脑上，所以即使您停止 **Nebula Graph** 服务，数据也会保留在您的本地电脑。
+## 安装 Nebula Graph 的其它方法
+* [使用源代码](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/1.build/1.build-source-code/)
+* [使用 Docker](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/1.build/2.build-by-docker/)
+* [使用 .rpm 或 .deb 文件](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/2.install/1.install-with-rpm-deb/)
+
+## 常见问题
+
+**问**：如何更新 nebula-console 客户端？
+
+**答**：在主机的`nebula-docker-compose`目录中使用`docker pull`命令。例如，要更新 Nebula Graph 1.0 系列对应的 nebula-console，运行如下命令：
+
+```Shell
+docker pull vesoft/nebula-console:nightly
+```
+
+如需更新 Nebula Graph 2.0 pre 版本对应的 nebula-console，则运行如下命令：
+
+```Shell
+docker pull vesoft/nebula-console:v2-preview-nightly
+```
+
+# 下一步
+您可以进行创建图空间和插入数据等操作，详情请参见[ Nebula Graph 快速入门](https://docs.nebula-graph.com.cn/manual-CN/1.overview/2.quick-start/1.get-started/)。

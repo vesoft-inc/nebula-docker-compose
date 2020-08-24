@@ -1,112 +1,117 @@
-<div align="center">
-  <h1>Nebula Graph Docker Deployment</h1>
-  <div>
-    <a href="https://github.com/vesoft-inc/nebula-docker-compose/blob/master/README_zh-CN.md">中文</a>
-  </div>
+<p align="center">
+  <img src="https://github.com/vesoft-inc/nebula/raw/master/docs/logo.png"/>
+  <br> English | <a href="README_zh-CN.md">中文</a>
+  <br>A distributed, scalable, lightning-fast graph database<br>
+</p>
+<p align="center">
+  <a href="https://github.com/vesoft-inc/nebula-graph/actions?workflow=docker">
+    <img src="https://github.com/vesoft-inc/nebula-graph/workflows/docker/badge.svg" alt="build docker image workflow"/>
+  </a>
+  <a href="http://githubbadges.com/star.svg?user=vesoft-inc&repo=nebula&style=default">
+    <img src="http://githubbadges.com/star.svg?user=vesoft-inc&repo=nebula&style=default" alt="nebula star"/>
+  </a>
+  <a href="http://githubbadges.com/fork.svg?user=vesoft-inc&repo=nebula&style=default">
+    <img src="http://githubbadges.com/fork.svg?user=vesoft-inc&repo=nebula&style=default" alt="nebula fork"/>
+  </a>
   <br>
-</div>
+</p>
 
-## Overview
+# Deploy Nebula Graph with Docker Compose
 
-In this document, we will walk you through the process of deploying a **Nebula Graph** cluster with [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/). We will also show you how to [check the services status of **Nebula Graph**](#checking-the-status-and-ports-of-nebula-graph-services), how to [check the cluster data and logs](#checking-the-cluster-data-and-logs), and how to [stop the services of **Nebula Graph**](#stopping-the-services-of-nebula-graph).
+Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
+
+  - [Prerequisites](#prerequisites)
+  - [How to deploy](#how-to-deploy)
+  - [Check the Nebula Graph service status and ports](#check-the-nebula-graph-service-status-and-ports)
+  - [Check the service data and logs](#check-the-service-data-and-logs)
+  - [Stop the Nebula Graph Services](#stop-the-nebula-graph-services)
+  - [Other Ways to Install Nebula Graph](#other-ways-to-install-nebula-graph)
+  - [FAQ](#faq)
+  - [What to Do Next](#what-to-do-next)
 
 ## Prerequisites
 
-Before you start deploying the **Nebula Graph** cluster, ensure that you have installed the latest version of [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/).
+* You have installed [Docker](https://docs.docker.com/engine/install/), [Docker Compose](https://docs.docker.com/compose/install/), and [Git](https://git-scm.com/download/linux) on your host.
 
-**Note**: If you do not have the `root` privilege for [Docker](https://docs.docker.com/install/), you can refer to [how to set root privileges for Docker](https://docs.docker.com/install/linux/linux-postinstall/).
+    >**NOTE**: 
+    >* To use Docker as a non-root user, follow the steps in [Manage Docker as a non-root user](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user).
+    >* We recommend that you install the latest version of these applications to make sure they work properly.
 
-## Services of **Nebula Graph** to Be Deployed
+* You have started the Docker service on your host.
 
-In this guide, we are going to deploy the following services of **Nebula Graph**:
+* If you have already deployed another version of Nebula Graph with Docker Compose on your host, to avoid compatibility issues，back up [the service data](#check-the-service-data-and-logs) if you need, and delete the `nebula-docker-compose/data` directory.
 
-* 3 replicas of `nebula-metad` service
-* 3 replicas of `nebula-storage`d service
-* 1 replica of `nebula-graphd` service
+## How to deploy
 
-## Deploying the **Nebula Graph** Cluster
+1. Clone the `nebula-docker-compose` repository to your host with Git.
 
-You can deploy the **Nebula Graph** cluster by the following steps:
+    * To install Nebula Graph 1.0, clone the `master` branch.
 
-1. Clone the `nebula-docker-compose` repository to your local computer.
+    ```shell
+    $ git clone https://github.com/vesoft-inc/nebula-docker-compose.git
+    ```
 
-```shell
-$ git clone https://github.com/vesoft-inc/nebula-docker-compose.git
-```
+    * To install Nebula Graph 2.0-pre, clone the `v2-preview` branch.
 
-2. Change your current directory to the `nebula-docker-compose` directory.
+    ```shell
+    $ git clone --branch v2-preview https://github.com/vesoft-inc/nebula-docker-compose.git
+    ```
 
-```shell
-$ cd nebula-docker-compose/
-```
+2. Go to the `nebula-docker-compose` directory.
 
-3. Start all the services of **Nebula Graph**.
+    ```shell
+    $ cd nebula-docker-compose/
+    ```
 
-```shell
-$ docker-compose up -d
-```
+3. Run the following command to start all the Nebula Graph services.
 
-The following information which indicates the services are started is displayed:
+    ```shell
+    $ docker-compose up -d
+    ```
 
-```shell
-Creating nebula-docker-compose_metad2_1 ... done
-Creating nebula-docker-compose_metad1_1 ... done
-Creating nebula-docker-compose_metad0_1 ... done
-Creating nebula-docker-compose_storaged2_1 ... done
-Creating nebula-docker-compose_graphd_1    ... done
-Creating nebula-docker-compose_storaged0_1 ... done
-Creating nebula-docker-compose_storaged1_1 ... done
-```
+    The following information indicates the services have started:
 
-4. Pull the `vesoft/nebula-console:nightly` image to your local computer.
+    ```shell
+    Creating nebula-docker-compose_metad2_1 ... done
+    Creating nebula-docker-compose_metad1_1 ... done
+    Creating nebula-docker-compose_metad0_1 ... done
+    Creating nebula-docker-compose_storaged2_1 ... done
+    Creating nebula-docker-compose_graphd_1    ... done
+    Creating nebula-docker-compose_storaged0_1 ... done
+    Creating nebula-docker-compose_storaged1_1 ... done
+    ```
 
-```shell
-$ docker pull vesoft/nebula-console:nightly
-```
+    >**NOTE**: For more information of the preceding services, see [Design and Architecture of Nebula Graph](https://docs.nebula-graph.io/manual-EN/1.overview/3.design-and-architecture/1.design-and-architecture/).
 
-**Note**:
+4. Use nebula-console to connect to Nebula Graph.
 
-a. We will use the `nebula-console` docker container to connect to the graph service of **Nebula Graph**.
+    Nebula-console is the native CLI client of Nebula Graph. In this step, Docker pulls the nebula-console images automatically from Docker Hub according to the path we set in the following commands and uses it to connect to the graphd service of Nebula Graph. You can use other clients to connect to Nebula Graph instead of Nebula-console, such as [Nebula Graph Stutio](https://github.com/vesoft-inc/nebula-web-docker) and [clients for different programming languages](https://docs.nebula-graph.io/manual-EN/1.overview/2.quick-start/3.supported-clients/).
 
-b. If you have pulled the `vesoft/nebula-console` image before, remove it with the following command before you pull it again:
+   * For Nebula Graph 1.0:
 
-   * `docker rm $(docker ps -qa -f status=exited) # cleanup exited containers`
-   * `docker rmi vesoft/nebula-console:nightly`
+    ```shell
+    $ docker run --rm -ti --network=host vesoft/nebula-console:nightly -u <user> -p <password> --addr=127.0.0.1 --port=3699
+    ```
 
-c. If you have pulled the **Nebula Graph** images before, you can update the images with the following command:
+   * For Nebula Graph 2.0 pre:
 
-```shell
-$ docker-compose pull
-```
+    ```shell
+    $ docker run --rm -ti --network nebula-docker-compose_nebula-net vesoft/nebula-console:v2-preview-nightly -u <user> -p <password> --address=graphd --port=3699
+    ```
 
-5. Connect to the graph service of **Nebula Graph**.
+    >**NOTE**: By default, the authentication is disabled, and the `-u` and `-p` options are unnecessary. To enbale authentication, see [Authentication Configurations](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/4.account-management-statements/authentication/#authentication).
 
-```shell
-$ docker run --rm -ti --network=host vesoft/nebula-console:nightly --addr=127.0.0.1 --port=3699
-```
+    The following information indicates that you have connected to the Nebula Graph services:
 
-If the authorization is not enabled, **Nebula Graph** will use the default user name and password to log in, so you can skip the user and password specification here. If the authorization is enabled, the user and password must be specified. For example:
+    ```shell
+    Welcome to Nebula Graph (Version 5d10861)
 
-Set the `enable_authorize` parameter in the `/usr/local/nebula/etc/nebula-graphd.conf` file to `true` to enable the authorization. In this case, you must provide the user and password to connect.
+    (user@127.0.0.1) [(none)]>
+    ```
 
-```shell
-$ docker run --rm -ti --network=host vesoft/nebula-console:nightly -u <user> -p <password> --addr=127.0.0.1 --port=3699
-```
+## Check the Nebula Graph service status and ports
 
-The following information which indicates that you successfully connect to **Nebula Graph** is displayed:
-
-```shell
-Welcome to Nebula Graph (Version 5d10861)
-
-(user@127.0.0.1) [(none)]>
-
-```
-
-**Note**: Now, you can start using **Nebula Graph** by creating spaces, tags and more. For details, refer to [get started](https://docs.nebula-graph.io/manual-EN/1.overview/2.quick-start/1.get-started/).
-
-## Checking the Status and Ports of **Nebula Graph** Services
-
-You can list all services of **Nebula Graph** and check their exposed ports with inputting the following command in your terminal:
+Running the following command to list the service information of Nebula Graph, such as state and ports.
 
 ```shell
 $ docker-compose ps
@@ -126,11 +131,11 @@ nebula-docker-compose_storaged1_1   ./bin/nebula-storaged --fl ...   Up (health:
 nebula-docker-compose_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.0.0.0:32873->12000/tcp, 0.0.0.0:32870->12002/tcp, 44500/tcp, 44501/tcp
 ```
 
-**Note**: We can see that the exposed port mapped to 3699 of the `nebula-docker-compose_graphd_1` container is 3699.
+>**NOTE**: Nebula Graph provides services to the clients through port TCP3699 by default. You can adjust the port number by modifying the [network configurations](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/3.configurations/3.meta-config/#networking_configurations).
 
-## Checking the Cluster Data and Logs
+## Check the service data and logs
 
-All services data and logs of **Nebula Graph** are stored in the `nebula-docker-compose/data` and `nebula-docker-compose/logs` directories respectively.
+All data and logs of Nebula Graph are stored persistently in the `nebula-docker-compose/data` and `nebula-docker-compose/logs` directories.
 
 The structure of the directories is as follows:
 
@@ -154,15 +159,15 @@ nebula-docker-compose/
         `- graph
 ```
 
-## Stopping the Services of **Nebula Graph**
+## Stop the Nebula Graph Services
 
-You can stop the services of **Nebula Graph** with the following command:
+You can run the following command to stop the Nebula Graph services:
 
 ```shell
 $ docker-compose down -v
 ```
 
-The following information which indicates you successfully stop the services of **Nebula Graph** is displayed:
+The following information indicates you have successfully stopped the Nebula Graph services:
 
 ```shell
 Stopping nebula-docker-compose_storaged1_1 ... done
@@ -182,9 +187,28 @@ Removing nebula-docker-compose_metad2_1    ... done
 Removing network nebula-docker-compose_nebula-net
 ```
 
-**Note**: As your data is stored in your local computer, your data will be reserved even after you stop the services of **Nebula Graph**.
+## Other Ways to Install Nebula Graph
 
-## TODO
+* [Using Source Code](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/1.build/1.build-source-code/)
+* [Using Docker](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/1.build/2.build-by-docker/)
+* [Using .rpm or .deb Files](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/2.install/1.install-with-rpm-deb/)
 
-* [ ] `prometheus` and `grafana` collect cluster metrics
-* [ ] `ansible` deployment tutorial
+## FAQ
+
+**Q**: How to update the nebula-console client?
+
+**A**: To update the nebula-console client, use the `docker pull` command in the `nebula-docker-compose` directory on your host. For example, if you want to update nebula-console for the Nebula Graph 1.0 series, run the follow command.
+
+```Shell
+docker pull vesoft/nebula-console:nightly
+```
+
+If you want to update nebula-console for the Nebula Graph 2.0 pre-release, run the following command instead.
+
+```Shell
+docker pull vesoft/nebula-console:v2-preview-nightly
+```
+
+## What to Do Next 
+
+You can start using Nebula Graph by creating spaces and inserting data. For more information, see [Quick Start](https://docs.nebula-graph.io/manual-EN/1.overview/2.quick-start/1.get-started/).
