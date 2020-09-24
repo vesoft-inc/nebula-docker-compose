@@ -90,7 +90,7 @@ Docker Compose 可以帮助您快速部署 Nebula Graph 服务。
 
 4. 连接到 Nebula Graph。
 
-    Nebula-console 是 Nebula Graph 的原生命令行客户端。在当前步骤中，Docker 会按下方命令中指定的 Docker Hub 路径将 nebula-console 镜像文件下载到本地主机，并用其连接 Nebula Graph 的 graphd 服务。您也可以使用其它客户端连接Nebula Graph，例如 [Nebula Graph Stutio](https://github.com/vesoft-inc/nebula-web-docker) 以及[其它编程语言的客户端](https://docs.nebula-graph.com.cn/manual-CN/1.overview/2.quick-start/3.supported-clients/)。
+    Nebula-console 是 Nebula Graph 的原生命令行客户端。在当前步骤中，Docker 会按下方命令中指定的 Docker Hub 路径将 nebula-console 镜像文件下载到本地主机，并用其连接 Nebula Graph 的 graphd 服务。您也可以使用其它客户端连接Nebula Graph，例如 [Nebula Graph Studio](https://github.com/vesoft-inc/nebula-web-docker) 以及[其它编程语言的客户端](https://docs.nebula-graph.com.cn/manual-CN/1.overview/2.quick-start/3.supported-clients/)。
 
    * 连接到 Nebula Graph 1.0 版本：
 
