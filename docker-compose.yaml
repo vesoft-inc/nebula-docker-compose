@@ -216,7 +216,7 @@ services:
     cap_add:
       - SYS_PTRACE
 
-  graphd0:
+  graphd:
     image: vesoft/nebula-graphd:v2-preview-nightly
     environment:
       USER: root
@@ -224,7 +224,7 @@ services:
     command:
       - --meta_server_addrs=metad0:45500,metad1:45500,metad2:45500
       - --port=3699
-      - --ws_ip=graphd0
+      - --ws_ip=graphd
       - --ws_http_port=13000
       - --log_dir=/logs
       - --v=0
@@ -234,7 +234,7 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://graphd0:13000/status"]
+      test: ["CMD", "curl", "-sf", "http://graphd:13000/status"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -244,7 +244,7 @@ services:
       - 13000
       - 13002
     volumes:
-      - ./logs/graph0:/logs
+      - ./logs/graph:/logs
     networks:
       - nebula-net
     restart: on-failure
