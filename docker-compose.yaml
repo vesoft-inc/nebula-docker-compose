@@ -251,5 +251,75 @@ services:
     cap_add:
       - SYS_PTRACE
 
+  graphd1:
+    image: vesoft/nebula-graphd:v2-preview-nightly
+    environment:
+      USER: root
+      TZ:   "${TZ}"
+    command:
+      - --meta_server_addrs=metad0:45500,metad1:45500,metad2:45500
+      - --port=3699
+      - --ws_ip=graphd1
+      - --ws_http_port=13000
+      - --log_dir=/logs
+      - --v=0
+      - --minloglevel=0
+    depends_on:
+      - metad0
+      - metad1
+      - metad2
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://graphd1:13000/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    ports:
+      - 3699
+      - 13000
+      - 13002
+    volumes:
+      - ./logs/graph1:/logs
+    networks:
+      - nebula-net
+    restart: on-failure
+    cap_add:
+      - SYS_PTRACE
+
+  graphd2:
+    image: vesoft/nebula-graphd:v2-preview-nightly
+    environment:
+      USER: root
+      TZ:   "${TZ}"
+    command:
+      - --meta_server_addrs=metad0:45500,metad1:45500,metad2:45500
+      - --port=3699
+      - --ws_ip=graphd2
+      - --ws_http_port=13000
+      - --log_dir=/logs
+      - --v=0
+      - --minloglevel=0
+    depends_on:
+      - metad0
+      - metad1
+      - metad2
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://graphd2:13000/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    ports:
+      - 3699
+      - 13000
+      - 13002
+    volumes:
+      - ./logs/graph2:/logs
+    networks:
+      - nebula-net
+    restart: on-failure
+    cap_add:
+      - SYS_PTRACE
+
 networks:
   nebula-net:
