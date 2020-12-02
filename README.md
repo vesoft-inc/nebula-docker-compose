@@ -96,7 +96,8 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
    * For Nebula Graph 2.0 pre:
 
     ```shell
-    $ docker run --rm -ti --network nebula-docker-compose_nebula-net vesoft/nebula-console:v2-preview-nightly -u <user> -p <password> --address=graphd --port=3699
+    $ docker run --rm -ti --network nebula-docker-compose_nebula-net --entrypoint=/bin/sh vesoft/nebula-console:v2-preview-nightly
+    docker> nebula-console -u <user> -p <password> --address=graphd --port=3699
     ```
 
     >**NOTE**: By default, the authentication is disabled, and the `-u` and `-p` options are unnecessary. To enbale authentication, see [Authentication Configurations](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/4.account-management-statements/authentication/#authentication).
