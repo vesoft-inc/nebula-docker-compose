@@ -45,16 +45,16 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 
 1. Clone the `nebula-docker-compose` repository to your host with Git.
 
-    * To install Nebula Graph 1.0, clone the `master` branch.
+    * To install Nebula Graph 1.0, clone the `v1.0` branch.
+
+    ```shell
+    $ git clone --branch v1.0 https://github.com/vesoft-inc/nebula-docker-compose.git
+    ```
+
+    * To install Nebula Graph 2.0, clone the `master` branch.
 
     ```shell
     $ git clone https://github.com/vesoft-inc/nebula-docker-compose.git
-    ```
-
-    * To install Nebula Graph 2.0-pre, clone the `v2-preview` branch.
-
-    ```shell
-    $ git clone --branch v2-preview https://github.com/vesoft-inc/nebula-docker-compose.git
     ```
 
 2. Go to the `nebula-docker-compose` directory.
