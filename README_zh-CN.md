@@ -50,16 +50,16 @@ Docker Compose 可以帮助您快速部署 Nebula Graph 服务。
 
 1. 使用 Git 将 `nebula-docker-compose` 库拷贝到您的主机。
 
-   * 安装 Nebula Graph 1.0 版本请拷贝 `master` 分支。
+   * 安装 Nebula Graph 1.0 版本请拷贝 `v1.0` 分支。
+
+    ```shell
+    $ git clone --branch v1.0 https://github.com/vesoft-inc/nebula-docker-compose.git
+    ```
+
+   * 安装 Nebula Graph 2.0 版本请拷贝 `master` 分支。
 
     ```shell
     $ git clone https://github.com/vesoft-inc/nebula-docker-compose.git
-    ```
-
-   * 安装 Nebula Graph 2.0 pre 版本请拷贝 `v2-preview` 分支。
-
-    ```shell
-    $ git clone --branch v2-preview https://github.com/vesoft-inc/nebula-docker-compose.git
     ```
 
 2. 进入 `nebula-docker-compose` 目录。
@@ -98,10 +98,11 @@ Docker Compose 可以帮助您快速部署 Nebula Graph 服务。
     $ docker run --rm -ti --network=host vesoft/nebula-console:nightly -u <user> -p <password> --addr=127.0.0.1 --port=3699
     ```
 
-    * 连接到 Nebula Graph 2.0 pre 版本：
+    * 连接到 Nebula Graph 2.0 版本：
 
-    ```shell
-    $ docker run --rm -ti --network nebula-docker-compose_nebula-net vesoft/nebula-console:v2-preview-nightly -u <user> -p <password> --address=graphd --port=3699
+   ```shell
+    $ docker run --rm -ti --network nebula-docker-compose_nebula-net --entrypoint=/bin/sh vesoft/nebula-console:v2-preview-nightly
+    docker> nebula-console -u <user> -p <password> --address=graphd --port=3699
     ```
 
     >**说明**：Nebula Graph 默认不开启身份验证功能，此时可以省略上述命令中的 `-u` 和 `-p` 选项。如需开启验证，请参见[身份验证](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/4.account-management-statements/authentication/)。
