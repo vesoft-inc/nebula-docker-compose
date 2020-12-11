@@ -204,7 +204,7 @@ Removing network nebula-docker-compose_nebula-net
 docker pull vesoft/nebula-console:nightly
 ```
 
-If you want to update nebula-console for the Nebula Graph 2.0 pre-release, run the following command instead.
+If you want to update nebula-console for the Nebula Graph v2.0, run the following command instead.
 
 ```Shell
 docker pull vesoft/nebula-console:v2-nightly
