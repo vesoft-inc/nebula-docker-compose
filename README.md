@@ -96,7 +96,7 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
    * For Nebula Graph 2.0:
 
     ```shell
-    $ docker run --rm -ti --network nebula-docker-compose_nebula-net --entrypoint=/bin/sh vesoft/nebula-console:v2-preview-nightly
+    $ docker run --rm -ti --network nebula-docker-compose_nebula-net --entrypoint=/bin/sh vesoft/nebula-console:v2-nightly
     docker> nebula-console -u <user> -p <password> --address=graphd --port=3699
     ```
 
@@ -207,7 +207,7 @@ docker pull vesoft/nebula-console:nightly
 If you want to update nebula-console for the Nebula Graph 2.0 pre-release, run the following command instead.
 
 ```Shell
-docker pull vesoft/nebula-console:v2-preview-nightly
+docker pull vesoft/nebula-console:v2-nightly
 ```
 
 ## What to Do Next 
