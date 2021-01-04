@@ -97,7 +97,7 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 
     ```shell
     $ docker run --rm -ti --network nebula-docker-compose_nebula-net --entrypoint=/bin/sh vesoft/nebula-console:v2-nightly
-    docker> nebula-console -u <user> -p <password> --address=graphd --port=3699
+    docker> nebula-console -u <user> -p <password> --address=graphd --port=9669
     ```
 
     >**NOTE**: By default, the authentication is disabled, and the `-u` and `-p` options are unnecessary. To enbale authentication, see [Authentication Configurations](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/4.account-management-statements/authentication/#authentication).
@@ -132,7 +132,7 @@ nebula-docker-compose_storaged1_1   ./bin/nebula-storaged --fl ...   Up (health:
 nebula-docker-compose_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   0.0.0.0:32873->12000/tcp, 0.0.0.0:32870->12002/tcp, 44500/tcp, 44501/tcp
 ```
 
->**NOTE**: Nebula Graph provides services to the clients through port TCP3699 by default. You can adjust the port number by modifying the [network configurations](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/3.configurations/3.meta-config/#networking_configurations).
+>**NOTE**: Nebula Graph `graphd` services listen on the port `3699` for v1.x and `9669` for v2.x by default. You can change the default port according to [network configurations](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/3.configurations/3.meta-config/#networking_configurations).
 
 ## Check the service data and logs
 

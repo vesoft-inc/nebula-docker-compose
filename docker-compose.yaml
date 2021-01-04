@@ -6,25 +6,25 @@ services:
       USER: root
       TZ:   "${TZ}"
     command:
-      - --meta_server_addrs=metad0:45500,metad1:45500,metad2:45500
+      - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
       - --local_ip=metad0
       - --ws_ip=metad0
-      - --port=45500
-      - --ws_http_port=11000
+      - --port=9559
+      - --ws_http_port=19559
       - --data_path=/data/meta
       - --log_dir=/logs
       - --v=0
       - --minloglevel=0
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://metad0:11000/status"]
+      test: ["CMD", "curl", "-sf", "http://metad0:19559/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - 45500
-      - 11000
-      - 11002
+      - 9559
+      - 19559
+      - 19560
     volumes:
       - ./data/meta0:/data/meta
       - ./logs/meta0:/logs
@@ -40,25 +40,25 @@ services:
       USER: root
       TZ:   "${TZ}"
     command:
-      - --meta_server_addrs=metad0:45500,metad1:45500,metad2:45500
+      - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
       - --local_ip=metad1
       - --ws_ip=metad1
-      - --port=45500
-      - --ws_http_port=11000
+      - --port=9559
+      - --ws_http_port=19559
       - --data_path=/data/meta
       - --log_dir=/logs
       - --v=0
       - --minloglevel=0
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://metad1:11000/status"]
+      test: ["CMD", "curl", "-sf", "http://metad1:19559/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - 45500
-      - 11000
-      - 11002
+      - 9559
+      - 19559
+      - 19560
     volumes:
       - ./data/meta1:/data/meta
       - ./logs/meta1:/logs
@@ -74,25 +74,25 @@ services:
       USER: root
       TZ:   "${TZ}"
     command:
-      - --meta_server_addrs=metad0:45500,metad1:45500,metad2:45500
+      - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
       - --local_ip=metad2
       - --ws_ip=metad2
-      - --port=45500
-      - --ws_http_port=11000
+      - --port=9559
+      - --ws_http_port=19559
       - --data_path=/data/meta
       - --log_dir=/logs
       - --v=0
       - --minloglevel=0
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://metad2:11000/status"]
+      test: ["CMD", "curl", "-sf", "http://metad2:19559/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - 45500
-      - 11000
-      - 11002
+      - 9559
+      - 19559
+      - 19560
     volumes:
       - ./data/meta2:/data/meta
       - ./logs/meta2:/logs
@@ -108,11 +108,11 @@ services:
       USER: root
       TZ:   "${TZ}"
     command:
-      - --meta_server_addrs=metad0:45500,metad1:45500,metad2:45500
+      - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
       - --local_ip=storaged0
       - --ws_ip=storaged0
-      - --port=44500
-      - --ws_http_port=12000
+      - --port=9779
+      - --ws_http_port=19779
       - --data_path=/data/storage
       - --log_dir=/logs
       - --v=0
@@ -122,15 +122,15 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://storaged0:12000/status"]
+      test: ["CMD", "curl", "-sf", "http://storaged0:19779/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - 44500
-      - 12000
-      - 12002
+      - 9779
+      - 19779
+      - 19780
     volumes:
       - ./data/storage0:/data/storage
       - ./logs/storage0:/logs
@@ -146,11 +146,11 @@ services:
       USER: root
       TZ:   "${TZ}"
     command:
-      - --meta_server_addrs=metad0:45500,metad1:45500,metad2:45500
+      - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
       - --local_ip=storaged1
       - --ws_ip=storaged1
-      - --port=44500
-      - --ws_http_port=12000
+      - --port=9779
+      - --ws_http_port=19779
       - --data_path=/data/storage
       - --log_dir=/logs
       - --v=0
@@ -160,15 +160,15 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://storaged1:12000/status"]
+      test: ["CMD", "curl", "-sf", "http://storaged1:19779/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - 44500
-      - 12000
-      - 12002
+      - 9559
+      - 19779
+      - 19780
     volumes:
       - ./data/storage1:/data/storage
       - ./logs/storage1:/logs
@@ -184,11 +184,11 @@ services:
       USER: root
       TZ:   "${TZ}"
     command:
-      - --meta_server_addrs=metad0:45500,metad1:45500,metad2:45500
+      - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
       - --local_ip=storaged2
       - --ws_ip=storaged2
-      - --port=44500
-      - --ws_http_port=12000
+      - --port=9779
+      - --ws_http_port=19779
       - --data_path=/data/storage
       - --log_dir=/logs
       - --v=0
@@ -198,15 +198,15 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://storaged2:12000/status"]
+      test: ["CMD", "curl", "-sf", "http://storaged2:19779/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - 44500
-      - 12000
-      - 12002
+      - 9779
+      - 19779
+      - 19780
     volumes:
       - ./data/storage2:/data/storage
       - ./logs/storage2:/logs
@@ -222,10 +222,10 @@ services:
       USER: root
       TZ:   "${TZ}"
     command:
-      - --meta_server_addrs=metad0:45500,metad1:45500,metad2:45500
-      - --port=3699
+      - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
+      - --port=9669
       - --ws_ip=graphd
-      - --ws_http_port=13000
+      - --ws_http_port=19669
       - --log_dir=/logs
       - --v=0
       - --minloglevel=0
@@ -234,15 +234,15 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://graphd:13000/status"]
+      test: ["CMD", "curl", "-sf", "http://graphd:19669/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - "3699:3699"
-      - 13000
-      - 13002
+      - "9669:9669"
+      - 19669
+      - 19670
     volumes:
       - ./logs/graph:/logs
     networks:
@@ -257,10 +257,10 @@ services:
       USER: root
       TZ:   "${TZ}"
     command:
-      - --meta_server_addrs=metad0:45500,metad1:45500,metad2:45500
-      - --port=3699
+      - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
+      - --port=9669
       - --ws_ip=graphd1
-      - --ws_http_port=13000
+      - --ws_http_port=19669
       - --log_dir=/logs
       - --v=0
       - --minloglevel=0
@@ -269,15 +269,15 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://graphd1:13000/status"]
+      test: ["CMD", "curl", "-sf", "http://graphd1:19669/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - 3699
-      - 13000
-      - 13002
+      - 9669
+      - 19669
+      - 19670
     volumes:
       - ./logs/graph1:/logs
     networks:
@@ -292,10 +292,10 @@ services:
       USER: root
       TZ:   "${TZ}"
     command:
-      - --meta_server_addrs=metad0:45500,metad1:45500,metad2:45500
-      - --port=3699
+      - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
+      - --port=9669
       - --ws_ip=graphd2
-      - --ws_http_port=13000
+      - --ws_http_port=19669
       - --log_dir=/logs
       - --v=0
       - --minloglevel=0
@@ -304,15 +304,15 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://graphd2:13000/status"]
+      test: ["CMD", "curl", "-sf", "http://graphd2:19669/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - 3699
-      - 13000
-      - 13002
+      - 9669
+      - 19669
+      - 19670
     volumes:
       - ./logs/graph2:/logs
     networks:
