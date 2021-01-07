@@ -166,7 +166,7 @@ services:
       retries: 3
       start_period: 20s
     ports:
-      - 9559
+      - 9779
       - 19779
       - 19780
     volumes:
