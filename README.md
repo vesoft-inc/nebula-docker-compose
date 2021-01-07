@@ -48,37 +48,34 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 
     * To install Nebula Graph 1.0, clone the `v1.0` branch.
 
-    ```shell
+    ```bash
     $ git clone --branch v1.0 https://github.com/vesoft-inc/nebula-docker-compose.git
     ```
 
     * To install Nebula Graph 2.0, clone the `master` branch.
 
-    ```shell
+    ```bash
     $ git clone https://github.com/vesoft-inc/nebula-docker-compose.git
     ```
 
 2. Go to the `nebula-docker-compose` directory.
 
-    ```shell
+    ```bash
     $ cd nebula-docker-compose/
     ```
 
 3. Run the following command to start all the Nebula Graph services.
 
-    ```shell
-    $ docker-compose up -d
-    ```
-
-    The following information indicates the services have started:
-
-    ```shell
+    ```bash
+    nebula-docker-compose]$ docker-compose up -d
+    Creating nebula-docker-compose_metad0_1 ... done
     Creating nebula-docker-compose_metad2_1 ... done
     Creating nebula-docker-compose_metad1_1 ... done
-    Creating nebula-docker-compose_metad0_1 ... done
-    Creating nebula-docker-compose_storaged2_1 ... done
+    Creating nebula-docker-compose_graphd2_1   ... done
     Creating nebula-docker-compose_graphd_1    ... done
+    Creating nebula-docker-compose_graphd1_1   ... done
     Creating nebula-docker-compose_storaged0_1 ... done
+    Creating nebula-docker-compose_storaged2_1 ... done
     Creating nebula-docker-compose_storaged1_1 ... done
     ```
 
@@ -105,7 +102,7 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 
     The following information indicates that you have connected to the Nebula Graph services:
 
-    ```shell
+    ```bash
     Welcome to Nebula Graph (Version 5d10861)
 
     (user@127.0.0.1) [(none)]>
@@ -113,7 +110,7 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 
 ## Check the Nebula Graph service status and ports
 
-Running the following command to list the service information of Nebula Graph, such as state and ports.
+Run `docker-compose ps` to list all the services of Nebula Graph and their status and ports.
 
 ```bash
 $ docker-compose ps
@@ -171,13 +168,13 @@ nebula-docker-compose/
 
 You can run the following command to stop the Nebula Graph services:
 
-```shell
+```bash
 $ docker-compose down -v
 ```
 
 The following information indicates you have successfully stopped the Nebula Graph services:
 
-```shell
+```bash
 Stopping nebula-docker-compose_storaged1_1 ... done
 Stopping nebula-docker-compose_storaged0_1 ... done
 Stopping nebula-docker-compose_graphd_1    ... done
