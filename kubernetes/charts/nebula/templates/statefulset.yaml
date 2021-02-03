@@ -158,7 +158,7 @@ spec:
         command:
           - "/bin/bash"
           - "-ecx"
-          - "exec /usr/local/nebula/bin/nebula-storaged --flagfile=/usr/local/nebula/etc/nebula-storaged.conf --local_ip=$(hostname).nebula-metad.{{ .Values.namespace }}.svc.cluster.local --v=4 --minloglevel=0 --daemonize=false"
+          - "exec /usr/local/nebula/bin/nebula-storaged --flagfile=/usr/local/nebula/etc/nebula-storaged.conf --local_ip=$(hostname).nebula-storaged.{{ .Values.namespace }}.svc.cluster.local --v=4 --minloglevel=0 --daemonize=false"
         env:
         - name: USER
           value: root
