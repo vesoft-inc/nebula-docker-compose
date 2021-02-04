@@ -12,8 +12,6 @@ spec:
   ports:
     - name: thrift
       port: {{ .Values.port.metad.thriftPort }}
-    - name: raft
-      port: {{ .Values.port.metad.raftPort }}
     - name: http
       port: {{ .Values.port.metad.httpPort }}
     - name: http2
@@ -35,8 +33,6 @@ spec:
   ports:
     - name: thrift
       port: {{ .Values.port.storaged.thriftPort }}
-    - name: raft
-      port: {{ .Values.port.storaged.raftPort }}
     - name: http
       port: {{ .Values.port.storaged.httpPort }}
     - name: http2

@@ -65,16 +65,21 @@ port:
     http2Port: 19670
   storaged:
     serviceType: ClusterIP
-    thriftPort: 44500
-    raftPort: 44501
-    httpPort: 12000
-    http2Port: 12002
+    thriftPort: 9779
+    httpPort: 19779
+    http2Port: 19780
   metad:
     serviceType: ClusterIP
-    thriftPort: 45500
-    raftPort: 45501
-    httpPort: 11000
-    http2Port: 11002
+    thriftPort: 9559
+    httpPort: 19559
+    http2Port: 19560
+
+# nebula metad & storaged container command
+commandArgs:
+  metad:
+    - "exec /usr/local/nebula/bin/nebula-metad --flagfile=/usr/local/nebula/etc/nebula-metad.conf --v=4 --minloglevel=0 --daemonize=false"
+  storaged:
+    - "exec /usr/local/nebula/bin/nebula-storaged --flagfile=/usr/local/nebula/etc/nebula-storaged.conf --v=4 --minloglevel=0 --daemonize=false"
 
 # Time period for the controller pod to do a graceful shutdown
 terminationGracePeriodSeconds: 30
@@ -102,7 +107,16 @@ disruptionBudget:
   maxUnavailable: 1
 
 # Controls whether the pod may use the node network namespace.
+# This is required if using a custom CNI where your applications are unable to initiate network connections
+# to the pods outside the k8s cluster, for example using Flannel CNI plugin on K8S.
 hostNetwork: false
+
+# If 'hostNetwork' set to true, you should specify metadEndpoints with metad replicas properly.
+# Uncomment the following lines, adjust them as necessary, and remove the square brackets after 'metadEndpoints:'.
+metadEndpoints: []
+#  - 192.168.8.25:9559
+#  - 192.168.8.26:9559
+#  - 192.168.8.27:9559
 
 # Leverage a PriorityClass to ensure the controller will survive resource shortages
 # ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
