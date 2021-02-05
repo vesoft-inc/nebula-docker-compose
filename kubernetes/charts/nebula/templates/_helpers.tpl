@@ -86,9 +86,49 @@ Generate dns address based endpoints for metad.
 {{- $namesapce := .Values.namespace -}}
 {{- $thriftPort := .Values.port.metad.thriftPort | toString -}}
 {{- $replicas := .Values.replication.metad.replicas | int -}}
+{{- if .Values.hostNetwork }}
+{{- join "," .Values.metadEndpoints }}
+{{- else }}
 {{- $name := print "nebula-metad" -}}
 {{- range $i, $e := until $replicas }}
 {{- $endpoints = printf "%s-%d.nebula-metad.%s.svc.cluster.local:%s" $name $i $namesapce $thriftPort | append $endpoints }}
 {{- end }}
 {{- join "," $endpoints }}
+{{- end }}
+{{- end }}
+
+{{/*
+Generate container command for metad.
+*/}}
+{{- define "nebula.metad.args" -}}
+{{- $args := .Values.commandArgs.metad | first -}}
+{{- $newArgs := list -}}
+{{- $namesapce := .Values.namespace -}}
+{{- if .Values.hostNetwork }}
+{{- $args = printf "%s --local_ip=$(hostname -i)" $args }}
+{{- $newArgs = $args | quote | append $newArgs }}
+{{- $newArgs }}
+{{- else }}
+{{- $args = printf "%s --local_ip=$(hostname).nebula-metad.%s.svc.cluster.local" $args $namesapce }}
+{{- $newArgs = $args | quote | append $newArgs }}
+{{- $newArgs }}
+{{- end }}
+{{- end }}
+
+{{/*
+Generate container command for storaged.
+*/}}
+{{- define "nebula.storaged.args" -}}
+{{- $args := .Values.commandArgs.storaged | first -}}
+{{- $newArgs := list -}}
+{{- $namesapce := .Values.namespace -}}
+{{- if .Values.hostNetwork }}
+{{- $args = printf "%s --local_ip=$(hostname -i)" $args }}
+{{- $newArgs = $args | quote | append $newArgs }}
+{{- $newArgs }}
+{{- else }}
+{{- $args = printf "%s --local_ip=$(hostname).nebula-storaged.%s.svc.cluster.local" $args $namesapce }}
+{{- $newArgs = $args | quote | append $newArgs }}
+{{- $newArgs }}
+{{- end }}
 {{- end }}

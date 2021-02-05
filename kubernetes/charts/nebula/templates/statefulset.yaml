@@ -37,10 +37,8 @@ spec:
       - name: nebula-metad
         image: "{{ .Values.image.metad.repository }}:{{ .Values.image.metad.tag }}"
         imagePullPolicy: {{ .Values.image.metad.pullPolicy }}
-        command:
-          - "/bin/bash"
-          - "-ecx"
-          - "exec /usr/local/nebula/bin/nebula-metad --flagfile=/usr/local/nebula/etc/nebula-metad.conf --local_ip=$(hostname).nebula-metad.{{ .Values.namespace }}.svc.cluster.local --v=4 --minloglevel=0 --daemonize=false"
+        command: ["/bin/bash", "-ecx"]
+        args: {{ template "nebula.metad.args" . }}
         env:
         - name: USER
           value: root
@@ -54,8 +52,6 @@ spec:
         ports:
         - containerPort: {{ .Values.port.metad.thriftPort }}
           name: thrift
-        - containerPort: {{ .Values.port.metad.raftPort }}
-          name: raft
         - containerPort: {{ .Values.port.metad.httpPort }}
           name: http
         - containerPort: {{ .Values.port.metad.http2Port }}
@@ -155,10 +151,8 @@ spec:
       - name: nebula-storaged
         image: "{{ .Values.image.storaged.repository }}:{{ .Values.image.storaged.tag }}"
         imagePullPolicy: {{ .Values.image.storaged.pullPolicy }}
-        command:
-          - "/bin/bash"
-          - "-ecx"
-          - "exec /usr/local/nebula/bin/nebula-storaged --flagfile=/usr/local/nebula/etc/nebula-storaged.conf --local_ip=$(hostname).nebula-metad.{{ .Values.namespace }}.svc.cluster.local --v=4 --minloglevel=0 --daemonize=false"
+        command: ["/bin/bash", "-ecx"]
+        args: {{ template "nebula.storaged.args" . }}
         env:
         - name: USER
           value: root
@@ -172,8 +166,6 @@ spec:
         ports:
         - containerPort: {{ .Values.port.storaged.thriftPort }}
           name: thrift
-        - containerPort: {{ .Values.port.storaged.raftPort }}
-          name: raft
         - containerPort: {{ .Values.port.storaged.httpPort }}
           name: http
         - containerPort: {{ .Values.port.storaged.http2Port }}
