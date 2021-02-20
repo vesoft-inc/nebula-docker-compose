@@ -138,6 +138,4 @@ affinity: {}
 nameOverride: ""
 fullnameOverride: ""
 
-# specify kubernetes namespace
-namespace: default
 

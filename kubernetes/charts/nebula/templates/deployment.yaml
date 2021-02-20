@@ -5,7 +5,6 @@ metadata:
     app.kubernetes.io: nebula
     app.kubernetes.io/component: nebula-graphd
   name: nebula-graphd
-  namespace: {{ .Values.namespace }}
 spec:
   selector:
     matchLabels:
