@@ -31,28 +31,31 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 
 ## Prerequisites
 
-* You have installed [Docker](https://docs.docker.com/engine/install/), [Docker Compose](https://docs.docker.com/compose/install/), and [Git](https://git-scm.com/download/linux) on your host.
+* You have installed the following applications on your host.
 
-    >**NOTE**:
-    >
-    >* To use Docker as a non-root user, follow the steps in [Manage Docker as a non-root user](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user).
-    >* We recommend that you install the latest version of these applications to make sure they work properly.
+  | Application    | Recommended version | Official installation reference                                    |
+  | -------------- | ------------------- | ------------------------------------------------------------------ |
+  | Docker         | Latest              | [Install Docker Engine](https://docs.docker.com/engine/install/)   |
+  | Docker Compose | Latest              | [Install Docker Compose](https://docs.docker.com/compose/install/) |
+  | Git            | Latest              | [Download Git](https://git-scm.com/download/)       |
+
+* If you are deploying Nebula Graph as a non-root user, grant the user with Docker-related privileges. For a detailed instruction, see [Docker document: Manage Docker as a non-root user](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user).
 
 * You have started the Docker service on your host.
 
-* If you have already deployed another version of Nebula Graph with Docker Compose on your host, to avoid compatibility issues，back up [the service data](#check-the-service-data-and-logs) if you need, and delete the `nebula-docker-compose/data` directory.
+* If you have already deployed another version of Nebula Graph with Docker Compose on your host, to avoid compatibility issues，back up [the service data](#check_the_service_data_and_logs) if you need, and delete the `nebula-docker-compose/data` directory.
 
 ## How to deploy
 
 1. Clone the `nebula-docker-compose` repository to your host with Git.
 
-    * To install Nebula Graph 1.0, clone the `v1.0` branch.
+    * To install the latest version of Nebula Graph 1.x, clone the `v1.0` branch.
 
     ```bash
     $ git clone --branch v1.0 https://github.com/vesoft-inc/nebula-docker-compose.git
     ```
 
-    * To install Nebula Graph 2.0, clone the `master` branch.
+    * To install the latest version of Nebula Graph 2.x, clone the `master` branch.
 
     ```bash
     $ git clone https://github.com/vesoft-inc/nebula-docker-compose.git
@@ -218,7 +221,7 @@ docker pull vesoft/nebula-console:v2-nightly
 
 To upgrade Nebula Graph, update the Nebula Graph docker images and restart the services.
 
-1. In the `nebula-docker-compose` directory, run `docker compose pull` to update the Nebula Graph docker images.
+1. In the `nebula-docker-compose` directory, run `docker-compose pull` to update the Nebula Graph docker images.
 
   > **CAUTION:** Make sure you have backed up all important data before following the next step to stop the Nebula Graph services.
 
