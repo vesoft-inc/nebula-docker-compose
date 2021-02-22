@@ -83,7 +83,7 @@ Generate dns address based endpoints for metad.
 */}}
 {{- define "nebula.metad.endpoints" -}}
 {{- $endpoints := list -}}
-{{- $namesapce := .Values.namespace -}}
+{{- $namesapce := .Release.Namespace -}}
 {{- $thriftPort := .Values.port.metad.thriftPort | toString -}}
 {{- $replicas := .Values.replication.metad.replicas | int -}}
 {{- if .Values.hostNetwork }}
@@ -103,7 +103,7 @@ Generate container command for metad.
 {{- define "nebula.metad.args" -}}
 {{- $args := .Values.commandArgs.metad | first -}}
 {{- $newArgs := list -}}
-{{- $namesapce := .Values.namespace -}}
+{{- $namesapce := .Release.Namespace -}}
 {{- if .Values.hostNetwork }}
 {{- $args = printf "%s --local_ip=$(hostname -i)" $args }}
 {{- $newArgs = $args | quote | append $newArgs }}
@@ -121,7 +121,7 @@ Generate container command for storaged.
 {{- define "nebula.storaged.args" -}}
 {{- $args := .Values.commandArgs.storaged | first -}}
 {{- $newArgs := list -}}
-{{- $namesapce := .Values.namespace -}}
+{{- $namesapce := .Release.Namespace -}}
 {{- if .Values.hostNetwork }}
 {{- $args = printf "%s --local_ip=$(hostname -i)" $args }}
 {{- $newArgs = $args | quote | append $newArgs }}

@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: nebula-metad
-  namespace: {{ .Values.namespace }}
   labels:
     app.kubernetes.io: nebula
     app.kubernetes.io/component: nebula-metad
