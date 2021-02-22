@@ -43,7 +43,7 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 
 * You have started the Docker service on your host.
 
-* If you have already deployed another version of Nebula Graph with Docker Compose on your host, to avoid compatibility issues，back up [the service data](#check_the_service_data_and_logs) if you need, and delete the `nebula-docker-compose/data` directory.
+* If you have already deployed another version of Nebula Graph with Docker Compose on your host, to avoid compatibility issues，back up [the service data](#check-the-service-data-and-logs) if you need, and delete the `nebula-docker-compose/data` directory.
 
 ## How to deploy
 
