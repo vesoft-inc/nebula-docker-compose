@@ -24,10 +24,10 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 * [How to deploy](#how-to-deploy)
 * [Check the Nebula Graph service status and ports](#check-the-nebula-graph-service-status-and-ports)
 * [Check the service data and logs](#check-the-service-data-and-logs)
-* [Stop the Nebula Graph Services](#stop-the-nebula-graph-services)
-* [Other Ways to Install Nebula Graph](#other-ways-to-install-nebula-graph)
+* [Stop the Nebula Graph services](#stop-the-nebula-graph-services)
+* [Other ways to install Nebula Graph](#other-ways-to-install-nebula-graph)
 * [FAQ](#faq)
-* [What to Do Next](#what-to-do-next)
+* [What to do next](#what-to-do-next)
 
 ## Prerequisites
 
@@ -70,7 +70,12 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 3. Run the following command to start all the Nebula Graph services.
 
     ```bash
-    nebula-docker-compose]$ docker-compose up -d
+    $ docker-compose up -d
+    ```
+
+    If these information is returned, Nebula Graph is started successfully.
+
+    ```bash
     Creating nebula-docker-compose_metad0_1 ... done
     Creating nebula-docker-compose_metad2_1 ... done
     Creating nebula-docker-compose_metad1_1 ... done
@@ -84,9 +89,9 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 
     >**NOTE**: For more information of the preceding services, see [Design and Architecture of Nebula Graph](https://docs.nebula-graph.io/manual-EN/1.overview/3.design-and-architecture/1.design-and-architecture/).
 
-4. Use nebula-console to connect to Nebula Graph.
+4. Use Nebula Console to connect to Nebula Graph.
 
-    Nebula-console is the native CLI client of Nebula Graph. In this step, Docker pulls the nebula-console images automatically from Docker Hub according to the path we set in the following commands and uses it to connect to the graphd service of Nebula Graph. You can use other clients to connect to Nebula Graph instead of Nebula-console, such as [Nebula Graph Studio](https://github.com/vesoft-inc/nebula-web-docker) and [clients for different programming languages](https://docs.nebula-graph.io/manual-EN/1.overview/2.quick-start/3.supported-clients/).
+    Nebula Console is the native CLI client of Nebula Graph. In this step, Docker pulls the Nebula Console images automatically from Docker Hub according to the path we set in the following commands and uses it to connect to the Graph Service of Nebula Graph. You can use other clients to connect to Nebula Graph instead of Nebula Console, such as [Nebula Graph Studio](https://github.com/vesoft-inc/nebula-web-docker) and [clients for different programming languages](https://docs.nebula-graph.io/manual-EN/1.overview/2.quick-start/3.supported-clients/).
 
    * For Nebula Graph 1.0:
 
@@ -98,10 +103,13 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 
     ```bash
     $ docker run --rm -ti --network nebula-docker-compose_nebula-net --entrypoint=/bin/sh vesoft/nebula-console:v2-nightly
+    ```
+
+    ```docker
     docker> nebula-console -u <user> -p <password> --address=graphd --port=9669
     ```
 
-    >**NOTE**: By default, the authentication is disabled, and the `-u` and `-p` options are unnecessary. To enbale authentication, see [Authentication Configurations](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/4.account-management-statements/authentication/#authentication).
+    >**NOTE**: By default, the authentication is disabled, and you can use any username or password to connect to Nebula Graph. To enable authentication, see [Authentication Configurations](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/4.account-management-statements/authentication/#authentication).
 
     The following information indicates that you have connected to the Nebula Graph services:
 
@@ -167,7 +175,7 @@ nebula-docker-compose/
         `- graph
 ```
 
-## Stop the Nebula Graph Services
+## Stop the Nebula Graph services
 
 You can run the following command to stop the Nebula Graph services:
 
@@ -195,7 +203,7 @@ Removing nebula-docker-compose_metad2_1    ... done
 Removing network nebula-docker-compose_nebula-net
 ```
 
-## Other Ways to Install Nebula Graph
+## Other ways to install Nebula Graph
 
 * [Using Source Code](https://docs.nebula-graph.io/2.0/4.deployment-and-installation/2.compile-and-install-nebula-graph/1.install-nebula-graph-by-compiling-the-source-code/)
 * [Using Docker](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/1.build/2.build-by-docker/)
@@ -203,15 +211,15 @@ Removing network nebula-docker-compose_nebula-net
 
 ## FAQ
 
-### How to update the nebula-console client?
+### How to update the Nebula Console client?
 
-To update the nebula-console client, use the `docker pull` command in the `nebula-docker-compose` directory on your host. For example, if you want to update nebula-console for the Nebula Graph 1.0 series, run the follow command.
+To update the Nebula Console client, use the `docker pull` command in the `nebula-docker-compose` directory on your host. For example, if you want to update Nebula Console for the Nebula Graph 1.0 series, run the follow command.
 
 ```bash
 docker pull vesoft/nebula-console:nightly
 ```
 
-If you want to update nebula-console for the Nebula Graph v2.0, run the following command instead.
+If you want to update Nebula Console for the Nebula Graph v2.0, run the following command instead.
 
 ```bash
 docker pull vesoft/nebula-console:v2-nightly
@@ -237,6 +245,6 @@ On the release of Nebula Graph 2.0.0-RC, the default port for connection changed
 
 If you updated the nebula-docker-compose repository after Jan 4, 2021 and there are pre-existing data, modify the `docker-compose.yaml` file and change the port numbers to [the previous ones](https://github.com/vesoft-inc/nebula-docker-compose/commit/2a612f1c4f0e2c31515e971b24b355b3be69420a) before connecting to Nebula Graph.
 
-## What to Do Next
+## What to do next
 
 You can start using Nebula Graph by creating spaces and inserting data. For more information, see [Quick Start](https://docs.nebula-graph.io/manual-EN/1.overview/2.quick-start/1.get-started/).
