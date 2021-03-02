@@ -11,7 +11,7 @@ Nebula Graph Helm chart for Kubernetes
 ## Get Repo Info
 
 ```console
-helm repo add nebula-graph https://vesoft-inc.github.io/nebula-docker-compose
+helm repo add nebula-graph https://vesoft-inc.github.io/nebula-docker-compose/charts
 helm repo update
 ```
 
