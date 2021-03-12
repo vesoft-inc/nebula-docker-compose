@@ -224,7 +224,6 @@ services:
     command:
       - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
       - --port=9669
-      - --local_ip=graphd
       - --ws_ip=graphd
       - --ws_http_port=19669
       - --log_dir=/logs
@@ -260,7 +259,6 @@ services:
     command:
       - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
       - --port=9669
-      - --local_ip=graphd1
       - --ws_ip=graphd1
       - --ws_http_port=19669
       - --log_dir=/logs
@@ -296,7 +294,6 @@ services:
     command:
       - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
       - --port=9669
-      - --local_ip=graphd2
       - --ws_ip=graphd2
       - --ws_http_port=19669
       - --log_dir=/logs
