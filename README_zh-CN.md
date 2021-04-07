@@ -24,14 +24,14 @@
 
 ## 使用 Docker Compose 部署 Nebula Graph
 
-Docker Compose 可以帮助您快速部署 Nebula Graph 服务。
+Docker Compose可以帮助您快速部署Nebula Graph服务。
 
 - [前提条件](#前提条件)
 - [部署流程](#部署流程)
-- [查看 Nebula Graph 服务状态和端口](#查看-nebula-graph-服务状态和端口)
+- [查看Nebula Graph服务状态和端口](#查看-nebula-graph-服务状态和端口)
 - [查看服务数据与日志](#查看服务数据与日志)
-- [停止 Nebula Graph 服务](#停止-nebula-graph-服务)
-- [安装 Nebula Graph 的其它方法](#安装-nebula-graph-的其它方法)
+- [停止Nebula Graph服务](#停止-nebula-graph-服务)
+- [安装Nebula Graph的其它方法](#安装-nebula-graph-的其它方法)
 - [常见问题](#常见问题)
 
 ## 前提条件
@@ -89,14 +89,6 @@ Docker Compose 可以帮助您快速部署 Nebula Graph 服务。
     ```
 
     >**说明**：Nebula Graph 默认不开启身份验证功能，此时可以省略上述命令中的 `-u` 和 `-p` 选项。如需开启验证，请参见[身份验证](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/4.account-management-statements/authentication/)。
-
-    显示以下信息表明您已成功连接到 Nebula Graph：
-
-    ```shell
-    Welcome to Nebula Graph (Version 5d10861)
-
-    (user@127.0.0.1) [(none)]>
-    ```
 
 ## 查看 Nebula Graph 服务状态和端口
 

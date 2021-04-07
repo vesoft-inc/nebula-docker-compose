@@ -87,14 +87,6 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 
     >**NOTE**: By default, the authentication is disabled, and the `-u` and `-p` options are unnecessary. To enbale authentication, see [Authentication Configurations](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/4.account-management-statements/authentication/#authentication).
 
-    The following information indicates that you have connected to the Nebula Graph services:
-
-    ```shell
-    Welcome to Nebula Graph (Version 5d10861)
-
-    (user@127.0.0.1) [(none)]>
-    ```
-
 ## Check the Nebula Graph service status and ports
 
 Running the following command to list the service information of Nebula Graph, such as state and ports.
