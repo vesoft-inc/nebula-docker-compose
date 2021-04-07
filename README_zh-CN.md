@@ -28,4 +28,4 @@
 | - | - | - | - |
 | [`master`](https://github.com/vesoft-inc/nebula-docker-compose/tree/master) | [nebula-graph仓库](https://github.com/vesoft-inc/nebula-graph)的`master`分支| 最新的v2.x开发版本 | [Docker Compose部署Nebula Graph](https://docs.nebula-graph.com.cn/2.0/2.quick-start/2.deploy-nebula-graph-with-docker-compose/) |
 | [`v2.0.0`](https://github.com/vesoft-inc/nebula-docker-compose/tree/v2.0.0)（**推荐**） | nebula-graph仓库的`v2.0.0`分支 | v.2.0.0-GA | [Docker Compose部署Nebula Graph](https://github.com/vesoft-inc/nebula-docker-compose/blob/v2.0.0/README_zh-CN.md) |
-| [`v1.0`](https://github.com/vesoft-inc/nebula-docker-compose/tree/v1.0)| [nebula](https://github.com/vesoft-inc/nebula)仓库的`master`分支 | v1.2.0 | [Docker Compose部署Nebula Graph](https://github.com/vesoft-inc/nebula-docker-compose/blob/v1.0/README_zh-CN.md) |
+| [`v1.0`](https://github.com/vesoft-inc/nebula-docker-compose/tree/v1.0)| [nebula](https://github.com/vesoft-inc/nebula)仓库的`master`分支 | 最新的v1.x开发版本 | [Docker Compose部署Nebula Graph](https://github.com/vesoft-inc/nebula-docker-compose/blob/v1.0/README_zh-CN.md) |
