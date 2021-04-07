@@ -20,11 +20,12 @@
   </a>
 </p>
 
+`v1.0`分支储存了使用Docker Compose部署Nebula Graph v1.x最新开发版本的解决方案。
+
 ## 使用 Docker Compose 部署 Nebula Graph
 
 Docker Compose 可以帮助您快速部署 Nebula Graph 服务。
 
-- [使用 Docker Compose 部署 Nebula Graph](#使用-docker-compose-部署-nebula-graph)
 - [前提条件](#前提条件)
 - [部署流程](#部署流程)
 - [查看 Nebula Graph 服务状态和端口](#查看-nebula-graph-服务状态和端口)
@@ -32,7 +33,6 @@ Docker Compose 可以帮助您快速部署 Nebula Graph 服务。
 - [停止 Nebula Graph 服务](#停止-nebula-graph-服务)
 - [安装 Nebula Graph 的其它方法](#安装-nebula-graph-的其它方法)
 - [常见问题](#常见问题)
-- [下一步](#下一步)
 
 ## 前提条件
 
@@ -48,18 +48,10 @@ Docker Compose 可以帮助您快速部署 Nebula Graph 服务。
 
 ## 部署流程
 
-1. 使用 Git 将 `nebula-docker-compose` 库拷贝到您的主机。
+1. 通过Git克隆`nebula-docker-compose`仓库的`v1.0`分支到您的主机。
 
-   * 安装 Nebula Graph 1.0 版本请拷贝 `master` 分支。
-
-    ```shell
-    $ git clone https://github.com/vesoft-inc/nebula-docker-compose.git
-    ```
-
-   * 安装 Nebula Graph 2.0 pre 版本请拷贝 `v2-preview` 分支。
-
-    ```shell
-    $ git clone --branch v2-preview https://github.com/vesoft-inc/nebula-docker-compose.git
+    ```bash
+    $ git clone -branch v1.0 https://github.com/vesoft-inc/  nebula-docker-compose.git
     ```
 
 2. 进入 `nebula-docker-compose` 目录。
@@ -92,16 +84,8 @@ Docker Compose 可以帮助您快速部署 Nebula Graph 服务。
 
     Nebula-console 是 Nebula Graph 的原生命令行客户端。在当前步骤中，Docker 会按下方命令中指定的 Docker Hub 路径将 nebula-console 镜像文件下载到本地主机，并用其连接 Nebula Graph 的 graphd 服务。您也可以使用其它客户端连接Nebula Graph，例如 [Nebula Graph Studio](https://github.com/vesoft-inc/nebula-web-docker) 以及[其它编程语言的客户端](https://docs.nebula-graph.com.cn/manual-CN/1.overview/2.quick-start/3.supported-clients/)。
 
-   * 连接到 Nebula Graph 1.0 版本：
-
     ```shell
     $ docker run --rm -ti --network=host vesoft/nebula-console:nightly -u <user> -p <password> --addr=127.0.0.1 --port=3699
-    ```
-
-    * 连接到 Nebula Graph 2.0 pre 版本：
-
-    ```shell
-    $ docker run --rm -ti --network nebula-docker-compose_nebula-net vesoft/nebula-console:v2-preview-nightly -u <user> -p <password> --address=graphd --port=3699
     ```
 
     >**说明**：Nebula Graph 默认不开启身份验证功能，此时可以省略上述命令中的 `-u` 和 `-p` 选项。如需开启验证，请参见[身份验证](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/4.account-management-statements/authentication/)。
@@ -193,25 +177,39 @@ Removing network nebula-docker-compose_nebula-net
 ```
 
 ## 安装 Nebula Graph 的其它方法
+
 * [使用源代码](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/1.build/1.build-source-code/)
 * [使用 Docker](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/1.build/2.build-by-docker/)
 * [使用 .rpm 或 .deb 文件](https://docs.nebula-graph.com.cn/manual-CN/3.build-develop-and-administration/2.install/1.install-with-rpm-deb/)
 
 ## 常见问题
 
-**问**：如何更新 nebula-console 客户端？
+### 如何更新Nebula Graph服务的Docker镜像？
 
-**答**：在主机的`nebula-docker-compose`目录中使用`docker pull`命令。例如，要更新 Nebula Graph 1.0 系列对应的 nebula-console，运行如下命令：
+在目录`nebula-docker-compose`内执行命令`docker-compose pull`，可以更新Graph服务、Storage服务和Meta服务的镜像。
 
-```Shell
+### 执行命令`docker-compose pull`报`ERROR: toomanyrequests`错误
+
+您可能遇到如下错误：
+
+`ERROR: toomanyrequests: You have reached your pull rate limit. You may increase the limit by authenticating and upgrading: https://www.docker.com/increase-rate-limit`
+
+以上错误表示您已达到Docker Hub的速率限制。解决方案请参见[Understanding Docker Hub Rate Limiting](https://www.docker.com/increase-rate-limit)。
+
+### 如何更新Nebula Console？
+
+执行如下命令可以更新Nebula Console客户端镜像。
+
+```bash
 docker pull vesoft/nebula-console:nightly
 ```
 
-如需更新 Nebula Graph 2.0 pre 版本对应的 nebula-console，则运行如下命令：
+### 如何升级用Docker Compose部署的Nebula Graph？
 
-```Shell
-docker pull vesoft/nebula-console:v2-preview-nightly
-```
+更新Nebula Graph的Docker镜像并重启服务：
 
-# 下一步
-您可以进行创建图空间和插入数据等操作，详情请参见[ Nebula Graph 快速入门](https://docs.nebula-graph.com.cn/manual-CN/1.overview/2.quick-start/1.get-started/)。
+1. 在目录`nebula-docker-compose`内，执行命令`docker-compose pull`更新Nebula Graph的Docker镜像。
+
+2. 执行命令`docker-compose down`停止Nebula Graph服务。
+
+3. 执行命令`docker-compose up -d`启动Nebula Graph服务。
