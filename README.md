@@ -16,18 +16,22 @@
   <br>
 </p>
 
+The `v2.0.0` branch stores the Docker Compose deployment solution for Nebula Graph v2.0.0.
+
 # Deploy Nebula Graph with Docker Compose
 
-Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
+There are multiple ways to deploy Nebula Graph, but using Docker Compose is usually considered to be a fast starter.
 
-* [Prerequisites](#prerequisites)
-* [How to deploy](#how-to-deploy)
-* [Check the Nebula Graph service status and ports](#check-the-nebula-graph-service-status-and-ports)
-* [Check the service data and logs](#check-the-service-data-and-logs)
-* [Stop the Nebula Graph services](#stop-the-nebula-graph-services)
-* [Other ways to install Nebula Graph](#other-ways-to-install-nebula-graph)
-* [FAQ](#faq)
-* [What to do next](#what-to-do-next)
+## Reading guide
+
+If you are reading this topic with the questions listed below, click them to jump to their answers.
+
+* [What do I need to do before deploying Nebula Graph?](#prerequisites)
+* [How to fast deploy Nebula Graph with Docker Compose?](#how-to-deploy)
+* [How to check the status and ports of the Nebula Graph services?](#check-the-nebula-graph-service-status-and-port)
+* [How to check the data and logs of the Nebula Graph services?](#check-the-service-data-and-logs)
+* [How to stop the Nebula Graph services?](#stop-the-nebula-graph-services)
+* [What are the other ways to install Nebula Graph?](#other-ways-to-install-nebula-graph)
 
 ## Prerequisites
 
@@ -47,18 +51,10 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 
 ## How to deploy
 
-1. Clone the `nebula-docker-compose` repository to your host with Git.
-
-    * To install the latest version of Nebula Graph 1.x, clone the `v1.0` branch.
+1. Clone the `v2.0.0` branch of the `nebula-docker-compose` repository to your host with Git.
 
     ```bash
-    $ git clone --branch v1.0 https://github.com/vesoft-inc/nebula-docker-compose.git
-    ```
-
-    * To install the latest version of Nebula Graph 2.x, clone the `master` branch.
-
-    ```bash
-    $ git clone https://github.com/vesoft-inc/nebula-docker-compose.git
+    $ git clone --branch v2.0.0 https://github.com/vesoft-inc/nebula-docker-compose.git
     ```
 
 2. Go to the `nebula-docker-compose` directory.
@@ -69,13 +65,10 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 
 3. Run the following command to start all the Nebula Graph services.
 
-    ```bash
-    $ docker-compose up -d
-    ```
-
-    If these information is returned, Nebula Graph is started successfully.
+    >**NOTE:** Update the [Nebula Graph images](#how-to-upgrade-nebula-graph-services) and [Nebula Console images](#how-to-update-the-nebula-console-client) first if they are out of date.
 
     ```bash
+    nebula-docker-compose]$ docker-compose up -d
     Creating nebula-docker-compose_metad0_1 ... done
     Creating nebula-docker-compose_metad2_1 ... done
     Creating nebula-docker-compose_metad1_1 ... done
@@ -87,92 +80,106 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
     Creating nebula-docker-compose_storaged1_1 ... done
     ```
 
-    >**NOTE**: For more information of the preceding services, see [Design and Architecture of Nebula Graph](https://docs.nebula-graph.io/manual-EN/1.overview/3.design-and-architecture/1.design-and-architecture/).
+    >**NOTE**: For more information of the preceding services, see [Nebula Graph architecture](../1.introduction/3.nebula-graph-architecture/1.architecture-overview.md).
 
-4. Use Nebula Console to connect to Nebula Graph.
+4. Connect to Nebula Graph.
 
-    Nebula Console is the native CLI client of Nebula Graph. In this step, Docker pulls the Nebula Console images automatically from Docker Hub according to the path we set in the following commands and uses it to connect to the Graph Service of Nebula Graph. You can use other clients to connect to Nebula Graph instead of Nebula Console, such as [Nebula Graph Studio](https://github.com/vesoft-inc/nebula-web-docker) and [clients for different programming languages](https://docs.nebula-graph.io/manual-EN/1.overview/2.quick-start/3.supported-clients/).
-
-   * For Nebula Graph 1.0:
+    1. Run the following command to start a new docker container with the Nebula Console image, and connect the container to the network where Nebula Graph is deployed.
 
     ```bash
-    $ docker run --rm -ti --network=host vesoft/nebula-console:nightly -u <user> -p <password> --addr=127.0.0.1 --port=3699
+    $ docker run --rm -ti --network nebula-docker-compose_nebula-net --entrypoint=/bin/sh vesoft/nebula-console:v2.0.0-ga
     ```
 
-   * For Nebula Graph 2.0:
+    > **Note**: Your local network (nebula-docker-compose_nebula-net) may be different from the example above. Use the following command to list the actual local network.
 
     ```bash
-    $ docker run --rm -ti --network nebula-docker-compose_nebula-net --entrypoint=/bin/sh vesoft/nebula-console:v2-nightly
+    $ docker network  ls
+    NETWORK ID          NAME                               DRIVER              SCOPE
+    a74c312b1d16        bridge                             bridge              local
+    dbfa82505f0e        host                               host                local
+    ed55ccf356ae        nebula-docker-compose_nebula-net   bridge              local
+    93ba48b4b288        none                               null                local
+
     ```
 
-    ```docker
-    docker> nebula-console -u <user> -p <password> --address=graphd --port=9669
-    ```
-
-    >**NOTE**: By default, the authentication is disabled, and you can use any username or password to connect to Nebula Graph. To enable authentication, see [Authentication Configurations](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/4.account-management-statements/authentication/#authentication).
-
-    The following information indicates that you have connected to the Nebula Graph services:
+    2. Connect to Nebula Graph with Nebula Console.
 
     ```bash
-    Welcome to Nebula Graph (Version 5d10861)
-
-    (user@127.0.0.1) [(none)]>
+    docker> nebula-console -u user -p password --address=graphd --port=9669
     ```
 
-## Check the Nebula Graph service status and ports
+    > **Note**: By default, the authentication is off, you can log in with any user name and password. To turn it on, see [Enable authentication](https://docs.nebula-graph.io/2.0/7.data-security/1.authentication/1.authentication/).
+
+    3. Run the `SHOW HOSTS` statement to check the status of the `nebula-storaged` processes.
+
+    ```bash
+    nebula> SHOW HOSTS;
+    +-------------+------+----------+--------------+----------------------+------------------------+
+    | Host        | Port | Status   | Leader count | Leader distribution  | Partition distribution |
+    +-------------+------+----------+--------------+----------------------+------------------------+
+    | "storaged0" | 9779 | "ONLINE" | 0            | "No valid partition" | "No valid partition"   |
+    +-------------+------+----------+--------------+----------------------+------------------------+
+    | "storaged1" | 9779 | "ONLINE" | 0            | "No valid partition" | "No valid partition"   |
+    +-------------+------+----------+--------------+----------------------+------------------------+
+    | "storaged2" | 9779 | "ONLINE" | 0            | "No valid partition" | "No valid partition"   |
+    +-------------+------+----------+--------------+----------------------+------------------------+
+    | "Total"     |      |          | 0            |                      |                        |
+    +-------------+------+----------+--------------+----------------------+------------------------+
+    ```
+
+5. Run `exit` twice to switch back to your terminal (shell). You can run Step 4 to login Nebula Graph again.
+
+## Check the Nebula Graph service status and port
 
 Run `docker-compose ps` to list all the services of Nebula Graph and their status and ports.
 
 ```bash
 $ docker-compose ps
-Name                     Command                       State                                                   Ports
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-nebula-docker-compose_graphd1_1     ./bin/nebula-graphd --flag ...   Up (health: starting)   13000/tcp, 13002/tcp, 0.0.0.0:33295->19669/tcp, 0.0.0.0:33291->19670/tcp,
-                                                                                             3699/tcp, 0.0.0.0:33298->9669/tcp
-nebula-docker-compose_graphd2_1     ./bin/nebula-graphd --flag ...   Up (health: starting)   13000/tcp, 13002/tcp, 0.0.0.0:33285->19669/tcp, 0.0.0.0:33284->19670/tcp,
-                                                                                             3699/tcp, 0.0.0.0:33286->9669/tcp
-nebula-docker-compose_graphd_1      ./bin/nebula-graphd --flag ...   Up (health: starting)   13000/tcp, 13002/tcp, 0.0.0.0:33288->19669/tcp, 0.0.0.0:33287->19670/tcp,
-                                                                                             3699/tcp, 0.0.0.0:9669->9669/tcp
-nebula-docker-compose_metad0_1      ./bin/nebula-metad --flagf ...   Up (health: starting)   11000/tcp, 11002/tcp, 0.0.0.0:33276->19559/tcp, 0.0.0.0:33275->19560/tcp,
-                                                                                             45500/tcp, 45501/tcp, 0.0.0.0:33278->9559/tcp
-nebula-docker-compose_metad1_1      ./bin/nebula-metad --flagf ...   Up (health: starting)   11000/tcp, 11002/tcp, 0.0.0.0:33279->19559/tcp, 0.0.0.0:33277->19560/tcp,
-                                                                                             45500/tcp, 45501/tcp, 0.0.0.0:33281->9559/tcp
-nebula-docker-compose_metad2_1      ./bin/nebula-metad --flagf ...   Up (health: starting)   11000/tcp, 11002/tcp, 0.0.0.0:33282->19559/tcp, 0.0.0.0:33280->19560/tcp,
-                                                                                             45500/tcp, 45501/tcp, 0.0.0.0:33283->9559/tcp
-nebula-docker-compose_storaged0_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   12000/tcp, 12002/tcp, 0.0.0.0:33290->19779/tcp, 0.0.0.0:33289->19780/tcp,
-                                                                                             44500/tcp, 44501/tcp, 0.0.0.0:33294->9779/tcp
-nebula-docker-compose_storaged1_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   12000/tcp, 12002/tcp, 0.0.0.0:33296->19779/tcp, 0.0.0.0:33292->19780/tcp,
-                                                                                             44500/tcp, 44501/tcp, 0.0.0.0:33299->9779/tcp
-nebula-docker-compose_storaged2_1   ./bin/nebula-storaged --fl ...   Up (health: starting)   12000/tcp, 12002/tcp, 0.0.0.0:33297->19779/tcp, 0.0.0.0:33293->19780/tcp,
-                                                                                             44500/tcp, 44501/tcp, 0.0.0.0:33300->9779/tcp
+nebula-docker-compose_graphd1_1     /usr/local/nebula/bin/nebu ...   Up (healthy)   0.0.0.0:33170->19669/tcp, 0.0.0.0:33169->19670/tcp, 0.0.0.0:33173->9669/tcp
+nebula-docker-compose_graphd2_1     /usr/local/nebula/bin/nebu ...   Up (healthy)   0.0.0.0:33174->19669/tcp, 0.0.0.0:33171->19670/tcp, 0.0.0.0:33176->9669/tcp
+nebula-docker-compose_graphd_1      /usr/local/nebula/bin/nebu ...   Up (healthy)   0.0.0.0:33205->19669/tcp, 0.0.0.0:33204->19670/tcp, 0.0.0.0:9669->9669/tcp
+nebula-docker-compose_metad0_1      ./bin/nebula-metad --flagf ...   Up (healthy)   0.0.0.0:33165->19559/tcp, 0.0.0.0:33162->19560/tcp, 0.0.0.0:33167->9559/tcp,
+                                                                                    9560/tcp
+nebula-docker-compose_metad1_1      ./bin/nebula-metad --flagf ...   Up (healthy)   0.0.0.0:33166->19559/tcp, 0.0.0.0:33163->19560/tcp, 0.0.0.0:33168->9559/tcp,
+                                                                                    9560/tcp
+nebula-docker-compose_metad2_1      ./bin/nebula-metad --flagf ...   Up (healthy)   0.0.0.0:33161->19559/tcp, 0.0.0.0:33160->19560/tcp, 0.0.0.0:33164->9559/tcp,
+                                                                                    9560/tcp
+nebula-docker-compose_storaged0_1   ./bin/nebula-storaged --fl ...   Up (healthy)   0.0.0.0:33180->19779/tcp, 0.0.0.0:33178->19780/tcp, 9777/tcp, 9778/tcp,
+                                                                                    0.0.0.0:33183->9779/tcp, 9780/tcp
+nebula-docker-compose_storaged1_1   ./bin/nebula-storaged --fl ...   Up (healthy)   0.0.0.0:33175->19779/tcp, 0.0.0.0:33172->19780/tcp, 9777/tcp, 9778/tcp,
+                                                                                    0.0.0.0:33177->9779/tcp, 9780/tcp
+nebula-docker-compose_storaged2_1   ./bin/nebula-storaged --fl ...   Up (healthy)   0.0.0.0:33184->19779/tcp, 0.0.0.0:33181->19780/tcp, 9777/tcp, 9778/tcp,
+                                                                                    0.0.0.0:33185->9779/tcp, 9780/tcp
 ```
 
->**NOTE**: The Nebula Graph services listen on port `3699` for v1.x and `9669` for v2.x by default. To use other ports, modify the `docker-compose.yaml` file in the `nebula-docker-compose` directory.
+Nebula Graph provides services to the clients through port `9669` by default. To use other ports, modify the `docker-compose.yaml` file in the `nebula-docker-compose` directory and restart the Nebula Graph services.
 
 ## Check the service data and logs
 
-All data and logs of Nebula Graph are stored persistently in the `nebula-docker-compose/data` and `nebula-docker-compose/logs` directories.
+All the data and logs of Nebula Graph are stored persistently in the `nebula-docker-compose/data` and `nebula-docker-compose/logs` directories.
 
 The structure of the directories is as follows:
 
 ```text
 nebula-docker-compose/
   |-- docker-compose.yaml
-  |-- data
-  |     |- meta0
-  |     |- meta1
-  |     |- meta2
-  |     |- storage0
-  |     |- storage1
-  |     `- storage2
-  `-- logs
-        |- meta0
-        |- meta1
-        |- meta2
-        |- storage0
-        |- storage1
-        |- storage2
-        `- graph
+  ├── data
+  │   ├── meta0
+  │   ├── meta1
+  │   ├── meta2
+  │   ├── storage0
+  │   ├── storage1
+  │   └── storage2
+  └── logs
+      ├── graph
+      ├── graph1
+      ├── graph2
+      ├── meta0
+      ├── meta1
+      ├── meta2
+      ├── storage0
+      ├── storage1
+      └── storage2
 ```
 
 ## Stop the Nebula Graph services
@@ -180,71 +187,79 @@ nebula-docker-compose/
 You can run the following command to stop the Nebula Graph services:
 
 ```bash
-$ docker-compose down -v
+$ docker-compose down
 ```
 
 The following information indicates you have successfully stopped the Nebula Graph services:
 
 ```bash
-Stopping nebula-docker-compose_storaged1_1 ... done
 Stopping nebula-docker-compose_storaged0_1 ... done
+Stopping nebula-docker-compose_graphd1_1   ... done
 Stopping nebula-docker-compose_graphd_1    ... done
+Stopping nebula-docker-compose_storaged1_1 ... done
+Stopping nebula-docker-compose_graphd2_1   ... done
 Stopping nebula-docker-compose_storaged2_1 ... done
 Stopping nebula-docker-compose_metad0_1    ... done
-Stopping nebula-docker-compose_metad1_1    ... done
 Stopping nebula-docker-compose_metad2_1    ... done
-Removing nebula-docker-compose_storaged1_1 ... done
+Stopping nebula-docker-compose_metad1_1    ... done
 Removing nebula-docker-compose_storaged0_1 ... done
+Removing nebula-docker-compose_graphd1_1   ... done
 Removing nebula-docker-compose_graphd_1    ... done
+Removing nebula-docker-compose_storaged1_1 ... done
+Removing nebula-docker-compose_graphd2_1   ... done
 Removing nebula-docker-compose_storaged2_1 ... done
 Removing nebula-docker-compose_metad0_1    ... done
-Removing nebula-docker-compose_metad1_1    ... done
 Removing nebula-docker-compose_metad2_1    ... done
+Removing nebula-docker-compose_metad1_1    ... done
 Removing network nebula-docker-compose_nebula-net
 ```
 
-## Other ways to install Nebula Graph
-
-* [Using Source Code](https://docs.nebula-graph.io/2.0/4.deployment-and-installation/2.compile-and-install-nebula-graph/1.install-nebula-graph-by-compiling-the-source-code/)
-* [Using Docker](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/1.build/2.build-by-docker/)
-* [Using .rpm or .deb Files](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/2.install/1.install-with-rpm-deb/)
+> **Note**: Command `docker-compose down -v` will **delete** all your local Nebula Graph storage data. Try this command if you're using a developing/nightly version and having some compatibility issues.
 
 ## FAQ
 
-### How to update the Nebula Console client?
+### How to update the docker images of Nebula Graph services
 
-To update the Nebula Console client, use the `docker pull` command in the `nebula-docker-compose` directory on your host. For example, if you want to update Nebula Console for the Nebula Graph 1.0 series, run the follow command.
+To update the images of the Graph Service, Storage Service, and Meta Service, run `docker-compose pull` in the `nebula-docker-compose` directory.
+
+### Why it shows `ERROR: toomanyrequests` when running `docker-compose pull`
+
+You may meet the following error.
+
+`ERROR: toomanyrequests: You have reached your pull rate limit. You may increase the limit by authenticating and upgrading: https://www.docker.com/increase-rate-limit`.
+
+You have met the rate limit of Docker Hub. Learn more on [Understanding Docker Hub Rate Limiting](https://www.docker.com/increase-rate-limit).
+
+### How to update the Nebula Console client
+
+To update the Nebula Console client, run the following command.
 
 ```bash
-docker pull vesoft/nebula-console:nightly
+docker pull vesoft/nebula-console:v2.0.0-ga
 ```
 
-If you want to update Nebula Console for the Nebula Graph v2.0, run the following command instead.
-
-```bash
-docker pull vesoft/nebula-console:v2-nightly
-```
-
-### How to upgrade Nebula Graph?
+### How to upgrade the Nebula Graph services deployed with Docker Compose
 
 To upgrade Nebula Graph, update the Nebula Graph docker images and restart the services.
 
 1. In the `nebula-docker-compose` directory, run `docker-compose pull` to update the Nebula Graph docker images.
 
-  > **CAUTION:** Make sure you have backed up all important data before following the next step to stop the Nebula Graph services.
+<!--
+  > **CAUTION:** Make sure that you have backed up all important data before following the next step to stop the Nebula Graph services.
+-->
 
 2. Run `docker-compose down` to stop the Nebula Graph services.
 
 3. Run `docker-compose up -d` to start the Nebula Graph services again.
 
-### Why can't I connect to Nebula Graph through port 3699 after updating the nebula-docker-compose repository?
-
-On the release of Nebula Graph 2.0.0-RC, the default port for connection changed from 3699 to 9669. To connect to Nebula Graph after updating the repository, use port 9669 or modify the port number in the `docker-compose.yaml` file.
-
-### Why can't I access the data after updating the nebula-docker-compose repository?
+### Why can't I access the data after updating the nebula-docker-compose repository? (Jan 4, 2021)
 
 If you updated the nebula-docker-compose repository after Jan 4, 2021 and there are pre-existing data, modify the `docker-compose.yaml` file and change the port numbers to [the previous ones](https://github.com/vesoft-inc/nebula-docker-compose/commit/2a612f1c4f0e2c31515e971b24b355b3be69420a) before connecting to Nebula Graph.
 
-## What to do next
+### Why can't I access the data after updating the nebula-docker-compose repository? (Jan 27, 2021)
 
-You can start using Nebula Graph by creating spaces and inserting data. For more information, see [Quick Start](https://docs.nebula-graph.io/manual-EN/1.overview/2.quick-start/1.get-started/).
+The data format is incompatible before and after in Jan 27, 2021. Run `docker-compose down -v` to delete all your local data.
+
+### Where are the data stored when Nebula Graph is deployed with Docker Compose
+
+If deployed with Docker Compose, Nebula Graph stores all data in `nebula-docker-compose/data/`.
