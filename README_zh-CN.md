@@ -51,7 +51,7 @@ Docker Compose 可以帮助您快速部署 Nebula Graph 服务。
 1. 通过Git克隆`nebula-docker-compose`仓库的`v1.0`分支到您的主机。
 
     ```bash
-    $ git clone -branch v1.0 https://github.com/vesoft-inc/  nebula-docker-compose.git
+    $ git clone -branch v1.0 https://github.com/vesoft-inc/nebula-docker-compose.git
     ```
 
 2. 进入 `nebula-docker-compose` 目录。
