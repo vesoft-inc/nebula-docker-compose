@@ -16,6 +16,8 @@
   <br>
 </p>
 
+The `v1.0` branch stores the Docker Compose deployment solution for the latest Nebula Graph v1.x version.
+
 # Deploy Nebula Graph with Docker Compose
 
 Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
@@ -43,18 +45,10 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 
 ## How to deploy
 
-1. Clone the `nebula-docker-compose` repository to your host with Git.
+1. Clone the `v1.0` branch of the `nebula-docker-compose` repository to your host with Git.
 
-    * To install Nebula Graph 1.0, clone the `master` branch.
-
-    ```shell
-    $ git clone https://github.com/vesoft-inc/nebula-docker-compose.git
-    ```
-
-    * To install Nebula Graph 2.0-pre, clone the `v2-preview` branch.
-
-    ```shell
-    $ git clone --branch v2-preview https://github.com/vesoft-inc/nebula-docker-compose.git
+    ```bash
+    $ git clone --branch v1.0 https://github.com/vesoft-inc/nebula-docker-compose.git
     ```
 
 2. Go to the `nebula-docker-compose` directory.
@@ -87,27 +81,11 @@ Using Docker Compose is a convenient way to deploy and manage Nebula Graph.
 
     Nebula-console is the native CLI client of Nebula Graph. In this step, Docker pulls the nebula-console images automatically from Docker Hub according to the path we set in the following commands and uses it to connect to the graphd service of Nebula Graph. You can use other clients to connect to Nebula Graph instead of Nebula-console, such as [Nebula Graph Studio](https://github.com/vesoft-inc/nebula-web-docker) and [clients for different programming languages](https://docs.nebula-graph.io/manual-EN/1.overview/2.quick-start/3.supported-clients/).
 
-   * For Nebula Graph 1.0:
-
     ```shell
     $ docker run --rm -ti --network=host vesoft/nebula-console:nightly -u <user> -p <password> --addr=127.0.0.1 --port=3699
     ```
 
-   * For Nebula Graph 2.0 pre:
-
-    ```shell
-    $ docker run --rm -ti --network nebula-docker-compose_nebula-net vesoft/nebula-console:v2-preview-nightly -u <user> -p <password> --address=graphd --port=3699
-    ```
-
     >**NOTE**: By default, the authentication is disabled, and the `-u` and `-p` options are unnecessary. To enbale authentication, see [Authentication Configurations](https://docs.nebula-graph.io/manual-EN/3.build-develop-and-administration/4.account-management-statements/authentication/#authentication).
-
-    The following information indicates that you have connected to the Nebula Graph services:
-
-    ```shell
-    Welcome to Nebula Graph (Version 5d10861)
-
-    (user@127.0.0.1) [(none)]>
-    ```
 
 ## Check the Nebula Graph service status and ports
 
@@ -203,20 +181,32 @@ Removing network nebula-docker-compose_nebula-net
 
 ## FAQ
 
-**Q**: How to update the nebula-console client?
+### How to update the docker images of Nebula Graph services
 
-**A**: To update the nebula-console client, use the `docker pull` command in the `nebula-docker-compose` directory on your host. For example, if you want to update nebula-console for the Nebula Graph 1.0 series, run the follow command.
+To update the images of the Graph Service, Storage Service, and Meta Service, run `docker-compose pull` in the `nebula-docker-compose` directory.
 
-```Shell
+### Why it shows `ERROR: toomanyrequests` when running `docker-compose pull`
+
+You may meet the following error.
+
+`ERROR: toomanyrequests: You have reached your pull rate limit. You may increase the limit by authenticating and upgrading: https://www.docker.com/increase-rate-limit`.
+
+You have met the rate limit of Docker Hub. Learn more on [Understanding Docker Hub Rate Limiting](https://www.docker.com/increase-rate-limit).
+
+### How to update the Nebula Console client
+
+To update the Nebula Console client, run the following command.
+
+```bash
 docker pull vesoft/nebula-console:nightly
 ```
 
-If you want to update nebula-console for the Nebula Graph 2.0 pre-release, run the following command instead.
+### How to upgrade the Nebula Graph services deployed with Docker Compose
 
-```Shell
-docker pull vesoft/nebula-console:v2-preview-nightly
-```
+To upgrade Nebula Graph, update the Nebula Graph docker images and restart the services.
 
-## What to Do Next 
+1. In the `nebula-docker-compose` directory, run `docker-compose pull` to update the Nebula Graph docker images.
 
-You can start using Nebula Graph by creating spaces and inserting data. For more information, see [Quick Start](https://docs.nebula-graph.io/manual-EN/1.overview/2.quick-start/1.get-started/).
+2. Run `docker-compose down` to stop the Nebula Graph services.
+
+3. Run `docker-compose up -d` to start the Nebula Graph services again.
