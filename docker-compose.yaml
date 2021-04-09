@@ -231,9 +231,9 @@ services:
       - --v=0
       - --minloglevel=0
     depends_on:
-      - metad0
-      - metad1
-      - metad2
+      - storaged0
+      - storaged1
+      - storaged2
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://graphd:19669/status"]
       interval: 30s
@@ -267,9 +267,9 @@ services:
       - --v=0
       - --minloglevel=0
     depends_on:
-      - metad0
-      - metad1
-      - metad2
+      - storaged0
+      - storaged1
+      - storaged2
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://graphd1:19669/status"]
       interval: 30s
@@ -303,9 +303,9 @@ services:
       - --v=0
       - --minloglevel=0
     depends_on:
-      - metad0
-      - metad1
-      - metad2
+      - storaged0
+      - storaged1
+      - storaged2
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://graphd2:19669/status"]
       interval: 30s
