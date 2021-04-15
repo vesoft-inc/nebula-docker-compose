@@ -3,15 +3,15 @@
 image:
   graphd:
     repository: vesoft/nebula-graphd
-    tag: v2-nightly
+    tag: v2.0.0
     pullPolicy: IfNotPresent
   metad:
     repository: vesoft/nebula-metad
-    tag: v2-nightly
+    tag: v2.0.0
     pullPolicy: IfNotPresent
   storaged:
     repository: vesoft/nebula-storaged
-    tag: v2-nightly
+    tag: v2.0.0
     pullPolicy: IfNotPresent
 
 storage:
@@ -77,9 +77,9 @@ port:
 # nebula metad & storaged container command
 commandArgs:
   metad:
-    - "exec /usr/local/nebula/bin/nebula-metad --flagfile=/usr/local/nebula/etc/nebula-metad.conf --v=4 --minloglevel=0 --daemonize=false"
+    - "exec /usr/local/nebula/bin/nebula-metad --flagfile=/usr/local/nebula/etc/nebula-metad.conf --daemonize=false"
   storaged:
-    - "exec /usr/local/nebula/bin/nebula-storaged --flagfile=/usr/local/nebula/etc/nebula-storaged.conf --v=4 --minloglevel=0 --daemonize=false"
+    - "exec /usr/local/nebula/bin/nebula-storaged --flagfile=/usr/local/nebula/etc/nebula-storaged.conf --daemonize=false"
 
 # Time period for the controller pod to do a graceful shutdown
 terminationGracePeriodSeconds: 30
