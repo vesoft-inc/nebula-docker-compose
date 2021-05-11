@@ -1,0 +1,23 @@
+---
+# stop nebula services
+
+- hosts: metad
+  roles:
+    - op
+  vars:
+    - module: metad
+    - op: status
+
+- hosts: storaged
+  roles:
+    - op
+  vars:
+    - module: storaged
+    - op: status
+
+- hosts: graphd
+  roles:
+    - op
+  vars:
+    - module: graphd
+    - op: status

@@ -1,0 +1,9 @@
+# configure /usr/local/nebula/etc/nebula-metad.conf for metad service
+
+- name: install metad
+  include_role:
+    name: install
+  vars:
+      module: nebula-metad
+
+

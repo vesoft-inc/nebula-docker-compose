@@ -1,0 +1,40 @@
+- name: create directory to store nebula package on all machines in the cluster
+  file:
+    path: "{{ deploy_dir }}"
+    state: directory
+    mode: 0775
+
+- name: verify if the package is exist
+  stat:
+    path: "{{ deploy_dir }}/bin"
+  register: stat_package
+
+- name: verify if the rpm is exist
+  stat:
+    path: "{{ deploy_dir }}/{{ nebula_packages.name }}"
+  register: stat_rpm
+
+- name: copy nebula package from Control Machine to all machines in the cluster
+  copy:
+    src: "{{ packages_dir }}/{{ nebula_packages.name }}"
+    dest: "{{ deploy_dir }}"
+  when:
+    -  not stat_rpm.stat.exists
+
+
+- name: unzip rpm file
+  shell: "{{ item }}"
+  with_items:
+    - "cd {{ deploy_dir }} && rpm2cpio {{ nebula_packages.name }} |cpio -div"
+    - "mv {{ deploy_dir }}/usr/local/nebula/bin {{ deploy_dir }}/"
+    - "mv {{ deploy_dir }}/usr/local/nebula/etc {{ deploy_dir }}/"
+    - "mv {{ deploy_dir }}/usr/local/nebula/share {{ deploy_dir }}/"
+    - "mv {{ deploy_dir }}/usr/local/nebula/scripts {{ deploy_dir }}/"
+
+  when:
+    -  not stat_package.stat.exists 
+
+- name: config {{ module }}.conf
+  template:
+    src: "{{ playbook_dir}}/templates/{{ module }}.conf.j2"
+    dest: "{{ deploy_dir }}/etc/{{ module }}.conf"

@@ -1,0 +1,14 @@
+fact_files/
+retry_files/
+
+*.log
+
+
+*.pyc
+
+*.idea
+packages
+
+poetry.lock
+pyproject.toml
+test.yml

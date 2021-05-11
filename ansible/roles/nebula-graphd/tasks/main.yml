@@ -1,0 +1,7 @@
+# configure /usr/local/nebula/etc/nebula-graphd.conf for graphd services
+
+- name: install graphd
+  include_role:
+    name: install
+  vars:
+    module: nebula-graphd

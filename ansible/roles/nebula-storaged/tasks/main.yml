@@ -1,0 +1,8 @@
+# configure /usr/local/nebula/etc/nebula-storaged.conf for storaged services
+
+- name: install storaged
+  include_role:
+    name: install
+  vars:
+      module: nebula-storaged
+

@@ -1,0 +1,42 @@
+---
+- hosts: graphd
+  roles:
+    - op
+  vars:
+    - module: graphd
+    - op: stop
+
+- hosts: storaged
+  roles:
+    - op
+  vars:
+    - module: storaged
+    - op: stop
+
+- hosts: metad
+  roles:
+    - op
+  vars:
+    - module: metad
+    - op: stop
+
+- hosts: metad
+  roles:
+    - op
+  vars:
+    - module: metad
+    - op: start
+
+- hosts: storaged
+  roles:
+    - op
+  vars:
+    - module: storaged
+    - op: start
+
+- hosts: graphd
+  roles:
+    - op
+  vars:
+    - module: graphd
+    - op: start

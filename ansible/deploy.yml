@@ -1,0 +1,38 @@
+---
+# deploy Nebula Graph cluster
+
+- name: set environment
+  hosts: all
+  become: true
+  roles:
+    - environment
+
+- name: copy nebula package to all machines in the cluster and install nebula on them
+  hosts: all
+  become: true
+  roles: 
+    - install
+
+- name: configuration for metad service
+  hosts: metad_servers
+  become: true
+  roles:
+    - metad
+
+- name: configuration for graphd service
+  hosts: graphd_servers
+  become: true
+  roles:
+    - graphd
+
+- name: configuration for storaged service
+  hosts: storaged_servers
+  become: true
+  roles:
+    - storaged
+
+- name: configuration for firewall
+  hosts: all
+  become: true
+  roles:
+    - { role: firewalld, when: enable_firewalld is defined and enable_firewalld }

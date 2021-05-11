@@ -1,0 +1,12 @@
+---
+- name: opration - {{ op }} {{ module }}
+  shell: "{{ deploy_dir }}/scripts/nebula.service {{ op }} {{ module }}"
+  register: result
+
+- name: echo result - {{ op }} {{ module }}
+  debug:
+    msg: "{{ result.stdout }}"
+
+
+
+

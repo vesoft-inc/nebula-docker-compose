@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+    - local
+
+- hosts: all
+  roles:
+    - prepare
+
+- hosts: metad
+  roles:
+    - nebula-metad
+
+- hosts: storaged
+  roles:
+    - nebula-storaged
+
+- hosts: graphd
+  roles:
+    - nebula-graphd

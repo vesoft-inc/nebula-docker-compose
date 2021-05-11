@@ -1,0 +1,18 @@
+- name: modify soft limit of max open files number
+  lineinfile:
+    path: /etc/security/limits.conf
+    regexp: '^root soft nofile'
+    insertafter: EOF
+    line: 'root soft nofile 654321'
+  
+- name: modify hard limit of max open files number
+  lineinfile:
+    path: /etc/security/limits.conf
+    regexp: '^root hard nofile'
+    insertafter: EOF
+    line: 'root hard nofile 654321'
+
+- name: restart sshd to make the changes on /etc/security/limits.conf take effect
+  service:
+    name: sshd
+    state: restarted

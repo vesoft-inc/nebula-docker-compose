@@ -1,0 +1,26 @@
+---
+# stop nebula services
+- hosts: graphd
+  roles:
+    - op
+  vars:
+    - module: graphd
+    - op: stop
+  ignore_errors: true
+
+
+- hosts: storaged
+  roles:
+    - op
+  vars:
+    - module: storaged
+    - op: stop
+  ignore_errors: true
+
+- hosts: metad
+  roles:
+    - op
+  vars:
+    - module: metad
+    - op: stop
+  ignore_errors: true

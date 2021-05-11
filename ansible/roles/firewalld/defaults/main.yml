@@ -1,0 +1,3 @@
+---
+
+firewalld_ports: [45500/tcp,45501/tcp,11000/tcp,11002/tcp,44500/tcp,44501/tcp,12000/tcp,12002/tcp,3699/tcp,13000/tcp,13002/tcp]

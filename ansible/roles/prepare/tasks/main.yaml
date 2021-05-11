@@ -1,0 +1,15 @@
+---
+- name: disk space check - fail when disk is full
+  shell: df -h {{ data_dir }} | tail -n1
+  register: disk_space_st
+  failed_when: " '100%' in disk_space_st.stdout "
+  changed_when: false
+
+# Debian GNU/Linux, Ubuntu, Fedora, CentOS, CoreOS
+- name: Get distro name from /etc/os-release
+  shell: "([ -f /etc/os-release ] && grep '^NAME=' /etc/os-release | sed s'/NAME=//' | tr -d \\\") || ([ -f /etc/redhat-release ] && cat /etc/redhat-release | cut '-d ' -f1)"
+  register: distro_st
+  failed_when: false
+  changed_when: false
+  tags:
+    - always
