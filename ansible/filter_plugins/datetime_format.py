@@ -2,9 +2,9 @@
 import datetime
 
 
-def yesturday_format(value):
-    yesturday = value - datetime.timedelta(days=1)
-    return yesturday.strftime('%Y.%m.%d')
+def yesterday_format(value):
+    yesterday = value - datetime.timedelta(days=1)
+    return yesterday.strftime('%Y.%m.%d')
 
 
 class FilterModule(object):
@@ -12,5 +12,5 @@ class FilterModule(object):
 
     def filters(self):
         return {
-            'yesturday_format': yesturday_format,
+            'yesterday_format': yesterday_format,
         }

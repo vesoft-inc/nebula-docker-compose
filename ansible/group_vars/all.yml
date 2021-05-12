@@ -3,21 +3,21 @@ nebula_packages:
         "{%- if install_source_type == 'GA' -%} 
         nebula-graph-{{ nebula_version }}.{{ os_version }}.{{ arc }}.{{ pkg }}
         {%- else -%} 
-        nebula-graph-{{ now()|yesturday_format }}-nightly.{{ os_version }}.{{ arc }}.{{ pkg }}
+        nebula-graph-{{ now()|yesterday_format }}-nightly.{{ os_version }}.{{ arc }}.{{ pkg }}
         {%- endif -%}"
         
     version: 
         "{%- if install_source_type.lower() == 'ga' -%} 
         {{ nebula_version }}
         {%- else -%} 
-        {{ nebula_version }}-{{ now()|yesturday_format }}-nightly
+        {{ nebula_version }}-{{ now()|yesterday_format }}-nightly
         {%- endif -%}"
 
     url: 
         "{%- if install_source_type.lower() == 'ga' -%} 
         https://oss-cdn.nebula-graph.io/package/{{ nebula_version }}/nebula-graph-{{ nebula_version }}.{{ os_version }}.{{ arc }}.{{ pkg }}
         {%- else -%} 
-        https://oss-cdn.nebula-graph.io/package/v2-nightly/{{ now()|yesturday_format }}/nebula-graph-{{ now()|yesturday_format }}-nightly.{{ os_version }}.{{ arc }}.{{ pkg }}
+        https://oss-cdn.nebula-graph.io/package/v2-nightly/{{ now()|yesterday_format }}/nebula-graph-{{ now()|yesterday_format }}-nightly.{{ os_version }}.{{ arc }}.{{ pkg }}
         {%- endif -%}"
     
 

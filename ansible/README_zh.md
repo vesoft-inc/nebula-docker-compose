@@ -44,7 +44,7 @@ sudo yum install ansible
 * Git clone 工程。
 * 修改 `inventory.ini` 文件
     - `install_source_type`，配置安装 GA 还是 nightly 的包。
-    - `ansible_ssh_user`, SSH 的 Linux 用户，如 `nebula`
+    - `ansible_ssh_user`， SSH 的 Linux 用户，如 `nebula`
     - `packages_dir`，操作机下载 rpm 包的目录。
     - `deploy_dir`，部署服务所在目录，如 `/home/nebula/nebula`
 
