@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   metad0:
-    image: vesoft/nebula-metad:v2.0.0
+    image: vesoft/nebula-metad:v2-nightly
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -13,7 +13,6 @@ services:
       - --ws_http_port=31120
       - --ws_h2_port=31130
       - --data_path=/data/meta
-      - --logtostderr
       - --v=0
       - --minloglevel=0
       - --log_dir=/logs
@@ -32,7 +31,7 @@ services:
       - SYS_PTRACE
 
   metad1:
-    image: vesoft/nebula-metad:v2.0.0
+    image: vesoft/nebula-metad:v2-nightly
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -44,7 +43,6 @@ services:
       - --ws_http_port=31220
       - --ws_h2_port=31230
       - --data_path=/data/meta
-      - --logtostderr
       - --v=0
       - --minloglevel=0
       - --log_dir=/logs
@@ -63,7 +61,7 @@ services:
       - SYS_PTRACE
 
   metad2:
-    image: vesoft/nebula-metad:v2.0.0
+    image: vesoft/nebula-metad:v2-nightly
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -75,7 +73,6 @@ services:
       - --ws_http_port=31320
       - --ws_h2_port=31330
       - --data_path=/data/meta
-      - --logtostderr
       - --v=0
       - --minloglevel=0
       - --log_dir=/logs
@@ -94,7 +91,7 @@ services:
       - SYS_PTRACE
 
   storaged0:
-    image: vesoft/nebula-storaged:v2.0.0
+    image: vesoft/nebula-storaged:v2-nightly
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -106,7 +103,6 @@ services:
       - --ws_http_port=32120
       - --ws_h2_port=32130
       - --data_path=/data/storage
-      - --logtostderr
       - --v=0
       - --minloglevel=0
       - --log_dir=/logs
@@ -129,7 +125,7 @@ services:
       - SYS_PTRACE
 
   storaged1:
-    image: vesoft/nebula-storaged:v2.0.0
+    image: vesoft/nebula-storaged:v2-nightly
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -141,7 +137,6 @@ services:
       - --ws_http_port=32220
       - --ws_h2_port=32230
       - --data_path=/data/storage
-      - --logtostderr
       - --v=0
       - --minloglevel=0
       - --log_dir=/logs
@@ -164,7 +159,7 @@ services:
       - SYS_PTRACE
 
   storaged2:
-    image: vesoft/nebula-storaged:v2.0.0
+    image: vesoft/nebula-storaged:v2-nightly
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -176,7 +171,6 @@ services:
       - --ws_http_port=32320
       - --ws_h2_port=32330
       - --data_path=/data/storage
-      - --logtostderr
       - --v=0
       - --minloglevel=0
       - --log_dir=/logs
@@ -199,7 +193,7 @@ services:
       - SYS_PTRACE
 
   graphd0:
-    image: vesoft/nebula-graphd:v2.0.0
+    image: vesoft/nebula-graphd:v2-nightly
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -210,7 +204,6 @@ services:
       - --ws_ip=0.0.0.0
       - --ws_http_port=33120
       - --ws_h2_port=33130
-      - --logtostderr
       - --v=0
       - --minloglevel=0
       - --log_dir=/logs
@@ -232,7 +225,7 @@ services:
       - SYS_PTRACE
 
   graphd1:
-    image: vesoft/nebula-graphd:v2.0.0
+    image: vesoft/nebula-graphd:v2-nightly
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -243,7 +236,6 @@ services:
       - --ws_ip=0.0.0.0
       - --ws_http_port=33220
       - --ws_h2_port=33230
-      - --logtostderr
       - --v=0
       - --minloglevel=0
       - --log_dir=/logs
@@ -265,7 +257,7 @@ services:
       - SYS_PTRACE
 
   graphd2:
-    image: vesoft/nebula-graphd:v2.0.0
+    image: vesoft/nebula-graphd:v2-nightly
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -276,7 +268,6 @@ services:
       - --ws_ip=0.0.0.0
       - --ws_http_port=33320
       - --ws_h2_port=33330
-      - --logtostderr
       - --v=0
       - --minloglevel=0
       - --log_dir=/logs
