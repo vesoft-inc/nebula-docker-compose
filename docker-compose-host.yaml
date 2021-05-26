@@ -1,0 +1,298 @@
+version: '3.8'
+services:
+  metad0:
+    image: vesoft/nebula-metad:v2.0.0
+    environment:
+      USER: root
+      TZ:   "${TZ}"
+    command:
+      - --meta_server_addrs=${HOST_IP}:9559,${HOST_IP}:19559,${HOST_IP}:29559
+      - --local_ip=${HOST_IP}
+      - --ws_ip=0.0.0.0
+      - --port=9559
+      - --ws_http_port=31120
+      - --ws_h2_port=31130
+      - --data_path=/data/meta
+      - --logtostderr
+      - --v=0
+      - --minloglevel=0
+      - --log_dir=/logs
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://${HOST_IP}:31120/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    volumes:
+      - ./data/meta0:/data/meta
+      - ./logs/meta0:/logs
+    network_mode: "host"
+    restart: on-failure
+    cap_add:
+      - SYS_PTRACE
+
+  metad1:
+    image: vesoft/nebula-metad:v2.0.0
+    environment:
+      USER: root
+      TZ:   "${TZ}"
+    command:
+      - --meta_server_addrs=${HOST_IP}:9559,${HOST_IP}:19559,${HOST_IP}:29559
+      - --local_ip=${HOST_IP}
+      - --ws_ip=0.0.0.0
+      - --port=19559
+      - --ws_http_port=31220
+      - --ws_h2_port=31230
+      - --data_path=/data/meta
+      - --logtostderr
+      - --v=0
+      - --minloglevel=0
+      - --log_dir=/logs
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://${HOST_IP}:31220/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    volumes:
+      - ./data/meta1:/data/meta
+      - ./logs/meta1:/logs
+    network_mode: "host"
+    restart: on-failure
+    cap_add:
+      - SYS_PTRACE
+
+  metad2:
+    image: vesoft/nebula-metad:v2.0.0
+    environment:
+      USER: root
+      TZ:   "${TZ}"
+    command:
+      - --meta_server_addrs=${HOST_IP}:9559,${HOST_IP}:19559,${HOST_IP}:29559
+      - --local_ip=${HOST_IP}
+      - --ws_ip=0.0.0.0
+      - --port=29559
+      - --ws_http_port=31320
+      - --ws_h2_port=31330
+      - --data_path=/data/meta
+      - --logtostderr
+      - --v=0
+      - --minloglevel=0
+      - --log_dir=/logs
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://${HOST_IP}:31320/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    volumes:
+      - ./data/meta2:/data/meta
+      - ./logs/meta2:/logs
+    network_mode: "host"
+    restart: on-failure
+    cap_add:
+      - SYS_PTRACE
+
+  storaged0:
+    image: vesoft/nebula-storaged:v2.0.0
+    environment:
+      USER: root
+      TZ:   "${TZ}"
+    command:
+      - --meta_server_addrs=${HOST_IP}:9559,${HOST_IP}:19559,${HOST_IP}:29559
+      - --local_ip=${HOST_IP}
+      - --ws_ip=0.0.0.0
+      - --port=9779
+      - --ws_http_port=32120
+      - --ws_h2_port=32130
+      - --data_path=/data/storage
+      - --logtostderr
+      - --v=0
+      - --minloglevel=0
+      - --log_dir=/logs
+    depends_on:
+      - metad0
+      - metad1
+      - metad2
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://${HOST_IP}:32120/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    volumes:
+      - ./data/storage0:/data/storage
+      - ./logs/storage0:/logs
+    network_mode: "host"
+    restart: on-failure
+    cap_add:
+      - SYS_PTRACE
+
+  storaged1:
+    image: vesoft/nebula-storaged:v2.0.0
+    environment:
+      USER: root
+      TZ:   "${TZ}"
+    command:
+      - --meta_server_addrs=${HOST_IP}:9559,${HOST_IP}:19559,${HOST_IP}:29559
+      - --local_ip=${HOST_IP}
+      - --ws_ip=0.0.0.0
+      - --port=19779
+      - --ws_http_port=32220
+      - --ws_h2_port=32230
+      - --data_path=/data/storage
+      - --logtostderr
+      - --v=0
+      - --minloglevel=0
+      - --log_dir=/logs
+    depends_on:
+      - metad0
+      - metad1
+      - metad2
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://${HOST_IP}:32220/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    volumes:
+      - ./data/storage1:/data/storage
+      - ./logs/storage1:/logs
+    network_mode: "host"
+    restart: on-failure
+    cap_add:
+      - SYS_PTRACE
+
+  storaged2:
+    image: vesoft/nebula-storaged:v2.0.0
+    environment:
+      USER: root
+      TZ:   "${TZ}"
+    command:
+      - --meta_server_addrs=${HOST_IP}:9559,${HOST_IP}:19559,${HOST_IP}:29559
+      - --local_ip=${HOST_IP}
+      - --ws_ip=0.0.0.0
+      - --port=29779
+      - --ws_http_port=32320
+      - --ws_h2_port=32330
+      - --data_path=/data/storage
+      - --logtostderr
+      - --v=0
+      - --minloglevel=0
+      - --log_dir=/logs
+    depends_on:
+      - metad0
+      - metad1
+      - metad2
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://${HOST_IP}:32320/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    volumes:
+      - ./data/storage2:/data/storage
+      - ./logs/storage2:/logs
+    network_mode: "host"
+    restart: on-failure
+    cap_add:
+      - SYS_PTRACE
+
+  graphd0:
+    image: vesoft/nebula-graphd:v2.0.0
+    environment:
+      USER: root
+      TZ:   "${TZ}"
+    command:
+      - --meta_server_addrs=${HOST_IP}:9559,${HOST_IP}:19559,${HOST_IP}:29559
+      - --port=9669
+      - --local_ip=${HOST_IP}
+      - --ws_ip=0.0.0.0
+      - --ws_http_port=33120
+      - --ws_h2_port=33130
+      - --logtostderr
+      - --v=0
+      - --minloglevel=0
+      - --log_dir=/logs
+    depends_on:
+      - storaged0
+      - storaged1
+      - storaged2
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://${HOST_IP}:33120/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    volumes:
+      - ./logs/graph:/logs
+    network_mode: "host"
+    restart: on-failure
+    cap_add:
+      - SYS_PTRACE
+
+  graphd1:
+    image: vesoft/nebula-graphd:v2.0.0
+    environment:
+      USER: root
+      TZ:   "${TZ}"
+    command:
+      - --meta_server_addrs=${HOST_IP}:9559,${HOST_IP}:19559,${HOST_IP}:29559
+      - --port=19669
+      - --local_ip=${HOST_IP}
+      - --ws_ip=0.0.0.0
+      - --ws_http_port=33220
+      - --ws_h2_port=33230
+      - --logtostderr
+      - --v=0
+      - --minloglevel=0
+      - --log_dir=/logs
+    depends_on:
+        - storaged0
+        - storaged1
+        - storaged2
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://${HOST_IP}:33220/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    volumes:
+      - ./logs/graph1:/logs
+    network_mode: "host"
+    restart: on-failure
+    cap_add:
+      - SYS_PTRACE
+
+  graphd2:
+    image: vesoft/nebula-graphd:v2.0.0
+    environment:
+      USER: root
+      TZ:   "${TZ}"
+    command:
+      - --meta_server_addrs=${HOST_IP}:9559,${HOST_IP}:19559,${HOST_IP}:29559
+      - --port=29669
+      - --local_ip=${HOST_IP}
+      - --ws_ip=0.0.0.0
+      - --ws_http_port=33320
+      - --ws_h2_port=33330
+      - --logtostderr
+      - --v=0
+      - --minloglevel=0
+      - --log_dir=/logs
+    depends_on:
+        - storaged0
+        - storaged1
+        - storaged2
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://${HOST_IP}:33320/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    volumes:
+      - ./logs/graph2:/logs
+    network_mode: "host"
+    restart: on-failure
+    cap_add:
+      - SYS_PTRACE
