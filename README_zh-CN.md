@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/vesoft-inc/nebula/raw/master/docs/logo.png"/>
+  <img src="https://nebula-graph.io/img/nav-nebula-logo.png"/>
   <br>中文 | <a href="README.md">English</a>
   <br>能够容纳千亿个顶点和万亿条边，并提供毫秒级查询延时的图数据库解决方案<br>
 </p>
@@ -24,8 +24,8 @@
 
 在使用本仓库前，请选择好您需要使用的分支。下表列出了常用分支以及与其相对应的Nebula Graph分支和版本。
 
-| nebula-docker-compose分支 | Nebula Graph分支与仓库 | Nebula Graph版本 | 如何使用本仓库 |
-| - | - | - | - |
-| [`master`](https://github.com/vesoft-inc/nebula-docker-compose/tree/master) | [nebula-graph仓库](https://github.com/vesoft-inc/nebula-graph)的`master`分支| 最新的v2.x开发版本 | [Docker Compose部署Nebula Graph](https://docs.nebula-graph.com.cn/2.0/2.quick-start/2.deploy-nebula-graph-with-docker-compose/) |
-| [`v2.0.0`](https://github.com/vesoft-inc/nebula-docker-compose/tree/v2.0.0)（**推荐**） | nebula-graph仓库的`v2.0.0`分支 | v.2.0.0-GA | [Docker Compose部署Nebula Graph](https://github.com/vesoft-inc/nebula-docker-compose/blob/v2.0.0/README_zh-CN.md) |
-| [`v1.0`](https://github.com/vesoft-inc/nebula-docker-compose/tree/v1.0)| [nebula](https://github.com/vesoft-inc/nebula)仓库的`master`分支 | 最新的v1.x开发版本 | [Docker Compose部署Nebula Graph](https://github.com/vesoft-inc/nebula-docker-compose/blob/v1.0/README_zh-CN.md) |
+| nebula-docker-compose分支                                                               | Nebula Graph分支与仓库                                                         | Nebula Graph版本     | 如何使用本仓库                                                                                                                    |
+| :-------------------------------------------------------------------------------------: | ------------------------------------------------------------------------------ | -------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| [`master`](https://github.com/vesoft-inc/nebula-docker-compose/tree/master)             | [nebula-graph仓库](https://github.com/vesoft-inc/nebula-graph)的`master`分支   | 最新的v2.x开发版本   | [Docker Compose部署Nebula Graph](https://docs.nebula-graph.com.cn/2.0/2.quick-start/2.deploy-nebula-graph-with-docker-compose/)   |
+| [`v2.0.0`](https://github.com/vesoft-inc/nebula-docker-compose/tree/v2.0.0)（**推荐**） | nebula-graph仓库的`v2.0.0`分支                                                 | v.2.0.0-GA           | [Docker Compose部署Nebula Graph](https://github.com/vesoft-inc/nebula-docker-compose/blob/v2.0.0/README_zh-CN.md)                 |
+| [`v1.0`](https://github.com/vesoft-inc/nebula-docker-compose/tree/v1.0)                 | [nebula](https://github.com/vesoft-inc/nebula)仓库的`master`分支               | 最新的v1.x开发版本   | [Docker Compose部署Nebula Graph](https://github.com/vesoft-inc/nebula-docker-compose/blob/v1.0/README_zh-CN.md)                   |
