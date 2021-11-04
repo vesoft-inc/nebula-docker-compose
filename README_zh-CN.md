@@ -29,3 +29,43 @@
 | [`master`](https://github.com/vesoft-inc/nebula-docker-compose/tree/master)             | [nebula-graph仓库](https://github.com/vesoft-inc/nebula-graph)的`master`分支   | 最新的v2.x开发版本   | [Docker Compose部署Nebula Graph](https://docs.nebula-graph.com.cn/2.0/2.quick-start/2.deploy-nebula-graph-with-docker-compose/)   |
 | [`v2.0.0`](https://github.com/vesoft-inc/nebula-docker-compose/tree/v2.0.0)（**推荐**） | nebula-graph仓库的`v2.0.0`分支                                                 | v.2.0.0-GA           | [Docker Compose部署Nebula Graph](https://github.com/vesoft-inc/nebula-docker-compose/blob/v2.0.0/README_zh-CN.md)                 |
 | [`v1.0`](https://github.com/vesoft-inc/nebula-docker-compose/tree/v1.0)                 | [nebula](https://github.com/vesoft-inc/nebula)仓库的`master`分支               | 最新的v1.x开发版本   | [Docker Compose部署Nebula Graph](https://github.com/vesoft-inc/nebula-docker-compose/blob/v1.0/README_zh-CN.md)                   |
+
+## FAQ
+
+### Running in M1 macOS
+
+如果您使用 Docker Desktop，只需要执行：
+
+```bash
+docker compose up -d
+```
+
+或者，如果您想使用 [lima](https://github.com/lima-vm/lima)：
+
+- 安装 lima `brew install lima`
+- 启动 lima VM `limactl start`
+- 然后您可以在 lima VM 中执行指令： `lima <command>` ，比如 `lima uname -a`
+
+- 在这之后，就可以用 `lima nerdctl` 替代 `docker` 这个命令行了，值得注意的是因为这里用的是 `nerdctl` 而不是 docker-compose，需要引用 `docker-compose-nerdctl.yaml`。
+
+```bash
+rm -fr data logs
+mkdir -p data/{meta,storage}{0..2}/nebula logs/{meta,storage,graph}{0..2} logs/graph
+lima nerdctl compose --file docker-compose-nerdctl.yaml up -d
+```
+
+- 从 lima VM 里用 console 接入 nebula：
+
+```bash
+lima ./nebula-console-linux-arm64-v2.6.0 -addr host.lima.internal -port 9669 -user root -p password
+```
+
+### Running with nerdctl
+
+如果您使用 [nerdctl](https://github.com/containerd/nerdctl)，可以用下边的兼容的 yaml 文件，这个情况下需要先创建 data、logs 目录。
+
+```bash
+mkdir -p data/{meta,storage}{0..2}/nebula logs/{meta,storage,graph}{0..2} logs/graph
+
+nerdctl compose --file docker-compose-nerdctl.yaml up -d
+```

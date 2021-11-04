@@ -27,3 +27,44 @@ Choose a nebula-docker-compose branch before you start. The following table list
 | [`v2.5.0`](https://github.com/vesoft-inc/nebula-docker-compose/tree/v2.5.0) | `v2.5.0` of the nebula-graph repository                                               | v.2.5.0                                    | [Deploy Nebula Graph with Docker Compose](https://github.com/vesoft-inc/nebula-docker-compose/blob/v2.5.0/README.md)                 |
 | [`v2.0.0`](https://github.com/vesoft-inc/nebula-docker-compose/tree/v2.0.0)                       | `v2.0.0` of the nebula-graph repository                                               | v.2.0.0-GA                                 | [Deploy Nebula Graph with Docker Compose](https://github.com/vesoft-inc/nebula-docker-compose/blob/v2.0.0/README.md)                 |
 | [`v1.0`](https://github.com/vesoft-inc/nebula-docker-compose/tree/v1.0)                           | `master` of the [nebula](https://github.com/vesoft-inc/nebula) repository             | The latest development <br>version of v1.x | [Deploy Nebula Graph with Docker Compose](https://github.com/vesoft-inc/nebula-docker-compose/blob/v1.0/README.md)                   |
+
+## FAQ
+
+### Running in M1 macOS
+
+If you are using Docker Desktop:
+
+```bash
+docker compose up -d
+```
+
+Alternatively, you could use [lima](https://github.com/lima-vm/lima):
+
+- Install lima with `brew install lima`
+- Start the lima VM with `limactl start`
+- Then you could use shell inside the lima VM with `lima <command>` like `lima uname -a`
+
+Then you could use `lima nerdctl` like `docker`:
+
+```bash
+rm -fr data logs
+mkdir -p data/{meta,storage}{0..2}/nebula logs/{meta,storage,graph}{0..2} logs/graph
+lima nerdctl --debug-full compose --file docker-compose-nerdctl.yaml up -d
+```
+
+To access the cluster from lima:
+
+```bash
+lima ./nebula-console-linux-arm64-v2.6.0 -addr host.lima.internal -port 9669 -user root -p password
+```
+
+### Running with nerdctl
+
+If you are running this compose file via [nerdctl](https://github.com/containerd/nerdctl), please use `docker-compose-nerdctl.yaml` instead:
+
+```bash
+mkdir -p data/{meta,storage}{0..2}/nebula logs/{meta,storage,graph}{0..2} logs/graph
+
+nerdctl compose --file docker-compose-nerdctl.yaml up -d
+```
+
