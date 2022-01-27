@@ -20,6 +20,8 @@ There are multiple ways to deploy Nebula Graph, but using Docker Compose is usua
 
 Choose a nebula-docker-compose branch before you start. The following table lists the most popular nebula-docker-compose branches and the corresponding Nebula Graph GitHub branches and versions.
 
+For minor version of docker images(2.6.2 for instance), please check tags from the docker hub i.e. [here](https://hub.docker.com/r/vesoft/nebula-graphd/tags).
+
 | nebula-docker-compose branch                                                                      | Nebula Graph branch and repository                                                    | Nebula Graph version                       | How to use nebula-docker-compose                                                                                                     |
 | :-----------------------------------------------------------------------------------------------: | ------------------------------------------------------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
 | [`master`](https://github.com/vesoft-inc/nebula-docker-compose/tree/master)                       | `master` of the [nebula-graph repository](https://github.com/vesoft-inc/nebula-graph) | The latest development <br>version of v2.x | [Deploy Nebula Graph with Docker Compose](https://docs.nebula-graph.io/2.0/2.quick-start/2.deploy-nebula-graph-with-docker-compose/) |
