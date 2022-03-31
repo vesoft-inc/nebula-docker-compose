@@ -331,9 +331,7 @@ services:
       - sh
       - -c
       - |
-        sleep 3 &&
-        nebula-console -addr graphd -port 9669 -u root -p nebula -e 'ADD HOSTS "storaged0":9779,"storaged1":9779,"storaged2":9779' &&
-        sleep 36000
+        sleep 3 
     depends_on:
       - graphd
     networks:
