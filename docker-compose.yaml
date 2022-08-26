@@ -336,6 +336,8 @@ services:
         sleep 36000
     depends_on:
       - graphd
+      - graphd1
+      - graphd2
     networks:
       - nebula-net
 
