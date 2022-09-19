@@ -1,14 +1,14 @@
 version: '3.6'
 services:
   metad0:
-    image: vesoft/nebula-metad:v1.0.0
+    image: vesoft/nebula-metad:nightly
     env_file:
       - ./nebula.env
     command:
-      - --meta_server_addrs=192.168.8.191:45500,192.168.8.192:45500,192.168.8.193:45500
+      - --meta_server_addrs=192.168.8.191:9559,192.168.8.192:9559,192.168.8.193:9559
       - --local_ip=192.168.8.191
       - --ws_ip=192.168.8.191
-      - --port=45500
+      - --port=9559
       - --data_path=/data/meta
       - --log_dir=/logs
       - --v=0
@@ -21,22 +21,22 @@ services:
         constraints:
           - node.hostname == node-191
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://192.168.8.191:11000/status"]
+      test: ["CMD", "curl", "-f", "http://192.168.8.191:19559/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - target: 11000
-        published: 11000
+      - target: 19559
+        published: 19559
         protocol: tcp
         mode: host
-      - target: 11002
-        published: 11002
+      - target: 19560
+        published: 19560
         protocol: tcp
         mode: host
-      - target: 45500
-        published: 45500
+      - target: 9559
+        published: 9559
         protocol: tcp
         mode: host
     volumes:
@@ -46,14 +46,14 @@ services:
       - nebula-net
 
   metad1:
-    image: vesoft/nebula-metad:v1.0.0
+    image: vesoft/nebula-metad:nightly
     env_file:
       - ./nebula.env
     command:
-      - --meta_server_addrs=192.168.8.191:45500,192.168.8.192:45500,192.168.8.193:45500
+      - --meta_server_addrs=192.168.8.191:9559,192.168.8.192:9559,192.168.8.193:9559
       - --local_ip=192.168.8.192
       - --ws_ip=192.168.8.192
-      - --port=45500
+      - --port=9559
       - --data_path=/data/meta
       - --log_dir=/logs
       - --v=0
@@ -66,22 +66,22 @@ services:
         constraints:
           - node.hostname == node-192
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://192.168.8.192:11000/status"]
+      test: ["CMD", "curl", "-f", "http://192.168.8.192:19559/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - target: 11000
-        published: 11000
+      - target: 19559
+        published: 19559
         protocol: tcp
         mode: host
-      - target: 11002
-        published: 11002
+      - target: 19560
+        published: 19560
         protocol: tcp
         mode: host
-      - target: 45500
-        published: 45500
+      - target: 9559
+        published: 9559
         protocol: tcp
         mode: host
     volumes:
@@ -91,14 +91,14 @@ services:
       - nebula-net
 
   metad2:
-    image: vesoft/nebula-metad:v1.0.0
+    image: vesoft/nebula-metad:nightly
     env_file:
       - ./nebula.env
     command:
-      - --meta_server_addrs=192.168.8.191:45500,192.168.8.192:45500,192.168.8.193:45500
+      - --meta_server_addrs=192.168.8.191:9559,192.168.8.192:9559,192.168.8.193:9559
       - --local_ip=192.168.8.193
       - --ws_ip=192.168.8.193
-      - --port=45500
+      - --port=9559
       - --data_path=/data/meta
       - --log_dir=/logs
       - --v=0
@@ -111,22 +111,22 @@ services:
         constraints:
           - node.hostname == node-193
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://192.168.8.193:11000/status"]
+      test: ["CMD", "curl", "-f", "http://192.168.8.193:19559/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - target: 11000
-        published: 11000
+      - target: 19559
+        published: 19559
         protocol: tcp
         mode: host
-      - target: 11002
-        published: 11002
+      - target: 19560
+        published: 19560
         protocol: tcp
         mode: host
-      - target: 45500
-        published: 45500
+      - target: 9559
+        published: 9559
         protocol: tcp
         mode: host
     volumes:
@@ -136,14 +136,14 @@ services:
       - nebula-net
 
   storaged0:
-    image: vesoft/nebula-storaged:v1.0.0
+    image: vesoft/nebula-storaged:nightly
     env_file:
       - ./nebula.env
     command:
-      - --meta_server_addrs=192.168.8.191:45500,192.168.8.192:45500,192.168.8.193:45500
+      - --meta_server_addrs=192.168.8.191:9559,192.168.8.192:9559,192.168.8.193:9559
       - --local_ip=192.168.8.191
       - --ws_ip=192.168.8.191
-      - --port=44500
+      - --port=9779
       - --data_path=/data/storage
       - --log_dir=/logs
       - --v=0
@@ -160,18 +160,18 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://192.168.8.191:12000/status"]
+      test: ["CMD", "curl", "-f", "http://192.168.8.191:19779/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - target: 12000
-        published: 12000
+      - target: 19779
+        published: 19779
         protocol: tcp
         mode: host
-      - target: 12002
-        published: 12002
+      - target: 19780
+        published: 19780
         protocol: tcp
         mode: host
     volumes:
@@ -181,14 +181,14 @@ services:
       - nebula-net
 
   storaged1:
-    image: vesoft/nebula-storaged:v1.0.0
+    image: vesoft/nebula-storaged:nightly
     env_file:
       - ./nebula.env
     command:
-      - --meta_server_addrs=192.168.8.191:45500,192.168.8.192:45500,192.168.8.193:45500
+      - --meta_server_addrs=192.168.8.191:9559,192.168.8.192:9559,192.168.8.193:9559
       - --local_ip=192.168.8.192
       - --ws_ip=192.168.8.192
-      - --port=44500
+      - --port=9779
       - --data_path=/data/storage
       - --log_dir=/logs
       - --v=0
@@ -205,17 +205,17 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://192.168.8.192:12000/status"]
+      test: ["CMD", "curl", "-f", "http://192.168.8.192:19779/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - target: 12000
-        published: 12000
+      - target: 19779
+        published: 19779
         protocol: tcp
         mode: host
-      - target: 12002
+      - target: 19780
         published: 12004
         protocol: tcp
         mode: host
@@ -226,14 +226,14 @@ services:
       - nebula-net
 
   storaged2:
-    image: vesoft/nebula-storaged:v1.0.0
+    image: vesoft/nebula-storaged:nightly
     env_file:
       - ./nebula.env
     command:
-      - --meta_server_addrs=192.168.8.191:45500,192.168.8.192:45500,192.168.8.193:45500
+      - --meta_server_addrs=192.168.8.191:9559,192.168.8.192:9559,192.168.8.193:9559
       - --local_ip=192.168.8.193
       - --ws_ip=192.168.8.193
-      - --port=44500
+      - --port=9779
       - --data_path=/data/storage
       - --log_dir=/logs
       - --v=0
@@ -250,17 +250,17 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://192.168.8.193:12000/status"]
+      test: ["CMD", "curl", "-f", "http://192.168.8.193:19779/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - target: 12000
-        published: 12000
+      - target: 19779
+        published: 19779
         protocol: tcp
         mode: host
-      - target: 12002
+      - target: 19780
         published: 12006
         protocol: tcp
         mode: host
@@ -271,12 +271,12 @@ services:
       - nebula-net
 
   graphd:
-    image: vesoft/nebula-graphd:v1.0.0
+    image: vesoft/nebula-graphd:nightly
     env_file:
       - ./nebula.env
     command:
-      - --meta_server_addrs=192.168.8.191:45500,192.168.8.192:45500,192.168.8.193:45500
-      - --port=3699
+      - --meta_server_addrs=192.168.8.191:9559,192.168.8.192:9559,192.168.8.193:9559
+      - --port=9669
       - --ws_ip=192.168.8.191
       - --log_dir=/logs
       - --v=0
@@ -293,22 +293,22 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://192.168.8.191:13000/status"]
+      test: ["CMD", "curl", "-f", "http://192.168.8.191:19669/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - target: 3699
-        published: 3699
+      - target: 9669
+        published: 9669
         protocol: tcp
         mode: host
-      - target: 13000
-        published: 13000
+      - target: 19669
+        published: 19669
         protocol: tcp
         mode: host
-      - target: 13002
-        published: 13002
+      - target: 19670
+        published: 19670
         protocol: tcp
         mode: host
     volumes:

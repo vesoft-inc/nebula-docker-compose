@@ -5,23 +5,24 @@ services:
     env_file:
       - ./nebula.env
     command:
-      - --meta_server_addrs=172.28.1.1:45500,172.28.1.2:45500,172.28.1.3:45500
+      - --meta_server_addrs=172.28.1.1:9559,172.28.1.2:9559,172.28.1.3:9559
       - --local_ip=172.28.1.1
       - --ws_ip=172.28.1.1
-      - --port=45500
+      - --port=9559
       - --data_path=/data/meta
       - --log_dir=/logs
       - --v=0
       - --minloglevel=2
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://172.28.1.1:11000/status"]
+      test: ["CMD", "curl", "-f", "http://172.28.1.1:19559/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - 11000
-      - 11002
+      - 9559
+      - 19559
+      - 19560
     volumes:
       - ./data/meta0:/data/meta
       - ./logs/meta0:/logs
@@ -35,23 +36,24 @@ services:
     env_file:
       - ./nebula.env
     command:
-      - --meta_server_addrs=172.28.1.1:45500,172.28.1.2:45500,172.28.1.3:45500
+      - --meta_server_addrs=172.28.1.1:9559,172.28.1.2:9559,172.28.1.3:9559
       - --local_ip=172.28.1.2
       - --ws_ip=172.28.1.2
-      - --port=45500
+      - --port=9559
       - --data_path=/data/meta
       - --log_dir=/logs
       - --v=0
       - --minloglevel=2
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://172.28.1.2:11000/status"]
+      test: ["CMD", "curl", "-f", "http://172.28.1.2:19559/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - 11000
-      - 11002
+      - 9559
+      - 19559
+      - 19560
     volumes:
       - ./data/meta1:/data/meta
       - ./logs/meta1:/logs
@@ -65,23 +67,24 @@ services:
     env_file:
       - ./nebula.env
     command:
-      - --meta_server_addrs=172.28.1.1:45500,172.28.1.2:45500,172.28.1.3:45500
+      - --meta_server_addrs=172.28.1.1:9559,172.28.1.2:9559,172.28.1.3:9559
       - --local_ip=172.28.1.3
       - --ws_ip=172.28.1.3
-      - --port=45500
+      - --port=9559
       - --data_path=/data/meta
       - --log_dir=/logs
       - --v=0
       - --minloglevel=2
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://172.28.1.3:11000/status"]
+      test: ["CMD", "curl", "-f", "http://172.28.1.3:19559/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - 11000
-      - 11002
+      - 9559
+      - 19559
+      - 19560
     volumes:
       - ./data/meta2:/data/meta
       - ./logs/meta2:/logs
@@ -95,10 +98,10 @@ services:
     env_file:
       - ./nebula.env
     command:
-      - --meta_server_addrs=172.28.1.1:45500,172.28.1.2:45500,172.28.1.3:45500
+      - --meta_server_addrs=172.28.1.1:9559,172.28.1.2:9559,172.28.1.3:9559
       - --local_ip=172.28.2.1
       - --ws_ip=172.28.2.1
-      - --port=44500
+      - --port=9779
       - --data_path=/data/storage
       - --log_dir=/logs
       - --v=0
@@ -108,14 +111,15 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://172.28.2.1:12000/status"]
+      test: ["CMD", "curl", "-f", "http://172.28.2.1:19779/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - 12000
-      - 12002
+      - 9779
+      - 19779
+      - 19780
     volumes:
       - ./data/storage0:/data/storage
       - ./logs/storage0:/logs
@@ -129,10 +133,10 @@ services:
     env_file:
       - ./nebula.env
     command:
-      - --meta_server_addrs=172.28.1.1:45500,172.28.1.2:45500,172.28.1.3:45500
+      - --meta_server_addrs=172.28.1.1:9559,172.28.1.2:9559,172.28.1.3:9559
       - --local_ip=172.28.2.2
       - --ws_ip=172.28.2.2
-      - --port=44500
+      - --port=9779
       - --data_path=/data/storage
       - --log_dir=/logs
       - --v=0
@@ -142,14 +146,15 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://172.28.2.2:12000/status"]
+      test: ["CMD", "curl", "-f", "http://172.28.2.2:19779/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - 12000
-      - 12002
+      - 19779
+      - 19779
+      - 19780
     volumes:
       - ./data/storage1:/data/storage
       - ./logs/storage1:/logs
@@ -163,10 +168,10 @@ services:
     env_file:
       - ./nebula.env
     command:
-      - --meta_server_addrs=172.28.1.1:45500,172.28.1.2:45500,172.28.1.3:45500
+      - --meta_server_addrs=172.28.1.1:9559,172.28.1.2:9559,172.28.1.3:9559
       - --local_ip=172.28.2.3
       - --ws_ip=172.28.2.3
-      - --port=44500
+      - --port=9779
       - --data_path=/data/storage
       - --log_dir=/logs
       - --v=0
@@ -176,14 +181,15 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://172.28.2.3:12000/status"]
+      test: ["CMD", "curl", "-f", "http://172.28.2.3:19779/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - 12000
-      - 12002
+      - 19780
+      - 19779
+      - 19780
     volumes:
       - ./data/storage2:/data/storage
       - ./logs/storage2:/logs
@@ -197,8 +203,8 @@ services:
     env_file:
       - ./nebula.env
     command:
-      - --meta_server_addrs=172.28.1.1:45500,172.28.1.2:45500,172.28.1.3:45500
-      - --port=3699
+      - --meta_server_addrs=172.28.1.1:9559,172.28.1.2:9559,172.28.1.3:9559
+      - --port=9669
       - --ws_ip=172.28.3.1
       - --log_dir=/logs
       - --v=0
@@ -208,15 +214,15 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://172.28.3.1:13000/status"]
+      test: ["CMD", "curl", "-f", "http://172.28.3.1:19669/status"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 20s
     ports:
-      - "3699:3699"
-      - 13000
-      - 13002
+      - "9669:9669"
+      - 19669
+      - 19670
     volumes:
       - ./logs/graph:/logs
     networks:
