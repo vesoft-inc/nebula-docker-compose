@@ -122,7 +122,8 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://storaged0:19779/status"]
+      # Just check process level health, please do `SHOW HOSTS` from console to check the status of storaged on cluster level
+      test: "cat /proc/net/tcp | awk 'function hextodec(str,ret,n,i,k,c){ret = 0;n = length(str);for (i = 1; i <= n; i++) {c = tolower(substr(str, i, 1));k = index(\"123456789abcdef\", c);ret = ret * 16 + k;}return ret;}function getIP(str,ret){ret=hextodec(substr(str,index(str,\":\")-2,2));for (i=5; i>0; i-=2) {ret = ret\".\"hextodec(substr(str,i,2));}ret = ret\":\"hextodec(substr(str,index(str,\":\")+1,4));return ret;} NR > 1 {{if(NR==2)print \"Local Listening\";local=getIP(\$2);remote=getIP(\$3)}{print local}}' | grep '0.0.0.0:9779'"
       interval: 30s
       timeout: 10s
       retries: 3
@@ -160,7 +161,8 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://storaged1:19779/status"]
+      # Just check process level health, please do `SHOW HOSTS` from console to check the status of storaged on cluster level
+      test: "cat /proc/net/tcp | awk 'function hextodec(str,ret,n,i,k,c){ret = 0;n = length(str);for (i = 1; i <= n; i++) {c = tolower(substr(str, i, 1));k = index(\"123456789abcdef\", c);ret = ret * 16 + k;}return ret;}function getIP(str,ret){ret=hextodec(substr(str,index(str,\":\")-2,2));for (i=5; i>0; i-=2) {ret = ret\".\"hextodec(substr(str,i,2));}ret = ret\":\"hextodec(substr(str,index(str,\":\")+1,4));return ret;} NR > 1 {{if(NR==2)print \"Local Listening\";local=getIP(\$2);remote=getIP(\$3)}{print local}}' | grep '0.0.0.0:9779'"
       interval: 30s
       timeout: 10s
       retries: 3
@@ -198,7 +200,8 @@ services:
       - metad1
       - metad2
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://storaged2:19779/status"]
+      # Just check process level health, please do `SHOW HOSTS` from console to check the status of storaged on cluster level
+      test: "cat /proc/net/tcp | awk 'function hextodec(str,ret,n,i,k,c){ret = 0;n = length(str);for (i = 1; i <= n; i++) {c = tolower(substr(str, i, 1));k = index(\"123456789abcdef\", c);ret = ret * 16 + k;}return ret;}function getIP(str,ret){ret=hextodec(substr(str,index(str,\":\")-2,2));for (i=5; i>0; i-=2) {ret = ret\".\"hextodec(substr(str,i,2));}ret = ret\":\"hextodec(substr(str,index(str,\":\")+1,4));return ret;} NR > 1 {{if(NR==2)print \"Local Listening\";local=getIP(\$2);remote=getIP(\$3)}{print local}}' | grep '0.0.0.0:9779'"
       interval: 30s
       timeout: 10s
       retries: 3
