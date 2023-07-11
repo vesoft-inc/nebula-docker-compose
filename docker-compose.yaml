@@ -325,7 +325,7 @@ services:
       - SYS_PTRACE
   
   console:
-    image: vesoft/nebula-console:nightly
+    image: vesoft/nebula-console:v3.5
     entrypoint: ""
     command: 
       - sh
