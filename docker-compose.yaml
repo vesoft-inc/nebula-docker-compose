@@ -345,5 +345,14 @@ services:
     networks:
       - nebula-net
 
+  web:
+    image: docker.io/vesoft/nebula-graph-studio:nightly
+    environment:
+      USER: root
+    ports:
+      - 7001:7001
+    networks:
+      - nebula-net
+
 networks:
   nebula-net:
