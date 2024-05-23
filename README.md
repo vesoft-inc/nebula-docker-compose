@@ -4,9 +4,6 @@
   <br>A distributed, scalable, lightning-fast graph database<br>
 </p>
 <p align="center">
-  <a href="https://github.com/vesoft-inc/nebula-graph/actions?workflow=docker">
-    <img src="https://github.com/vesoft-inc/nebula-graph/workflows/docker/badge.svg" alt="build docker image workflow"/>
-  </a>
   <a href="http://githubbadges.com/star.svg?user=vesoft-inc&repo=nebula&style=default">
     <img src="https://img.shields.io/github/stars/vesoft-inc/nebula" alt="GitHub stars" />
   </a>
