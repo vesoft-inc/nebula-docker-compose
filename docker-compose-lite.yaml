@@ -103,5 +103,26 @@ services:
     cap_add:
       - SYS_PTRACE
 
+  console:
+    image: docker.io/vesoft/nebula-console:nightly
+    entrypoint: ""
+    command: 
+      - sh
+      - -c
+      - |
+        for i in `seq 1 60`;do
+          var=`nebula-console -addr graphd -port 9669 -u root -p nebula -e 'ADD HOSTS "storaged0":9779'`;
+          if [[ $$? == 0 ]];then
+            break;
+          fi;
+          sleep 1;
+          echo "retry to add hosts.";
+        done && tail -f /dev/null;
+
+    depends_on:
+      - graphd
+    networks:
+      - nebula-net
+
 networks:
   nebula-net:
