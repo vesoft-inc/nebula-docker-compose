@@ -2,6 +2,7 @@ version: '3.4'
 services:
   metad0:
     image: docker.io/vesoft/nebula-metad:nightly
+    user: root
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -36,6 +37,7 @@ services:
 
   metad1:
     image: docker.io/vesoft/nebula-metad:nightly
+    user: root
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -70,6 +72,7 @@ services:
 
   metad2:
     image: docker.io/vesoft/nebula-metad:nightly
+    user: root
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -104,6 +107,7 @@ services:
 
   storaged0:
     image: docker.io/vesoft/nebula-storaged:nightly
+    user: root
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -142,6 +146,7 @@ services:
 
   storaged1:
     image: docker.io/vesoft/nebula-storaged:nightly
+    user: root
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -180,6 +185,7 @@ services:
 
   storaged2:
     image: docker.io/vesoft/nebula-storaged:nightly
+    user: root
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -218,6 +224,7 @@ services:
 
   graphd:
     image: docker.io/vesoft/nebula-graphd:nightly
+    user: root
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -254,6 +261,7 @@ services:
 
   graphd1:
     image: docker.io/vesoft/nebula-graphd:nightly
+    user: root
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -290,6 +298,7 @@ services:
 
   graphd2:
     image: docker.io/vesoft/nebula-graphd:nightly
+    user: root
     environment:
       USER: root
       TZ:   "${TZ}"
@@ -326,6 +335,7 @@ services:
   
   console:
     image: docker.io/vesoft/nebula-console:nightly
+    user: root
     entrypoint: ""
     command: 
       - sh
