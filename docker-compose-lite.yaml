@@ -2,6 +2,7 @@ version: '3.4'
 services:
   metad0:
     image: docker.io/vesoft/nebula-metad:nightly
+    user: root
     environment:
       USER: root
     command:
@@ -39,6 +40,7 @@ services:
 
   storaged0:
     image: docker.io/vesoft/nebula-storaged:nightly
+    user: root
     environment:
       USER: root
     command:
@@ -78,6 +80,7 @@ services:
 
   graphd:
     image: docker.io/vesoft/nebula-graphd:nightly
+    user: root
     environment:
       USER: root
     command:
@@ -121,6 +124,7 @@ services:
     # docker run --rm -ti --network host vesoft/nebula-console:nightly -addr 127.0.0.1 -port 9669 -u root -p nebula
 
     image: docker.io/vesoft/nebula-console:nightly
+    user: root
     entrypoint: ""
     environment:
       ACTIVATOR_RETRY: ${ACTIVATOR_RETRY:-30}
