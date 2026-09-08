@@ -1,9 +1,27 @@
 version: '3.4'
 services:
+  data-init:
+    # Docker creates missing bind-mount source directories as root. Fix their
+    # ownership before the Nebula services, which run as the image's nebula user.
+    image: docker.io/vesoft/nebula-metad:nightly
+    user: root
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        mkdir -p /data/meta0 /data/storage0
+        chown 10001:10001 /data/meta0 /data/storage0
+        echo "Data directory permissions initialized:"
+        ls -ldh /data/meta0 /data/storage0
+    volumes:
+      - ./data:/data/
+    restart: "no"
+
   metad0:
     image: docker.io/vesoft/nebula-metad:nightly
-    environment:
-      USER: root
+    user: "10001:10001"
+    depends_on:
+      data-init:
+        condition: service_completed_successfully
     command:
       - --meta_server_addrs=metad0:9559
       - --local_ip=metad0
@@ -39,8 +57,7 @@ services:
 
   storaged0:
     image: docker.io/vesoft/nebula-storaged:nightly
-    environment:
-      USER: root
+    user: "10001:10001"
     command:
       - --meta_server_addrs=metad0:9559
       - --local_ip=storaged0
@@ -78,8 +95,7 @@ services:
 
   graphd:
     image: docker.io/vesoft/nebula-graphd:nightly
-    environment:
-      USER: root
+    user: "10001:10001"
     command:
       - --meta_server_addrs=metad0:9559
       - --port=9669
