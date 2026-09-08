@@ -1,10 +1,33 @@
 version: '3.4'
 services:
+  data-init:
+    # Docker creates missing bind-mount source directories as root. Initialize
+    # only the top-level directories; Nebula creates its own child files.
+    image: docker.io/vesoft/nebula-metad:nightly
+    user: root
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        mkdir -p /data/meta0 /data/meta1 /data/meta2 /data/storage0 /data/storage1 /data/storage2
+        mkdir -p /logs/meta0 /logs/meta1 /logs/meta2 /logs/storage0 /logs/storage1 /logs/storage2 /logs/graph /logs/graph1 /logs/graph2
+        chown 10001:10001 /data/meta0 /data/meta1 /data/meta2 /data/storage0 /data/storage1 /data/storage2
+        chown 10001:10001 /logs/meta0 /logs/meta1 /logs/meta2 /logs/storage0 /logs/storage1 /logs/storage2 /logs/graph /logs/graph1 /logs/graph2
+        echo "Data and log directory permissions initialized:"
+        ls -ldh /data/meta0 /data/meta1 /data/meta2 /data/storage0 /data/storage1 /data/storage2
+        ls -ldh /logs/meta0 /logs/meta1 /logs/meta2 /logs/storage0 /logs/storage1 /logs/storage2 /logs/graph /logs/graph1 /logs/graph2
+    volumes:
+      - ./data:/data/
+      - ./logs:/logs/
+    restart: "no"
+
   metad0:
     image: docker.io/vesoft/nebula-metad:nightly
+    user: "10001:10001"
     environment:
-      USER: root
       TZ:   "${TZ}"
+    depends_on:
+      data-init:
+        condition: service_completed_successfully
     command:
       - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
       - --local_ip=metad0
@@ -36,9 +59,12 @@ services:
 
   metad1:
     image: docker.io/vesoft/nebula-metad:nightly
+    user: "10001:10001"
     environment:
-      USER: root
       TZ:   "${TZ}"
+    depends_on:
+      data-init:
+        condition: service_completed_successfully
     command:
       - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
       - --local_ip=metad1
@@ -70,9 +96,12 @@ services:
 
   metad2:
     image: docker.io/vesoft/nebula-metad:nightly
+    user: "10001:10001"
     environment:
-      USER: root
       TZ:   "${TZ}"
+    depends_on:
+      data-init:
+        condition: service_completed_successfully
     command:
       - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
       - --local_ip=metad2
@@ -104,8 +133,8 @@ services:
 
   storaged0:
     image: docker.io/vesoft/nebula-storaged:nightly
+    user: "10001:10001"
     environment:
-      USER: root
       TZ:   "${TZ}"
     command:
       - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
@@ -118,9 +147,14 @@ services:
       - --v=0
       - --minloglevel=0
     depends_on:
-      - metad0
-      - metad1
-      - metad2
+      data-init:
+        condition: service_completed_successfully
+      metad0:
+        condition: service_started
+      metad1:
+        condition: service_started
+      metad2:
+        condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://storaged0:19779/status"]
       interval: 30s
@@ -142,8 +176,8 @@ services:
 
   storaged1:
     image: docker.io/vesoft/nebula-storaged:nightly
+    user: "10001:10001"
     environment:
-      USER: root
       TZ:   "${TZ}"
     command:
       - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
@@ -156,9 +190,14 @@ services:
       - --v=0
       - --minloglevel=0
     depends_on:
-      - metad0
-      - metad1
-      - metad2
+      data-init:
+        condition: service_completed_successfully
+      metad0:
+        condition: service_started
+      metad1:
+        condition: service_started
+      metad2:
+        condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://storaged1:19779/status"]
       interval: 30s
@@ -180,8 +219,8 @@ services:
 
   storaged2:
     image: docker.io/vesoft/nebula-storaged:nightly
+    user: "10001:10001"
     environment:
-      USER: root
       TZ:   "${TZ}"
     command:
       - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
@@ -194,9 +233,14 @@ services:
       - --v=0
       - --minloglevel=0
     depends_on:
-      - metad0
-      - metad1
-      - metad2
+      data-init:
+        condition: service_completed_successfully
+      metad0:
+        condition: service_started
+      metad1:
+        condition: service_started
+      metad2:
+        condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://storaged2:19779/status"]
       interval: 30s
@@ -218,8 +262,8 @@ services:
 
   graphd:
     image: docker.io/vesoft/nebula-graphd:nightly
+    user: "10001:10001"
     environment:
-      USER: root
       TZ:   "${TZ}"
     command:
       - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
@@ -231,9 +275,14 @@ services:
       - --v=0
       - --minloglevel=0
     depends_on:
-      - storaged0
-      - storaged1
-      - storaged2
+      data-init:
+        condition: service_completed_successfully
+      storaged0:
+        condition: service_started
+      storaged1:
+        condition: service_started
+      storaged2:
+        condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://graphd:19669/status"]
       interval: 30s
@@ -254,8 +303,8 @@ services:
 
   graphd1:
     image: docker.io/vesoft/nebula-graphd:nightly
+    user: "10001:10001"
     environment:
-      USER: root
       TZ:   "${TZ}"
     command:
       - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
@@ -267,9 +316,14 @@ services:
       - --v=0
       - --minloglevel=0
     depends_on:
-      - storaged0
-      - storaged1
-      - storaged2
+      data-init:
+        condition: service_completed_successfully
+      storaged0:
+        condition: service_started
+      storaged1:
+        condition: service_started
+      storaged2:
+        condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://graphd1:19669/status"]
       interval: 30s
@@ -290,8 +344,8 @@ services:
 
   graphd2:
     image: docker.io/vesoft/nebula-graphd:nightly
+    user: "10001:10001"
     environment:
-      USER: root
       TZ:   "${TZ}"
     command:
       - --meta_server_addrs=metad0:9559,metad1:9559,metad2:9559
@@ -303,9 +357,14 @@ services:
       - --v=0
       - --minloglevel=0
     depends_on:
-      - storaged0
-      - storaged1
-      - storaged2
+      data-init:
+        condition: service_completed_successfully
+      storaged0:
+        condition: service_started
+      storaged1:
+        condition: service_started
+      storaged2:
+        condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://graphd2:19669/status"]
       interval: 30s
